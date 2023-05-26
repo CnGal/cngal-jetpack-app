@@ -1,16 +1,18 @@
 package com.cngal.app.extension
 
-import java.text.SimpleDateFormat
-import java.util.Date
-import java.util.Locale
+import java.time.Instant
+import java.time.LocalDateTime
+import java.time.ZoneId
+import java.time.format.DateTimeFormatter
+
 
 fun String.getImageSource(): String
 {
     return this.split("?").last()
 }
 
-fun String.toDate(): Date?
+
+fun String.toDate(): Instant
 {
-    val dateFormat = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSSSSS'Z", Locale.getDefault())
-    return dateFormat.parse(this)
+    return Instant.parse(this)
 }

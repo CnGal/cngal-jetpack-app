@@ -1,8 +1,14 @@
 package com.cngal.app.service
 
 import com.cngal.app.model.article.ArticleCardModel
+import com.cngal.app.model.home.AnnouncementModel
 import com.cngal.app.model.home.CarouselModel
+import com.cngal.app.model.home.FriendLinkModel
+import com.cngal.app.model.home.LatestArticleModel
+import com.cngal.app.model.home.LatestVideoModel
 import com.cngal.app.model.home.NewsModel
+import com.cngal.app.model.home.PublishedGameModel
+import com.cngal.app.model.home.RecentlyEditedGameModel
 import com.cngal.app.model.home.UpcomingGameModel
 import com.squareup.moshi.FromJson
 import com.squareup.moshi.JsonAdapter
@@ -32,6 +38,24 @@ interface HomeService
 
     @GET("/api/home/ListUpcomingGames")
     suspend fun getUpcomingGameData(): List<UpcomingGameModel>
+
+    @GET("/api/home/ListPublishedGames")
+    suspend fun getPublishedGameData(): List<PublishedGameModel>
+
+    @GET("/api/home/ListLatestArticles")
+    suspend fun getLatestArticleData(): List<LatestArticleModel>
+
+    @GET("/api/home/ListLatestVideos")
+    suspend fun getLatestVideoData(): List<LatestVideoModel>
+
+    @GET("/api/home/ListAnnouncements")
+    suspend fun getAnnouncementData(): List<AnnouncementModel>
+
+    @GET("/api/home/ListRecentlyEditedGames")
+    suspend fun getRecentlyEditedGameData(): List<RecentlyEditedGameModel>
+
+    @GET("/api/home/ListFriendLinks")
+    suspend fun getFriendLinkData(): List<FriendLinkModel>
 
     companion object
     {

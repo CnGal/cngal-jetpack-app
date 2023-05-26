@@ -4,6 +4,7 @@ import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.aspectRatio
 import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -12,8 +13,6 @@ import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Schedule
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.MaterialTheme
@@ -22,30 +21,30 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.derivedStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.saveable.rememberSaveable
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import coil.compose.AsyncImage
-import com.cngal.app.compose.shared.IconChip
 import com.cngal.app.compose.shared.TitleCard
 import com.cngal.app.helper.appContext
 import com.cngal.app.helper.openNewTabWindow
-import com.cngal.app.model.home.UpcomingGameModel
+import com.cngal.app.model.home.LatestVideoModel
 
 @Composable
-fun UpcomingGameGroupCard(model: List<UpcomingGameModel>)
+fun LatestVideoGroupCard(model: List<LatestVideoModel>)
 {
-    val items =  model.take(9)
+    val items = model.take(9)
 
-    TitleCard(title = "即将发布", link = "https://www.cngal.org/times", content = {
+    TitleCard(title = "最新视频", link = "https://www.cngal.org/search/?Types=Video", content = {
         LazyRow(
             horizontalArrangement = Arrangement.spacedBy(12.dp),
             contentPadding = PaddingValues(horizontal = 12.dp),
         ) {
             items(items = items) { item ->
 
-                UpcomingGameCard(model = item, onClickCard = {
+                LatestVideoCard(model = item, onClickCard = {
                     //todo 替换跳转页面
                     openNewTabWindow(
                         "https://www.cngal.org/${item.url}",
@@ -58,10 +57,10 @@ fun UpcomingGameGroupCard(model: List<UpcomingGameModel>)
 }
 
 @Composable
-fun UpcomingGameCard(model: UpcomingGameModel, onClickCard: () -> Unit)
+fun LatestVideoCard(model: LatestVideoModel, onClickCard: () -> Unit)
 {
     Card(modifier = Modifier
-            .width(250.dp)
+            .width(200.dp)
             .fillMaxHeight()
             .clickable { onClickCard() }
     ) {
@@ -82,19 +81,35 @@ fun UpcomingGameCard(model: UpcomingGameModel, onClickCard: () -> Unit)
 
                 Text(
                     text = model.name,
-                    style = MaterialTheme.typography.titleLarge,
-                    maxLines = 1,
+                    style = MaterialTheme.typography.titleSmall,
+                    maxLines = 2,
                     overflow = TextOverflow.Ellipsis,
                 )
-                IconChip(
-                    model.publishTime,
-                    Icons.Filled.Schedule,
-                    MaterialTheme.colorScheme.primary
-                )
+                Row(
+                    modifier = Modifier
+                        .fillMaxWidth(),
+                    horizontalArrangement = Arrangement.SpaceBetween,
+                    verticalAlignment = Alignment.CenterVertically,
+                ) {
+
+                    Text(
+                        text = model.originalAuthor,
+                        style = MaterialTheme.typography.bodyMedium,
+                        maxLines = 1,
+                        overflow = TextOverflow.Ellipsis,
+                    )
+
+                    Text(
+                        text = model.publishTime,
+                        style = MaterialTheme.typography.bodyMedium,
+                        color = MaterialTheme.colorScheme.secondary,
+                        maxLines = 1,
+                        overflow = TextOverflow.Ellipsis,
+                    )
+                }
 
             }
-
         }
-    }
 
+    }
 }

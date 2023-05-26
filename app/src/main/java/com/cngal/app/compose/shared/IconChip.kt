@@ -40,7 +40,7 @@ fun IconChip(text: String, icon: ImageVector,color:Color)
         ) {
             Icon(icon, contentDescription = text,Modifier.size(16.dp))
 
-            Spacer(Modifier.size(ButtonDefaults.IconSpacing))
+            Spacer(Modifier.size(4.dp))
             Text(
                 text = text,
                 style = MaterialTheme.typography.bodySmall,

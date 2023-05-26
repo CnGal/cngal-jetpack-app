@@ -7,7 +7,7 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.ui.Modifier
-import com.cngal.app.compose.home.HomeScreen
+import com.cngal.app.compose.overview.MainScreen
 import com.cngal.app.ui.theme.CnGalTheme
 
 class MainActivity : ComponentActivity()
@@ -21,7 +21,7 @@ class MainActivity : ComponentActivity()
                 Surface(
                     modifier = Modifier.fillMaxSize(), color = MaterialTheme.colorScheme.background
                 ) {
-                    HomeScreen()
+                    MainScreen()
                 }
             }
         }

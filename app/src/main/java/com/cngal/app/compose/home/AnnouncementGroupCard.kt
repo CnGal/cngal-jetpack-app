@@ -12,6 +12,7 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ExpandLess
 import androidx.compose.material.icons.filled.ExpandMore
 import androidx.compose.material.icons.filled.FiberNew
+import androidx.compose.material.icons.filled.PushPin
 import androidx.compose.material3.Button
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
@@ -34,28 +35,31 @@ import androidx.compose.ui.unit.dp
 import com.cngal.app.compose.shared.TitleCard
 import com.cngal.app.helper.appContext
 import com.cngal.app.helper.openNewTabWindow
-import com.cngal.app.model.article.ArticleCardModel
+import com.cngal.app.model.home.AnnouncementModel
 
 @Composable
-fun WeeklyNewsGroupCard(model: List<ArticleCardModel>)
+fun AnnouncementGroupCard(model: List<AnnouncementModel>)
 {
-    val items =  model.take(3)
+    val items =   model.take(6)
 
 
-    TitleCard(title = "每周速报", link = "https://www.cngal.org/weeklynews", content = {
+    TitleCard(title = "公告", link = "https://www.cngal.org/search?Types=Notice", content = {
         Column(
             verticalArrangement = Arrangement.spacedBy(12.dp),
             modifier = Modifier
                 .padding(horizontal = 12.dp)
         ) {
             items.forEach { item ->
-                WeeklyNewsCard(model = item, latest = model.indexOf(item) == 0, onClickDetail={
-                    //todo 替换跳转页面
-                    openNewTabWindow(
-                        "https://www.cngal.org/articles/index/${item.id}",
-                        appContext
-                    )
-                })
+                AnnouncementCard(
+                    model = item,
+                    latest = model.indexOf(item) == model.count { it.priority > 0 },
+                    onClickDetail = {
+                        //todo 替换跳转页面
+                        openNewTabWindow(
+                            "https://www.cngal.org/${item.url}",
+                            appContext
+                        )
+                    })
             }
 
         }
@@ -63,12 +67,12 @@ fun WeeklyNewsGroupCard(model: List<ArticleCardModel>)
 }
 
 @Composable
-fun WeeklyNewsCard(model: ArticleCardModel, latest: Boolean, onClickDetail: () -> Unit)
+fun AnnouncementCard(model: AnnouncementModel, latest: Boolean, onClickDetail: () -> Unit)
 {
 
     var expanded by rememberSaveable { mutableStateOf(false) }
 
-    Card( modifier = Modifier
+    Card(modifier = Modifier
             .fillMaxWidth()
             .animateContentSize(
                 animationSpec = spring(
@@ -100,10 +104,17 @@ fun WeeklyNewsCard(model: ArticleCardModel, latest: Boolean, onClickDetail: () -
                             contentDescription = "最新",
                             tint = MaterialTheme.colorScheme.secondary
                         )
+                    } else if (model.priority > 0)
+                    {
+                        Icon(
+                            Icons.Filled.PushPin,
+                            contentDescription = "置顶",
+                            tint = MaterialTheme.colorScheme.secondary
+                        )
                     }
 
                     Text(
-                        text = model.displayName.replace("CnGal每周速报（", "").replace("）", ""),
+                        text = model.name,
                         maxLines = 1,
                         overflow = TextOverflow.Ellipsis,
                         style = MaterialTheme.typography.bodyMedium,
@@ -135,24 +146,29 @@ fun WeeklyNewsCard(model: ArticleCardModel, latest: Boolean, onClickDetail: () -
                 Column(
                     modifier = Modifier
                         .fillMaxWidth(),
-                    horizontalAlignment = Alignment.End,
+                    horizontalAlignment = Alignment.Start,
                 ) {
                     Text(
                         text = model.briefIntroduction,
                         overflow = TextOverflow.Ellipsis,
                         style = MaterialTheme.typography.bodyMedium,
                     )
-
-                    Button(
+                    Column(
                         modifier = Modifier
-                            .padding(0.dp,0.dp,18.dp,20.dp),
-                        onClick = {onClickDetail()}
-                    ){
-                        Text(
-                            text = "查看详情",
-                            style = MaterialTheme.typography.titleSmall,
-                            fontWeight = FontWeight.Bold
-                        )
+                            .fillMaxWidth(),
+                        horizontalAlignment = Alignment.End,
+                    ) {
+                        Button(
+                            modifier = Modifier
+                                .padding(0.dp, 12.dp, 12.dp, 12.dp),
+                            onClick = { onClickDetail() }
+                        ) {
+                            Text(
+                                text = "查看详情",
+                                style = MaterialTheme.typography.titleSmall,
+                                fontWeight = FontWeight.Bold
+                            )
+                        }
                     }
                 }
 
