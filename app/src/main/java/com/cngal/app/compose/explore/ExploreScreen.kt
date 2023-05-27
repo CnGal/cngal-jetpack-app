@@ -49,21 +49,19 @@ fun ExploreScreen(
             {
                 Box(
                     modifier = Modifier
-                        .padding(0.dp, 0.dp, 0.dp, 36.dp)
+                        .padding(0.dp, 0.dp, 0.dp, 24.dp)
                 ) {
                     EvaluationGroupCard(evaluationsState.data!!)
                 }
             }
         }
-        item(key = "TitleCard") {
-            TitleCard(title = "随机推荐", content = {})
-        }
+
         items(items = personalRecommends, key = {
             it.id
         }) { item ->
             Box(
                 modifier = Modifier
-                    .padding(12.dp, 8.dp, 12.dp, 24.dp)
+                    .padding(12.dp, 0.dp, 12.dp, 24.dp)
             ) {
                 PersonalRecommendCard(model = item, onClickCard = {
                     //todo 替换跳转页面

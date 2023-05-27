@@ -17,6 +17,8 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.derivedStateOf
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Alignment
@@ -27,6 +29,8 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import coil.compose.AsyncImage
 import com.cngal.app.compose.shared.TitleCard
+import com.cngal.app.extension.toDate
+import com.cngal.app.extension.toTimeFromNowString
 import com.cngal.app.helper.appContext
 import com.cngal.app.helper.openNewTabWindow
 import com.cngal.app.model.home.NewsModel
@@ -40,16 +44,14 @@ fun NewsGroupCardPreview()
 
 
 @Composable
-fun NewsGroupCard(model: List<NewsModel>)
+fun NewsGroupCard(model:List<List<NewsModel>>)
 {
-    val items =  model.take(12).chunked(3)
-
     TitleCard(title = "最新动态", link = "https://www.cngal.org/articles/news", content = {
         LazyRow(
             horizontalArrangement = Arrangement.spacedBy(12.dp),
             contentPadding = PaddingValues(horizontal = 12.dp),
         ) {
-            items(items = items) { item ->
+            items(items = model) { item ->
                 Column(verticalArrangement = Arrangement.spacedBy(12.dp)) {
                     item.forEach { news ->
                         NewsCard(model = news, onClickImage = {
@@ -110,7 +112,7 @@ fun NewsCard(model: NewsModel, onClickImage: () -> Unit, onClickCard: () -> Unit
                         style = MaterialTheme.typography.titleMedium
                     )
                     Text(
-                        text = "11小时前",
+                        text = model.time.toDate().toTimeFromNowString(),
                         color = MaterialTheme.colorScheme.secondary,
                         style = MaterialTheme.typography.bodySmall
                     )

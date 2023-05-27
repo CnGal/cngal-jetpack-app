@@ -5,8 +5,6 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
-import androidx.compose.material3.AssistChipDefaults
-import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.ExperimentalMaterial3Api
@@ -24,7 +22,7 @@ import androidx.compose.ui.unit.dp
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun IconChip(text: String, icon: ImageVector,color:Color)
+fun IconChip(text: String, icon: ImageVector?, color:Color)
 {
     Card(
         colors = CardDefaults.cardColors(
@@ -38,9 +36,12 @@ fun IconChip(text: String, icon: ImageVector,color:Color)
             horizontalArrangement = Arrangement.SpaceBetween,
             verticalAlignment = Alignment.CenterVertically,
         ) {
-            Icon(icon, contentDescription = text,Modifier.size(16.dp))
+            if(icon!=null)
+            {
+                Icon(icon, contentDescription = text,Modifier.size(16.dp))
+                Spacer(Modifier.size(4.dp))
+            }
 
-            Spacer(Modifier.size(4.dp))
             Text(
                 text = text,
                 style = MaterialTheme.typography.bodySmall,

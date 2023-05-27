@@ -5,7 +5,7 @@ import com.squareup.moshi.Json
 import com.squareup.moshi.JsonClass
 
 @JsonClass(generateAdapter = true)
-data class PublishedGameModel(
+data class FreeGameModel(
     @Json(name = "briefIntroduction")
     val briefIntroduction: String,
     @Json(name = "image")

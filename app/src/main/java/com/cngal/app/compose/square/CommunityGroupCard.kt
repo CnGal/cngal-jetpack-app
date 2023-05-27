@@ -1,4 +1,4 @@
-package com.cngal.app.compose.home
+package com.cngal.app.compose.square
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.clickable
@@ -11,7 +11,6 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Card
-import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -26,7 +25,7 @@ import com.cngal.app.compose.shared.TitleCard
 import com.cngal.app.data.home.CommunityData
 import com.cngal.app.helper.appContext
 import com.cngal.app.helper.openNewTabWindow
-import com.cngal.app.model.home.CommunityModel
+import com.cngal.app.model.square.CommunityModel
 
 @Composable
 @Preview(showBackground = true)

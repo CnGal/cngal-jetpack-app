@@ -1,4 +1,4 @@
-package com.cngal.app.model.home
+package com.cngal.app.model.square
 
 import androidx.compose.ui.graphics.vector.ImageVector
 

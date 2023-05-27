@@ -2,18 +2,20 @@ package com.cngal.app.compose.home
 
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.aspectRatio
 import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Schedule
+import androidx.compose.material.icons.filled.Tag
 import androidx.compose.material3.Card
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
@@ -27,19 +29,20 @@ import com.cngal.app.compose.shared.IconChip
 import com.cngal.app.compose.shared.TitleCard
 import com.cngal.app.helper.appContext
 import com.cngal.app.helper.openNewTabWindow
-import com.cngal.app.model.home.UpcomingGameModel
+import com.cngal.app.model.home.FreeGameModel
 
 @Composable
-fun UpcomingGameGroupCard(model: List<UpcomingGameModel>)
+fun FreeGameGroupCard(model: List<FreeGameModel>)
 {
-    TitleCard(title = "即将发布", link = "https://www.cngal.org/times", content = {
+
+    TitleCard(title = "免费游玩", link = "https://www.cngal.org/free", content = {
         LazyRow(
             horizontalArrangement = Arrangement.spacedBy(12.dp),
             contentPadding = PaddingValues(horizontal = 12.dp),
         ) {
             items(items = model) { item ->
 
-                UpcomingGameCard(model = item, onClickCard = {
+                FreeGameCard(model = item, onClickCard = {
                     //todo 替换跳转页面
                     openNewTabWindow(
                         "https://www.cngal.org/${item.url}",
@@ -52,12 +55,12 @@ fun UpcomingGameGroupCard(model: List<UpcomingGameModel>)
 }
 
 @Composable
-fun UpcomingGameCard(model: UpcomingGameModel, onClickCard: () -> Unit)
+fun FreeGameCard(model: FreeGameModel, onClickCard: () -> Unit)
 {
-    Card(modifier = Modifier
-            .width(250.dp)
-            .fillMaxHeight()
-            .clickable { onClickCard() }
+    Card( modifier = Modifier
+        .width(150.dp)
+        .fillMaxHeight()
+        .clickable { onClickCard() }
     ) {
         Column {
             AsyncImage(
@@ -76,16 +79,26 @@ fun UpcomingGameCard(model: UpcomingGameModel, onClickCard: () -> Unit)
 
                 Text(
                     text = model.name,
-                    style = MaterialTheme.typography.titleLarge,
+                    style = MaterialTheme.typography.titleSmall,
                     maxLines = 1,
                     overflow = TextOverflow.Ellipsis,
                 )
-                IconChip(
-                    model.publishTime,
-                    Icons.Filled.Schedule,
-                    MaterialTheme.colorScheme.primary
-                )
 
+                Box(
+                    modifier = Modifier
+                        .height(24.dp)
+                )
+                {
+                    if (model.tags.isNotEmpty())
+                    {
+                        IconChip(
+                            model.tags.first(),
+                            Icons.Filled.Tag,
+                            MaterialTheme.colorScheme.primary
+                        )
+                    }
+
+                }
             }
 
         }

@@ -17,13 +17,9 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Tag
 import androidx.compose.material3.Card
-import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.derivedStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.text.style.TextOverflow
@@ -38,14 +34,13 @@ import com.cngal.app.model.home.PublishedGameModel
 @Composable
 fun PublishedGameGroupCard(model: List<PublishedGameModel>)
 {
-    val items = model.take(9)
 
     TitleCard(title = "近期新作", link = "https://www.cngal.org/times", content = {
         LazyRow(
             horizontalArrangement = Arrangement.spacedBy(12.dp),
             contentPadding = PaddingValues(horizontal = 12.dp),
         ) {
-            items(items = items) { item ->
+            items(items = model) { item ->
 
                 PublishedGameCard(model = item, onClickCard = {
                     //todo 替换跳转页面
@@ -94,11 +89,10 @@ fun PublishedGameCard(model: PublishedGameModel, onClickCard: () -> Unit)
                         .height(24.dp)
                 )
                 {
-                    val tag =  model.tags.shuffled().take(1)
-                    if (tag.isNotEmpty())
+                    if (model.tags.isNotEmpty())
                     {
                         IconChip(
-                            tag.first(),
+                            model.tags.first(),
                             Icons.Filled.Tag,
                             MaterialTheme.colorScheme.primary
                         )

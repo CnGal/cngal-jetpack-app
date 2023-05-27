@@ -26,6 +26,7 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.unit.dp
 import coil.compose.AsyncImage
+import com.cngal.app.model.home.CarouselModel
 import kotlinx.coroutines.delay
 
 /**
@@ -35,9 +36,9 @@ import kotlinx.coroutines.delay
 
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
-fun Banner(imgs: List<String>, onClickBanner: (imgUrl: String) -> Unit)
+fun Banner(model: List<CarouselModel>, onClickBanner: (CarouselModel) -> Unit)
 {
-    val pageCount = imgs.size
+    val pageCount = model.size
     val pagerState = rememberPagerState(initialPage = 0)
 
     // 页码转换
@@ -52,7 +53,7 @@ fun Banner(imgs: List<String>, onClickBanner: (imgUrl: String) -> Unit)
         ) { index ->
             // 计算页面下标
             val page = pageMapper(index)
-            BannerItem(imgUrl = imgs[page], onClickBanner)
+            BannerItem(model = model[page], onClickBanner)
         }
 
         var underDragging by remember {
@@ -97,17 +98,17 @@ fun Banner(imgs: List<String>, onClickBanner: (imgUrl: String) -> Unit)
 }
 
 @Composable
-fun BannerItem(imgUrl: String, onClickBanner: (imgUrl: String) -> Unit)
+fun BannerItem(model: CarouselModel, onClickBanner: ( CarouselModel) -> Unit)
 {
     AsyncImage(
-        model = imgUrl, contentDescription = null,
+        model = model.image, contentDescription = model.note,
         contentScale = ContentScale.Crop,
         modifier = Modifier
             .fillMaxWidth()
             .aspectRatio(1024f / 200f)
             .padding(horizontal = 12.dp)
             .clip(RoundedCornerShape(12.dp))
-            .clickable { onClickBanner(imgUrl) }
+            .clickable { onClickBanner(model) }
     )
 }
 

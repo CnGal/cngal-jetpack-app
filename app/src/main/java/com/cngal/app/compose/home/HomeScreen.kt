@@ -2,15 +2,30 @@ package com.cngal.app.compose.home
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.heightIn
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Search
+import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.Icon
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Text
+import androidx.compose.material3.TextField
+import androidx.compose.material3.TextFieldDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
+import com.cngal.app.compose.square.AnnouncementGroupCard
+import com.cngal.app.compose.square.CommunityGroupCard
+import com.cngal.app.compose.square.FriendLinkGroupCard
+import com.cngal.app.compose.square.RecentlyEditedGameGroupCard
 import com.cngal.app.model.shared.AppState
 import com.cngal.app.viewmodel.home.HomeViewModel
 
@@ -27,10 +42,8 @@ fun HomeScreen(
     val publishedGamesState by viewModel.publishedGames.collectAsState()
     val latestArticlesState by viewModel.latestArticles.collectAsState()
     val latestVideosState by viewModel.latestVideos.collectAsState()
-    val announcementsState by viewModel.announcements.collectAsState()
-    val recentlyEditedGamesState by viewModel.recentlyEditedGames.collectAsState()
-    val friendLinksState by viewModel.friendLinks.collectAsState()
-
+    val freeGamesState by viewModel.freeGames.collectAsState()
+    val discountGamesState by viewModel.discountGames.collectAsState()
     Column(
         modifier = modifier
             .verticalScroll(rememberScrollState())
@@ -40,6 +53,7 @@ fun HomeScreen(
                 .padding(vertical = 12.dp),
             verticalArrangement = Arrangement.spacedBy(36.dp)
         ) {
+
             if (carouselsState.state == AppState.SUCCESS)
             {
                 CarouselGroupCard(carouselsState.data!!)
@@ -62,6 +76,14 @@ fun HomeScreen(
             {
                 UpcomingGameGroupCard(upcomingGamesState.data!!)
             }
+            if (freeGamesState.state == AppState.SUCCESS)
+            {
+                FreeGameGroupCard(freeGamesState.data!!)
+            }
+            if (discountGamesState.state == AppState.SUCCESS)
+            {
+                DiscountGameGroupCard(discountGamesState.data!!)
+            }
             if (latestArticlesState.state == AppState.SUCCESS)
             {
                 LatestArticleGroupCard(latestArticlesState.data!!)
@@ -69,21 +91,6 @@ fun HomeScreen(
             if (latestVideosState.state == AppState.SUCCESS)
             {
                 LatestVideoGroupCard(latestVideosState.data!!)
-            }
-            if (announcementsState.state == AppState.SUCCESS)
-            {
-                AnnouncementGroupCard(announcementsState.data!!)
-            }
-            if (recentlyEditedGamesState.state == AppState.SUCCESS)
-            {
-                RecentlyEditedGameGroupCard(recentlyEditedGamesState.data!!)
-            }
-
-            CommunityGroupCard()
-
-            if (friendLinksState.state == AppState.SUCCESS)
-            {
-                FriendLinkGroupCard(friendLinksState.data!!)
             }
         }
     }

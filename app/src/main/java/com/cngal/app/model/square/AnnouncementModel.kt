@@ -1,4 +1,4 @@
-package com.cngal.app.model.home
+package com.cngal.app.model.square
 
 
 import com.squareup.moshi.Json

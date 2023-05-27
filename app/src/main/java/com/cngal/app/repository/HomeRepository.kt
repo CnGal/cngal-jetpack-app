@@ -1,14 +1,16 @@
 package com.cngal.app.repository
 
 import com.cngal.app.model.article.ArticleCardModel
-import com.cngal.app.model.home.AnnouncementModel
+import com.cngal.app.model.square.AnnouncementModel
 import com.cngal.app.model.home.CarouselModel
-import com.cngal.app.model.home.FriendLinkModel
+import com.cngal.app.model.home.DiscountGameModel
+import com.cngal.app.model.home.FreeGameModel
+import com.cngal.app.model.square.FriendLinkModel
 import com.cngal.app.model.home.LatestArticleModel
 import com.cngal.app.model.home.LatestVideoModel
 import com.cngal.app.model.home.NewsModel
 import com.cngal.app.model.home.PublishedGameModel
-import com.cngal.app.model.home.RecentlyEditedGameModel
+import com.cngal.app.model.square.RecentlyEditedGameModel
 import com.cngal.app.model.home.UpcomingGameModel
 import com.cngal.app.service.HomeService
 import kotlinx.coroutines.Dispatchers
@@ -55,18 +57,13 @@ class HomeRepository
             emit(data)
         }.flowOn(Dispatchers.IO)
 
-        fun getAnnouncementData( ): Flow<List<AnnouncementModel>> = flow {
-            val data = HomeService.instance.getAnnouncementData()
+        fun getFreeGameData( ): Flow<List<FreeGameModel>> = flow {
+            val data = HomeService.instance.getFreeGameData()
             emit(data)
         }.flowOn(Dispatchers.IO)
 
-        fun getRecentlyEditedGameData( ): Flow<List<RecentlyEditedGameModel>> = flow {
-            val data = HomeService.instance.getRecentlyEditedGameData()
-            emit(data)
-        }.flowOn(Dispatchers.IO)
-
-        fun getFriendLinkData( ): Flow<List<FriendLinkModel>> = flow {
-            val data = HomeService.instance.getFriendLinkData()
+        fun getDiscountGameData( ): Flow<List<DiscountGameModel>> = flow {
+            val data = HomeService.instance.getDiscountGameData()
             emit(data)
         }.flowOn(Dispatchers.IO)
     }

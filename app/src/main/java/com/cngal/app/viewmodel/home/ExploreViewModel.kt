@@ -1,7 +1,6 @@
 package com.cngal.app.viewmodel.home
 
 import androidx.compose.runtime.snapshots.SnapshotStateList
-import androidx.compose.runtime.toMutableStateList
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.cngal.app.compose.uistate.ExploreUiState
@@ -9,7 +8,6 @@ import com.cngal.app.model.explore.EvaluationModel
 import com.cngal.app.model.explore.PersonalRecommendModel
 import com.cngal.app.model.shared.ApiResponse
 import com.cngal.app.repository.ExploreRepository
-import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.catch
@@ -33,6 +31,7 @@ class ExploreViewModel : ViewModel()
     {
         getEvaluationData()
     }
+
     fun refreshRecommends()
     {
         _personalRecommends.update {
@@ -86,9 +85,14 @@ class ExploreViewModel : ViewModel()
             }.catch { e ->
                 _evaluations.value =
                     ApiResponse.error(e)
-            }.collect { response ->
+            }.collect { model ->
+
+                model.forEach(){
+                    it.articles=it.articles.shuffled().take(2)
+                }
+
                 _evaluations.value =
-                    ApiResponse.success(response)
+                    ApiResponse.success(model.shuffled().take(1))
             }
         }
     }

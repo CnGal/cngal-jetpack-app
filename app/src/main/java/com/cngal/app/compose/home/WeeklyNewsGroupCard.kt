@@ -39,16 +39,13 @@ import com.cngal.app.model.article.ArticleCardModel
 @Composable
 fun WeeklyNewsGroupCard(model: List<ArticleCardModel>)
 {
-    val items =  model.take(3)
-
-
     TitleCard(title = "每周速报", link = "https://www.cngal.org/weeklynews", content = {
         Column(
             verticalArrangement = Arrangement.spacedBy(12.dp),
             modifier = Modifier
                 .padding(horizontal = 12.dp)
         ) {
-            items.forEach { item ->
+            model.forEach { item ->
                 WeeklyNewsCard(model = item, latest = model.indexOf(item) == 0, onClickDetail={
                     //todo 替换跳转页面
                     openNewTabWindow(

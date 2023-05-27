@@ -2,10 +2,8 @@ package com.cngal.app.service
 
 import com.cngal.app.model.explore.EvaluationModel
 import com.cngal.app.model.explore.PersonalRecommendModel
-import com.cngal.app.model.home.FriendLinkModel
 import com.squareup.moshi.Moshi
 import com.squareup.moshi.kotlin.reflect.KotlinJsonAdapterFactory
-import retrofit2.Call
 import retrofit2.Retrofit
 import retrofit2.converter.moshi.MoshiConverterFactory
 import retrofit2.http.Body

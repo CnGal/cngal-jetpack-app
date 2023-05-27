@@ -1,4 +1,4 @@
-package com.cngal.app.compose.home
+package com.cngal.app.compose.square
 
 import androidx.compose.animation.animateContentSize
 import androidx.compose.animation.core.Spring
@@ -15,16 +15,13 @@ import androidx.compose.material.icons.filled.FiberNew
 import androidx.compose.material.icons.filled.PushPin
 import androidx.compose.material3.Button
 import androidx.compose.material3.Card
-import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.derivedStateOf
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
@@ -35,21 +32,18 @@ import androidx.compose.ui.unit.dp
 import com.cngal.app.compose.shared.TitleCard
 import com.cngal.app.helper.appContext
 import com.cngal.app.helper.openNewTabWindow
-import com.cngal.app.model.home.AnnouncementModel
+import com.cngal.app.model.square.AnnouncementModel
 
 @Composable
 fun AnnouncementGroupCard(model: List<AnnouncementModel>)
 {
-    val items =   model.take(6)
-
-
     TitleCard(title = "公告", link = "https://www.cngal.org/search?Types=Notice", content = {
         Column(
             verticalArrangement = Arrangement.spacedBy(12.dp),
             modifier = Modifier
                 .padding(horizontal = 12.dp)
         ) {
-            items.forEach { item ->
+            model.forEach { item ->
                 AnnouncementCard(
                     model = item,
                     latest = model.indexOf(item) == model.count { it.priority > 0 },

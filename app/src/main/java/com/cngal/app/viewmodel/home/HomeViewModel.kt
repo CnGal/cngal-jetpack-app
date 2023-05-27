@@ -3,15 +3,13 @@ package com.cngal.app.viewmodel.home
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.cngal.app.model.article.ArticleCardModel
-import com.cngal.app.model.explore.PersonalRecommendModel
-import com.cngal.app.model.home.AnnouncementModel
 import com.cngal.app.model.home.CarouselModel
-import com.cngal.app.model.home.FriendLinkModel
+import com.cngal.app.model.home.DiscountGameModel
+import com.cngal.app.model.home.FreeGameModel
 import com.cngal.app.model.home.LatestArticleModel
 import com.cngal.app.model.home.LatestVideoModel
 import com.cngal.app.model.home.NewsModel
 import com.cngal.app.model.home.PublishedGameModel
-import com.cngal.app.model.home.RecentlyEditedGameModel
 import com.cngal.app.model.home.UpcomingGameModel
 import com.cngal.app.model.shared.ApiResponse
 import com.cngal.app.repository.HomeRepository
@@ -26,7 +24,7 @@ class HomeViewModel : ViewModel()
     private val _carousels = MutableStateFlow(ApiResponse.empty<List<CarouselModel>>())
     val carousels = _carousels.asStateFlow()
 
-    private val _news = MutableStateFlow(ApiResponse.empty<List<NewsModel>>())
+    private val _news = MutableStateFlow(ApiResponse.empty<List<List<NewsModel>>>())
     val news = _news.asStateFlow()
 
     private val _weeklyNews = MutableStateFlow(ApiResponse.empty<List<ArticleCardModel>>())
@@ -44,16 +42,11 @@ class HomeViewModel : ViewModel()
     private val _latestVideos = MutableStateFlow(ApiResponse.empty<List<LatestVideoModel>>())
     val latestVideos = _latestVideos.asStateFlow()
 
-    private val _announcements = MutableStateFlow(ApiResponse.empty<List<AnnouncementModel>>())
-    val announcements = _announcements.asStateFlow()
+    private val _freeGames = MutableStateFlow(ApiResponse.empty<List<FreeGameModel>>())
+    val freeGames = _freeGames.asStateFlow()
 
-    private val _recentlyEditedGames = MutableStateFlow(ApiResponse.empty<List<RecentlyEditedGameModel>>())
-    val recentlyEditedGames = _recentlyEditedGames.asStateFlow()
-
-    private val _friendLinks = MutableStateFlow(ApiResponse.empty<List<FriendLinkModel>>())
-    val friendLinks = _friendLinks.asStateFlow()
-
-
+    private val _discountGames = MutableStateFlow(ApiResponse.empty<List<DiscountGameModel>>())
+    val discountGames = _discountGames.asStateFlow()
 
     init
     {
@@ -64,9 +57,8 @@ class HomeViewModel : ViewModel()
         getPublishedGameData()
         getLatestArticleData()
         getLatestVideoData()
-        getAnnouncementData()
-        getRecentlyEditedGameData()
-        getFriendLinkData()
+        getFreeGameData()
+        getDiscountGameData()
     }
 
     private fun getCarouselData()
@@ -77,9 +69,29 @@ class HomeViewModel : ViewModel()
             }.catch { e ->
                 _carousels.value =
                     ApiResponse.error(e)
-            }.collect { response ->
-                _carousels.value =
-                    ApiResponse.success(response)
+            }.collect { carousels ->
+
+                //预处理
+                carousels.toMutableList().sortByDescending { s -> s.priority }
+                val images = carousels.take(3).toMutableList()
+                if (carousels.count() >= 6)
+                {
+                    images.addAll(
+                        carousels.filter { s: CarouselModel ->
+                            !images.map { it.image }.contains(s.image)
+                        }
+                            .shuffled()
+                            .take(3))
+                }
+                else
+                {
+                    images.addAll(carousels.filter { s: CarouselModel ->
+                        !images.map { it.image }.contains(s.image)
+                    })
+                }
+
+                //赋值
+                _carousels.value = ApiResponse.success(images)
             }
         }
     }
@@ -92,9 +104,9 @@ class HomeViewModel : ViewModel()
             }.catch { e ->
                 _news.value =
                     ApiResponse.error(e)
-            }.collect { response ->
+            }.collect { model ->
                 _news.value =
-                    ApiResponse.success(response)
+                    ApiResponse.success(model.take(12).chunked(3) )
             }
         }
     }
@@ -107,9 +119,9 @@ class HomeViewModel : ViewModel()
             }.catch { e ->
                 _weeklyNews.value =
                     ApiResponse.error(e)
-            }.collect { response ->
+            }.collect { model ->
                 _weeklyNews.value =
-                    ApiResponse.success(response)
+                    ApiResponse.success(model.take(3))
             }
         }
     }
@@ -122,9 +134,9 @@ class HomeViewModel : ViewModel()
             }.catch { e ->
                 _upcomingGames.value =
                     ApiResponse.error(e)
-            }.collect { response ->
+            }.collect { model ->
                 _upcomingGames.value =
-                    ApiResponse.success(response)
+                    ApiResponse.success(model.take(9))
             }
         }
     }
@@ -137,9 +149,34 @@ class HomeViewModel : ViewModel()
             }.catch { e ->
                 _publishedGames.value =
                     ApiResponse.error(e)
-            }.collect { response ->
+            }.collect { model ->
+                model.forEach()
+                {
+                    it.tags=it.tags.shuffled().take(1)
+                }
+
                 _publishedGames.value =
-                    ApiResponse.success(response)
+                    ApiResponse.success(model.take(9))
+            }
+        }
+    }
+
+    private fun getFreeGameData()
+    {
+        viewModelScope.launch {
+            HomeRepository.getFreeGameData().onStart {
+                _freeGames.value = ApiResponse.loading()
+            }.catch { e ->
+                _freeGames.value =
+                    ApiResponse.error(e)
+            }.collect { model ->
+                model.forEach()
+                {
+                    it.tags=it.tags.shuffled().take(1)
+                }
+
+                _freeGames.value =
+                    ApiResponse.success(model.take(9))
             }
         }
     }
@@ -152,9 +189,9 @@ class HomeViewModel : ViewModel()
             }.catch { e ->
                 _latestArticles.value =
                     ApiResponse.error(e)
-            }.collect { response ->
+            }.collect { model ->
                 _latestArticles.value =
-                    ApiResponse.success(response)
+                    ApiResponse.success(model.take(9))
             }
         }
     }
@@ -167,55 +204,26 @@ class HomeViewModel : ViewModel()
             }.catch { e ->
                 _latestVideos.value =
                     ApiResponse.error(e)
-            }.collect { response ->
+            }.collect { model ->
                 _latestVideos.value =
-                    ApiResponse.success(response)
+                    ApiResponse.success(model.take(9))
             }
         }
     }
 
-    private fun getAnnouncementData()
+    private fun getDiscountGameData()
     {
         viewModelScope.launch {
-            HomeRepository.getAnnouncementData().onStart {
-                _announcements.value = ApiResponse.loading()
+            HomeRepository.getDiscountGameData().onStart {
+                _discountGames.value = ApiResponse.loading()
             }.catch { e ->
-                _announcements.value =
+                _discountGames.value =
                     ApiResponse.error(e)
-            }.collect { response ->
-                _announcements.value =
-                    ApiResponse.success(response)
+            }.collect { model ->
+                _discountGames.value =
+                    ApiResponse.success(model.take(9))
             }
         }
     }
 
-    private fun getRecentlyEditedGameData()
-    {
-        viewModelScope.launch {
-            HomeRepository.getRecentlyEditedGameData().onStart {
-                _recentlyEditedGames.value = ApiResponse.loading()
-            }.catch { e ->
-                _recentlyEditedGames.value =
-                    ApiResponse.error(e)
-            }.collect { response ->
-                _recentlyEditedGames.value =
-                    ApiResponse.success(response)
-            }
-        }
-    }
-
-    private fun getFriendLinkData()
-    {
-        viewModelScope.launch {
-            HomeRepository.getFriendLinkData().onStart {
-                _friendLinks.value = ApiResponse.loading()
-            }.catch { e ->
-                _friendLinks.value =
-                    ApiResponse.error(e)
-            }.collect { response ->
-                _friendLinks.value =
-                    ApiResponse.success(response)
-            }
-        }
-    }
 }

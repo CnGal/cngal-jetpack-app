@@ -1,7 +1,7 @@
 package com.cngal.app.data.home
 
 import com.cngal.app.R
-import com.cngal.app.model.home.CommunityModel
+import com.cngal.app.model.square.CommunityModel
 
 val CommunityData: Set<CommunityModel> =
     setOf(

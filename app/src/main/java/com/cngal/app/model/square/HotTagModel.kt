@@ -1,13 +1,13 @@
-package com.cngal.app.model.home
+package com.cngal.app.model.square
 
 
 import com.squareup.moshi.Json
 import com.squareup.moshi.JsonClass
 
 @JsonClass(generateAdapter = true)
-data class FriendLinkModel(
+data class HotTagModel(
     @Json(name = "image")
-    val image: String,
+    val image: String?,
     @Json(name = "name")
     val name: String,
     @Json(name = "url")

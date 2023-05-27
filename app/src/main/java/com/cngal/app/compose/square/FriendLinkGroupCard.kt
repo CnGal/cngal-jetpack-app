@@ -1,4 +1,4 @@
-package com.cngal.app.compose.home
+package com.cngal.app.compose.square
 
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
@@ -9,12 +9,11 @@ import androidx.compose.foundation.layout.aspectRatio
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Card
-import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.derivedStateOf
-import androidx.compose.runtime.remember
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -24,21 +23,19 @@ import coil.compose.AsyncImage
 import com.cngal.app.compose.shared.TitleCard
 import com.cngal.app.helper.appContext
 import com.cngal.app.helper.openNewTabWindow
-import com.cngal.app.model.home.FriendLinkModel
+import com.cngal.app.model.square.FriendLinkModel
 
 
 @Composable
-fun FriendLinkGroupCard(model: List<FriendLinkModel>)
+fun FriendLinkGroupCard(model:List<List<FriendLinkModel>>)
 {
-    val items =  model.shuffled().chunked(model.size / 2)
-
     TitleCard(title = "友情链接", content = {
         Row(
             horizontalArrangement = Arrangement.spacedBy(12.dp),
             modifier = Modifier
                 .padding(horizontal = 12.dp)
         ) {
-            items.forEach { itemGroup ->
+            model.forEach { itemGroup ->
                 Box(
                     modifier = Modifier
                         .weight(1f, fill = false)

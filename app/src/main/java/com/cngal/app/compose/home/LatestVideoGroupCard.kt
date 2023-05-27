@@ -19,6 +19,8 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.derivedStateOf
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Alignment
@@ -35,14 +37,12 @@ import com.cngal.app.model.home.LatestVideoModel
 @Composable
 fun LatestVideoGroupCard(model: List<LatestVideoModel>)
 {
-    val items = model.take(9)
-
     TitleCard(title = "最新视频", link = "https://www.cngal.org/search/?Types=Video", content = {
         LazyRow(
             horizontalArrangement = Arrangement.spacedBy(12.dp),
             contentPadding = PaddingValues(horizontal = 12.dp),
         ) {
-            items(items = items) { item ->
+            items(items = model) { item ->
 
                 LatestVideoCard(model = item, onClickCard = {
                     //todo 替换跳转页面

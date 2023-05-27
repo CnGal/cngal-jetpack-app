@@ -18,8 +18,11 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.derivedStateOf
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.saveable.rememberSaveable
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -36,13 +39,11 @@ import com.cngal.app.model.explore.EvaluationModel
 @Composable
 fun EvaluationGroupCard(model: List<EvaluationModel>)
 {
-    val items =   model.take(1)
-
     Column(
             verticalArrangement = Arrangement.spacedBy(12.dp),
             modifier = Modifier.padding(horizontal = 12.dp)
         ) {
-        items.forEach { item ->
+        model.forEach { item ->
                 EvaluationCard(model = item, onClickImage = {
                     //todo 替换跳转页面
                     openNewTabWindow(
@@ -80,7 +81,7 @@ fun EvaluationCard(model: EvaluationModel, onClickImage: () -> Unit)
         Row(
             horizontalArrangement = Arrangement.spacedBy(12.dp),
         ) {
-            model.articles.shuffled().take(2).forEach { item ->
+            model.articles.forEach { item ->
                 Box(
                     modifier = Modifier.weight(1f, fill = false)
                 ) {
@@ -145,6 +146,7 @@ fun EvaluationArticleCard(model: EvaluationArticleModel, onClickCard: () -> Unit
                         color = MaterialTheme.colorScheme.secondary,
                         maxLines = 1,
                         overflow = TextOverflow.Ellipsis,
+                       modifier= Modifier.weight(1f,false)
                     )
                 }
 

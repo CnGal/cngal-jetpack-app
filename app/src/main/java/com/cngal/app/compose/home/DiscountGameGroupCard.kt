@@ -4,16 +4,20 @@ import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.aspectRatio
 import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Schedule
+import androidx.compose.material.icons.filled.LocalOffer
+import androidx.compose.material.icons.filled.Percent
+import androidx.compose.material.icons.filled.ThumbUp
 import androidx.compose.material3.Card
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
@@ -27,19 +31,20 @@ import com.cngal.app.compose.shared.IconChip
 import com.cngal.app.compose.shared.TitleCard
 import com.cngal.app.helper.appContext
 import com.cngal.app.helper.openNewTabWindow
-import com.cngal.app.model.home.UpcomingGameModel
+import com.cngal.app.model.home.DiscountGameModel
 
 @Composable
-fun UpcomingGameGroupCard(model: List<UpcomingGameModel>)
+fun DiscountGameGroupCard(model: List<DiscountGameModel>)
 {
-    TitleCard(title = "即将发布", link = "https://www.cngal.org/times", content = {
+
+    TitleCard(title = "折扣中的游戏", link = "https://www.cngal.org/discount", content = {
         LazyRow(
             horizontalArrangement = Arrangement.spacedBy(12.dp),
             contentPadding = PaddingValues(horizontal = 12.dp),
         ) {
             items(items = model) { item ->
 
-                UpcomingGameCard(model = item, onClickCard = {
+                DiscountGameCard(model = item, onClickCard = {
                     //todo 替换跳转页面
                     openNewTabWindow(
                         "https://www.cngal.org/${item.url}",
@@ -52,12 +57,12 @@ fun UpcomingGameGroupCard(model: List<UpcomingGameModel>)
 }
 
 @Composable
-fun UpcomingGameCard(model: UpcomingGameModel, onClickCard: () -> Unit)
+fun DiscountGameCard(model: DiscountGameModel, onClickCard: () -> Unit)
 {
-    Card(modifier = Modifier
-            .width(250.dp)
-            .fillMaxHeight()
-            .clickable { onClickCard() }
+    Card( modifier = Modifier
+        .width(200.dp)
+        .fillMaxHeight()
+        .clickable { onClickCard() }
     ) {
         Column {
             AsyncImage(
@@ -76,16 +81,29 @@ fun UpcomingGameCard(model: UpcomingGameModel, onClickCard: () -> Unit)
 
                 Text(
                     text = model.name,
-                    style = MaterialTheme.typography.titleLarge,
+                    style = MaterialTheme.typography.titleMedium,
                     maxLines = 1,
                     overflow = TextOverflow.Ellipsis,
                 )
-                IconChip(
-                    model.publishTime,
-                    Icons.Filled.Schedule,
-                    MaterialTheme.colorScheme.primary
-                )
 
+                Row(
+                    modifier = Modifier
+                        .height(24.dp),
+                horizontalArrangement = Arrangement.spacedBy(12.dp)
+                )
+                {
+                    IconChip(
+                        "${model.cut}% OFF",
+                        Icons.Filled.LocalOffer,
+                        MaterialTheme.colorScheme.primary
+                    )
+                    IconChip(
+                        "¥ ${"%.2f".format(model.price)}",
+                        null,
+                        MaterialTheme.colorScheme.primary
+                    )
+
+                }
             }
 
         }

@@ -7,7 +7,7 @@ import com.squareup.moshi.JsonClass
 @JsonClass(generateAdapter = true)
 data class EvaluationModel(
     @Json(name = "articles")
-    val articles: List<EvaluationArticleModel>,
+    var articles: List<EvaluationArticleModel>,
     @Json(name = "image")
     val image: String,
     @Json(name = "name")
