@@ -12,6 +12,7 @@ import androidx.compose.runtime.SideEffect
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.core.view.WindowCompat
+import com.cngal.app.compose.overview.MainScreen
 import com.cngal.app.compose.overview.OverviewScreen
 import com.cngal.app.ui.theme.CnGalTheme
 import com.google.accompanist.systemuicontroller.rememberSystemUiController
@@ -33,7 +34,7 @@ class MainActivity : ComponentActivity()
                 Surface(
                     modifier = Modifier.fillMaxSize(), color = MaterialTheme.colorScheme.background
                 ) {
-                    OverviewScreen()
+                    MainScreen()
                 }
             }
         }

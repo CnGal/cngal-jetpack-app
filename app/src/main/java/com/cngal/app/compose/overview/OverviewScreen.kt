@@ -26,11 +26,12 @@ import com.cngal.app.SquareDestination
 import com.cngal.app.compose.explore.ExploreScreen
 import com.cngal.app.compose.home.HomeScreen
 import com.cngal.app.compose.square.SquareScreen
+import com.cngal.app.extension.navigateSingleTopTo
 import com.google.accompanist.systemuicontroller.rememberSystemUiController
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun OverviewScreen()
+fun OverviewScreen(onNav:(String)->Unit)
 {
     val navController = rememberNavController()
 
@@ -59,17 +60,19 @@ fun OverviewScreen()
             }
         }
     ) { innerPadding ->
-        CnGalNavHost(
+        OverviewNavHost(
             navController = navController,
-            modifier = Modifier.padding(innerPadding)
+            modifier = Modifier.padding(innerPadding),
+            onNav
         )
     }
 }
 
 @Composable
-fun CnGalNavHost(
+fun OverviewNavHost(
     navController: NavHostController,
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
+    onNav:(String)->Unit
 )
 {
     NavHost(
@@ -78,7 +81,7 @@ fun CnGalNavHost(
         modifier = modifier
     ) {
         composable(route = HomeDestination.route) {
-            HomeScreen()
+            HomeScreen(onNav=onNav)
         }
         composable(route = ExploreDestination.route) {
             ExploreScreen()
@@ -87,15 +90,4 @@ fun CnGalNavHost(
             SquareScreen()
         }
     }
-}
-
-
-fun NavHostController.navigateSingleTopTo(route: String) = this.navigate(route) {
-    popUpTo(
-        this@navigateSingleTopTo.graph.findStartDestination().id
-    ) {
-        saveState = true
-    }
-    launchSingleTop = true
-    restoreState = true
 }

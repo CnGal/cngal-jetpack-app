@@ -27,12 +27,10 @@ import androidx.compose.ui.unit.dp
 import coil.compose.AsyncImage
 import com.cngal.app.compose.shared.IconChip
 import com.cngal.app.compose.shared.TitleCard
-import com.cngal.app.helper.appContext
-import com.cngal.app.helper.openNewTabWindow
 import com.cngal.app.model.home.PublishedGameModel
 
 @Composable
-fun PublishedGameGroupCard(model: List<PublishedGameModel>)
+fun PublishedGameGroupCard(model: List<PublishedGameModel>, onNav: (String) -> Unit)
 {
 
     TitleCard(title = "近期新作", link = "https://www.cngal.org/times", content = {
@@ -43,11 +41,7 @@ fun PublishedGameGroupCard(model: List<PublishedGameModel>)
             items(items = model) { item ->
 
                 PublishedGameCard(model = item, onClickCard = {
-                    //todo 替换跳转页面
-                    openNewTabWindow(
-                        "https://www.cngal.org/${item.url}",
-                        appContext
-                    )
+                    onNav.invoke(item.url)
                 })
             }
         }
@@ -57,10 +51,10 @@ fun PublishedGameGroupCard(model: List<PublishedGameModel>)
 @Composable
 fun PublishedGameCard(model: PublishedGameModel, onClickCard: () -> Unit)
 {
-    Card( modifier = Modifier
-            .width(150.dp)
-            .fillMaxHeight()
-            .clickable { onClickCard() }
+    Card(modifier = Modifier
+        .width(150.dp)
+        .fillMaxHeight()
+        .clickable { onClickCard() }
     ) {
         Column {
             AsyncImage(

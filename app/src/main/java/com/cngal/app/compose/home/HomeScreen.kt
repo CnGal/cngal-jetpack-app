@@ -31,7 +31,7 @@ import com.cngal.app.viewmodel.home.HomeViewModel
 
 @Composable
 fun HomeScreen(
-    modifier: Modifier = Modifier, viewModel: HomeViewModel = viewModel()
+    modifier: Modifier = Modifier, viewModel: HomeViewModel = viewModel(),onNav:(String)->Unit
 )
 {
 
@@ -70,7 +70,7 @@ fun HomeScreen(
             }
             if (publishedGamesState.state == AppState.SUCCESS)
             {
-                PublishedGameGroupCard(publishedGamesState.data!!)
+                PublishedGameGroupCard(publishedGamesState.data!!,onNav)
             }
             if (upcomingGamesState.state == AppState.SUCCESS)
             {
