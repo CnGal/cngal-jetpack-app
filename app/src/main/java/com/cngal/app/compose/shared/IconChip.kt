@@ -22,11 +22,11 @@ import androidx.compose.ui.unit.dp
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun IconChip(text: String, icon: ImageVector?, color:Color)
+fun IconChip(text: String, icon: ImageVector?)
 {
     Card(
         colors = CardDefaults.cardColors(
-            containerColor = color
+            containerColor = MaterialTheme.colorScheme.secondary
         ),
         modifier = Modifier
     ) {

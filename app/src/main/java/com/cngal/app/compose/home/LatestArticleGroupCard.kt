@@ -84,6 +84,8 @@ fun LatestArticleCard(model: LatestArticleModel, onClickCard: () -> Unit)
                     style = MaterialTheme.typography.titleLarge,
                     maxLines = 2,
                     overflow = TextOverflow.Ellipsis,
+                    modifier = Modifier
+                        .height(60.dp),
                 )
                 Text(
                     text = model.briefIntroduction,
@@ -105,8 +107,7 @@ fun LatestArticleCard(model: LatestArticleModel, onClickCard: () -> Unit)
                         {
                             IconChip(
                                 "搬运",
-                                Icons.Filled.SwapHoriz,
-                                MaterialTheme.colorScheme.primary
+                                Icons.Filled.SwapHoriz
                             )
                             Text(
                                 text = "作者：${model.originalAuthor}",

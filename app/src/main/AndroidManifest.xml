@@ -13,11 +13,11 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.CnGal"
         tools:targetApi="31"
-        android:usesCleartextTraffic="true">
+        android:usesCleartextTraffic="true"
+        android:windowSoftInputMode="adjustResize">
         <activity
             android:name=".MainActivity"
             android:exported="true"
-            android:label="@string/app_name"
             android:theme="@style/Theme.CnGal">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

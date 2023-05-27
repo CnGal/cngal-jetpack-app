@@ -82,8 +82,7 @@ fun UpcomingGameCard(model: UpcomingGameModel, onClickCard: () -> Unit)
                 )
                 IconChip(
                     model.publishTime,
-                    Icons.Filled.Schedule,
-                    MaterialTheme.colorScheme.primary
+                    Icons.Filled.Schedule
                 )
 
             }

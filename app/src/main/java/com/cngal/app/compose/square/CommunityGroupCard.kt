@@ -1,6 +1,5 @@
 package com.cngal.app.compose.square
 
-import androidx.compose.foundation.Image
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -17,12 +16,12 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
-import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import coil.compose.AsyncImage
 import com.cngal.app.compose.shared.TitleCard
-import com.cngal.app.data.home.CommunityData
+import com.cngal.app.data.square.CommunityData
 import com.cngal.app.helper.appContext
 import com.cngal.app.helper.openNewTabWindow
 import com.cngal.app.model.square.CommunityModel
@@ -41,9 +40,11 @@ fun CommunityGroupCard(model: List<CommunityModel> = CommunityData.toList())
 
     TitleCard(title = "社区交流", content = {
 
-        Column(verticalArrangement = Arrangement.spacedBy(12.dp),
+        Column(
+            verticalArrangement = Arrangement.spacedBy(12.dp),
             modifier = Modifier
-                .padding(horizontal = 12.dp)) {
+                .padding(horizontal = 12.dp)
+        ) {
             model.forEach { item ->
                 CommunityCard(model = item, onClickCard = {
                     //todo 替换跳转页面
@@ -62,8 +63,8 @@ fun CommunityGroupCard(model: List<CommunityModel> = CommunityData.toList())
 fun CommunityCard(model: CommunityModel, onClickCard: () -> Unit)
 {
     Card(modifier = Modifier
-            .fillMaxWidth()
-            .clickable { onClickCard() }
+        .fillMaxWidth()
+        .clickable { onClickCard() }
     ) {
         Row(
             modifier = Modifier
@@ -71,8 +72,8 @@ fun CommunityCard(model: CommunityModel, onClickCard: () -> Unit)
             horizontalArrangement = Arrangement.spacedBy(10.dp),
             verticalAlignment = Alignment.CenterVertically,
         ) {
-            Image(
-                painter = painterResource(id = model.image),
+            AsyncImage(
+                model = model.image,
                 contentDescription = model.title,
                 modifier = Modifier
                     .height(45.dp)

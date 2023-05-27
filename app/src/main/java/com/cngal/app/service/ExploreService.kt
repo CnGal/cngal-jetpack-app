@@ -1,5 +1,6 @@
 package com.cngal.app.service
 
+import androidx.annotation.Keep
 import com.cngal.app.model.explore.EvaluationModel
 import com.cngal.app.model.explore.PersonalRecommendModel
 import com.squareup.moshi.Moshi
@@ -11,6 +12,7 @@ import retrofit2.http.GET
 import retrofit2.http.Headers
 import retrofit2.http.POST
 
+@Keep
 interface ExploreService
 {
     @GET("/api/home/ListEvaluations")

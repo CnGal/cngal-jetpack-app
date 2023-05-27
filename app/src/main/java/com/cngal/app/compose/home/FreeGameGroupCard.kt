@@ -93,8 +93,7 @@ fun FreeGameCard(model: FreeGameModel, onClickCard: () -> Unit)
                     {
                         IconChip(
                             model.tags.first(),
-                            Icons.Filled.Tag,
-                            MaterialTheme.colorScheme.primary
+                            Icons.Filled.Tag
                         )
                     }
 

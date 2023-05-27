@@ -165,8 +165,7 @@ fun GalleryCard(
                     model.tags.shuffled().take(2).forEach {
                         IconChip(
                             it,
-                            Icons.Filled.Tag,
-                            MaterialTheme.colorScheme.primary
+                            Icons.Filled.Tag
                         )
                     }
                 }
@@ -279,15 +278,13 @@ fun PlainTextCard(model: PersonalRecommendModel, onClickCard: (PersonalRecommend
                         {
                             IconChip(
                                 "已发布",
-                                Icons.Filled.Publish,
-                                MaterialTheme.colorScheme.primary
+                                Icons.Filled.Publish
                             )
                         } else
                         {
                             IconChip(
                                 "未发布",
-                                Icons.Filled.Unpublished,
-                                MaterialTheme.colorScheme.primary
+                                Icons.Filled.Unpublished
                             )
                         }
 
@@ -295,13 +292,11 @@ fun PlainTextCard(model: PersonalRecommendModel, onClickCard: (PersonalRecommend
                         {
                             IconChip(
                                 "${"%.0f".format(model.release.storeInfor.recommendationRate!!)}% 好评",
-                                Icons.Filled.ThumbUp,
-                                MaterialTheme.colorScheme.primary
+                                Icons.Filled.ThumbUp
                             )
                             IconChip(
                                 "${model.release.storeInfor.evaluationCount}条评测",
-                                Icons.Filled.Article,
-                                MaterialTheme.colorScheme.primary
+                                Icons.Filled.Article
                             )
                         }
                     }

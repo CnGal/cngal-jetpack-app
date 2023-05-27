@@ -94,13 +94,11 @@ fun DiscountGameCard(model: DiscountGameModel, onClickCard: () -> Unit)
                 {
                     IconChip(
                         "${model.cut}% OFF",
-                        Icons.Filled.LocalOffer,
-                        MaterialTheme.colorScheme.primary
+                        Icons.Filled.LocalOffer
                     )
                     IconChip(
                         "¥ ${"%.2f".format(model.price)}",
-                        null,
-                        MaterialTheme.colorScheme.primary
+                        null
                     )
 
                 }

@@ -1,5 +1,6 @@
 package com.cngal.app.service
 
+import androidx.annotation.Keep
 import com.cngal.app.model.article.ArticleCardModel
 import com.cngal.app.model.square.AnnouncementModel
 import com.cngal.app.model.home.CarouselModel
@@ -18,6 +19,7 @@ import retrofit2.Retrofit
 import retrofit2.converter.moshi.MoshiConverterFactory
 import retrofit2.http.GET
 
+@Keep
 interface HomeService
 {
 
