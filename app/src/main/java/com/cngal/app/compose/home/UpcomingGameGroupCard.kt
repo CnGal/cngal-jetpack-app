@@ -30,7 +30,7 @@ import com.cngal.app.helper.openNewTabWindow
 import com.cngal.app.model.home.UpcomingGameModel
 
 @Composable
-fun UpcomingGameGroupCard(model: List<UpcomingGameModel>)
+fun UpcomingGameGroupCard(model: List<UpcomingGameModel>,onNav: (String) -> Unit)
 {
     TitleCard(title = "即将发布", link = "https://www.cngal.org/times", content = {
         LazyRow(
@@ -40,11 +40,7 @@ fun UpcomingGameGroupCard(model: List<UpcomingGameModel>)
             items(items = model) { item ->
 
                 UpcomingGameCard(model = item, onClickCard = {
-                    //todo 替换跳转页面
-                    openNewTabWindow(
-                        "https://www.cngal.org/${item.url}",
-                        appContext
-                    )
+                    onNav.invoke(item.url)
                 })
             }
         }

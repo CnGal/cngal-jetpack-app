@@ -74,15 +74,15 @@ fun HomeScreen(
             }
             if (upcomingGamesState.state == AppState.SUCCESS)
             {
-                UpcomingGameGroupCard(upcomingGamesState.data!!)
+                UpcomingGameGroupCard(upcomingGamesState.data!!,onNav)
             }
             if (freeGamesState.state == AppState.SUCCESS)
             {
-                FreeGameGroupCard(freeGamesState.data!!)
+                FreeGameGroupCard(freeGamesState.data!!,onNav)
             }
             if (discountGamesState.state == AppState.SUCCESS)
             {
-                DiscountGameGroupCard(discountGamesState.data!!)
+                DiscountGameGroupCard(discountGamesState.data!!,onNav)
             }
             if (latestArticlesState.state == AppState.SUCCESS)
             {

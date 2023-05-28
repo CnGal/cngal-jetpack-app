@@ -3,7 +3,7 @@ package com.cngal.app.viewmodel.home
 import androidx.compose.runtime.snapshots.SnapshotStateList
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.cngal.app.compose.uistate.ExploreUiState
+import com.cngal.app.uistate.explore.ExploreUiState
 import com.cngal.app.model.explore.EvaluationModel
 import com.cngal.app.model.explore.PersonalRecommendModel
 import com.cngal.app.model.shared.ApiResponse
@@ -47,12 +47,12 @@ class ExploreViewModel : ViewModel()
                 .onStart {
                     _uiState.update {
                         it.isLoading = true
-                        return@onStart
+                        it
                     }
                 }.catch { e ->
                     _uiState.update {
                         it.isLoading = false
-                        return@catch
+                        it
                     }
                 }.collect { response ->
                     run {

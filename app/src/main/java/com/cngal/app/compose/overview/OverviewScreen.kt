@@ -84,7 +84,7 @@ fun OverviewNavHost(
             HomeScreen(onNav=onNav)
         }
         composable(route = ExploreDestination.route) {
-            ExploreScreen()
+            ExploreScreen(onNav=onNav)
         }
         composable(route = SquareDestination.route) {
             SquareScreen()

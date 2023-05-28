@@ -1,9 +1,7 @@
-package com.cngal.app.compose.uistate
+package com.cngal.app.uistate.explore
 
 class ExploreUiState
 {
     var isLoading:Boolean=false
     var isCompleted:Boolean=false
-
-
 }

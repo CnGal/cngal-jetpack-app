@@ -34,12 +34,11 @@ import com.cngal.app.viewmodel.home.ExploreViewModel
 
 @Composable
 fun ExploreScreen(
-    modifier: Modifier = Modifier, viewModel: ExploreViewModel = viewModel()
+    modifier: Modifier = Modifier, viewModel: ExploreViewModel = viewModel(),onNav:(String)->Unit
 )
 {
     val evaluationsState by viewModel.evaluations.collectAsState()
     val personalRecommends by viewModel.personalRecommends.collectAsState()
-    val uiState by viewModel.uiState.collectAsState()
 
     LazyColumn(
         contentPadding = PaddingValues(vertical = 12.dp),
@@ -51,7 +50,7 @@ fun ExploreScreen(
                     modifier = Modifier
                         .padding(0.dp, 0.dp, 0.dp, 24.dp)
                 ) {
-                    EvaluationGroupCard(evaluationsState.data!!)
+                    EvaluationGroupCard(evaluationsState.data!!,onNav)
                 }
             }
         }
@@ -64,15 +63,9 @@ fun ExploreScreen(
                     .padding(12.dp, 0.dp, 12.dp, 24.dp)
             ) {
                 PersonalRecommendCard(model = item, onClickCard = {
-                    //todo 替换跳转页面
-                    openNewTabWindow(
-                        "https://www.cngal.org/entries/index/${it.id}", appContext
-                    )
+                    onNav.invoke("entries/index/${it.id}")
                 }, onClickImage = {
-                    //todo 替换跳转页面
-                    openNewTabWindow(
-                        "https://www.cngal.org/entries/index/${it.id}", appContext
-                    )
+                    onNav.invoke("entries/index/${it.id}")
                 }, onClickStore = {
                     //todo 替换跳转页面
                     openNewTabWindow(

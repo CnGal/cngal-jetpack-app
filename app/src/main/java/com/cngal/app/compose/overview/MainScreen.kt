@@ -1,8 +1,6 @@
 package com.cngal.app.compose.overview
 
-import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.ExperimentalMaterial3Api
-import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.navigation.NavHostController
@@ -20,18 +18,20 @@ fun MainScreen()
 {
     val navController = rememberNavController()
 
-    Scaffold { innerPadding ->
-        MainNavHost(
-            navController = navController,
-            modifier = Modifier.padding(innerPadding)
-        )
-    }
+
+    MainNavHost(
+        navController = navController,
+        onNav = {
+            navController.navigateSingleTopTo(it)
+        }
+    )
 }
 
 @Composable
 fun MainNavHost(
     navController: NavHostController,
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
+    onNav: (String) -> Unit
 )
 {
     NavHost(
@@ -40,18 +40,16 @@ fun MainNavHost(
         modifier = modifier
     ) {
         composable(route = OverviewDestination.route) {
-            OverviewScreen(onNav = {
-                navController.navigateSingleTopTo(it)
-            })
+            OverviewScreen(onNav = onNav)
         }
         composable(
             route = SingleEntryDestination.routeWithArgs,
             arguments = SingleEntryDestination.arguments,
             deepLinks = SingleEntryDestination.deepLinks
         ) { navBackStackEntry ->
-            val entryId =
+            val id =
                 navBackStackEntry.arguments?.getInt(SingleEntryDestination.singleEntryIdArg)
-            SingleEntryScreen(entryId)
+            SingleEntryScreen(id = id, onNav = onNav)
 
         }
     }

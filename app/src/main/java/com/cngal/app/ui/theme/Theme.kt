@@ -56,7 +56,7 @@ fun CnGalTheme(
         darkTheme -> DarkColorScheme
         else -> LightColorScheme
     }
-    val view = LocalView.current
+/*    val view = LocalView.current
     if (!view.isInEditMode)
     {
         SideEffect {
@@ -64,7 +64,7 @@ fun CnGalTheme(
             window.statusBarColor = colorScheme.primary.toArgb()
             WindowCompat.getInsetsController(window, view).isAppearanceLightStatusBars = darkTheme
         }
-    }
+    }*/
 
     MaterialTheme(
         colorScheme = colorScheme,

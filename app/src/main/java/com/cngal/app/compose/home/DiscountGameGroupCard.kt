@@ -34,7 +34,7 @@ import com.cngal.app.helper.openNewTabWindow
 import com.cngal.app.model.home.DiscountGameModel
 
 @Composable
-fun DiscountGameGroupCard(model: List<DiscountGameModel>)
+fun DiscountGameGroupCard(model: List<DiscountGameModel>,onNav: (String) -> Unit)
 {
 
     TitleCard(title = "折扣中的游戏", link = "https://www.cngal.org/discount", content = {
@@ -45,11 +45,7 @@ fun DiscountGameGroupCard(model: List<DiscountGameModel>)
             items(items = model) { item ->
 
                 DiscountGameCard(model = item, onClickCard = {
-                    //todo 替换跳转页面
-                    openNewTabWindow(
-                        "https://www.cngal.org/${item.url}",
-                        appContext
-                    )
+                    onNav.invoke(item.url)
                 })
             }
         }

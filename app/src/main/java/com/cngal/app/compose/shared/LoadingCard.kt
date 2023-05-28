@@ -1,7 +1,9 @@
 package com.cngal.app.compose.shared
 
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Card
@@ -15,21 +17,53 @@ import androidx.compose.ui.unit.dp
 
 @Preview
 @Composable
-fun LoadingCard()
+fun LoadingCardPreview()
 {
-    Card(
-        modifier = Modifier
-            .fillMaxWidth()
-    ) {
-        Column(
+    LoadingCard(true)
+}
+
+@Composable
+fun LoadingCard(fillScreen: Boolean = false)
+{
+    if (fillScreen)
+    {
+        Box(
             modifier = Modifier
-                .padding(24.dp)
-                .fillMaxWidth(),
-            horizontalAlignment = Alignment.CenterHorizontally,
-            verticalArrangement = Arrangement.spacedBy(12.dp)
+                .fillMaxWidth()
+                .fillMaxHeight(),
+            contentAlignment = Alignment.Center
         ) {
-            CircularProgressIndicator()
-            Text(text = "正在加载")
+            Column(
+                modifier = Modifier
+                    .padding(24.dp)
+                    .fillMaxWidth(),
+                horizontalAlignment = Alignment.CenterHorizontally,
+                verticalArrangement = Arrangement.spacedBy(12.dp)
+            ) {
+                CircularProgressIndicator()
+                Text(text = "正在加载")
+            }
         }
     }
+    else
+    {
+        Card(
+            modifier = Modifier
+                .fillMaxWidth()
+        ) {
+            Column(
+                modifier = Modifier
+                    .padding(24.dp)
+                    .fillMaxWidth(),
+                horizontalAlignment = Alignment.CenterHorizontally,
+                verticalArrangement = Arrangement.spacedBy(12.dp)
+            ) {
+                CircularProgressIndicator()
+                Text(text = "正在加载")
+            }
+        }
+
+    }
+
+
 }
