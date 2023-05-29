@@ -63,4 +63,19 @@ object SingleEntryDestination : BaseDestination {
     )
 }
 
+
+//单个文章详情页
+object SingleArticleDestination : BaseDestination {
+    override val route = "articles/index"
+    override val text = "概览"
+    const val singleArticleIdArg = "article_id"
+    val routeWithArgs = "${route}/{${singleArticleIdArg}}"
+    val arguments = listOf(
+        navArgument(singleArticleIdArg) { type = NavType.IntType }
+    )
+    val deepLinks = listOf(
+        navDeepLink { uriPattern = "rally://$route/{$singleArticleIdArg}"}
+    )
+}
+
 val CnGalOverviewScreens = listOf(HomeDestination,ExploreDestination,SquareDestination)

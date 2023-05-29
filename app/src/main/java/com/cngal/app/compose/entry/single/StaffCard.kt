@@ -62,7 +62,7 @@ fun StaffGroupCard(staff: StaffGroupModel, onNav: (String) -> Unit)
     }
 }
 
-@OptIn(ExperimentalLayoutApi::class)
+
 @Composable
 fun StaffPositionGroupCard(
     position: String?,

@@ -36,7 +36,7 @@ fun RecentlyEditedGameGroupCard(model: List<RecentlyEditedGameModel>)
             modifier = Modifier
                 .padding(horizontal = 12.dp)
         ) {
-            model.forEach() { item ->
+            model.forEach { item ->
                 RecentlyEditedGameCard(model = item, onClickCard = {
                     //todo 替换跳转页面
                     openNewTabWindow(

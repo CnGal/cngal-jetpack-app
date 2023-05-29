@@ -1,7 +1,6 @@
 package com.cngal.app.model.entry
 
 
-import com.cngal.app.model.shared.Duration
 import com.squareup.moshi.Json
 import com.squareup.moshi.JsonClass
 
@@ -10,7 +9,7 @@ data class AudioModel(
     @Json(name = "briefIntroduction")
     val briefIntroduction: String?,
     @Json(name = "duration")
-    val duration: Duration,
+    val duration: String,
     @Json(name = "name")
     val name: String,
     @Json(name = "priority")

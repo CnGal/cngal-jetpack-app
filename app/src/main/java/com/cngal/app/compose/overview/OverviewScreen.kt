@@ -26,7 +26,6 @@ import com.cngal.app.SquareDestination
 import com.cngal.app.compose.explore.ExploreScreen
 import com.cngal.app.compose.home.HomeScreen
 import com.cngal.app.compose.square.SquareScreen
-import com.cngal.app.extension.navigateSingleTopTo
 import com.google.accompanist.systemuicontroller.rememberSystemUiController
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -90,4 +89,14 @@ fun OverviewNavHost(
             SquareScreen()
         }
     }
+}
+
+fun NavHostController.navigateSingleTopTo(route: String) = this.navigate(route) {
+    popUpTo(
+        this@navigateSingleTopTo.graph.findStartDestination().id
+    ) {
+        saveState = true
+    }
+    launchSingleTop = true
+    restoreState = true
 }

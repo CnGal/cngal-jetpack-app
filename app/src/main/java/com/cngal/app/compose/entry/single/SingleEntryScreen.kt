@@ -29,6 +29,13 @@ fun SingleEntryScreen(
     val entryState by viewModel.entry.collectAsState()
     val uiState by viewModel.uiState.collectAsState()
 
+    LaunchedEffect(id) {
+        if ((viewModel.entry.value.data?.id ?: 0) != id)
+        {
+            viewModel.loadEntryData(id)
+        }
+    }
+
     if (entryState.state == AppState.LOADING)
     {
         LoadingCard(true)
@@ -52,46 +59,60 @@ fun SingleEntryScreen(
                     Box(modifier = modifier.padding(horizontal = 12.dp, vertical = 36.dp)) {
                         ErrorCard()
                     }
-                    return
+                    //return
                 }
-
-                if (entryState.state == AppState.EMPTY)
+                else
                 {
-                    LaunchedEffect(Unit) {
-                        viewModel.loadEntryData(id)
+                    if (entryState.state == AppState.SUCCESS)
+                    {
+                        val model = entryState.data!!
+
+                        MainCard(
+                            model.mainPicture,
+                            model.thumbnail,
+                            uiState.steamId,
+                            model.type,
+                            model.name,
+                            model.briefIntroduction,
+                            model.anotherName
+                        )
+
+                        TagGroupCard(tags = model.tags, onNav = onNav)
+
+
+                        GalleryCard(images = uiState.images)
+
+                        InformationCard(
+                            model.information.firstOrNull(),
+                            model.productionGroups,
+                            model.publishers,
+                            onNav
+                        )
+
+                        StaffCard(staffs = model.staffs, onNav = onNav)
+
+                        MainPageCard(mainPage = model.mainPage)
+
+                        VerticalDrawingCard(model.mainPicture,model.name,model.type)
+
+                        NewsCard(uiState.news,onNav)
+
+                        RelevanceGroupCard(
+                            model.roles,
+                            uiState.castWorks,
+                            uiState.productionGroupWorks,
+                            uiState.publisherWorks,
+                            uiState.participationWorks,
+                            uiState.appreciatedParticWorks,
+                            uiState.games,
+                            uiState.groups,
+                            uiState.staffs,
+                            uiState.roles,
+                            onNav
+                        )
                     }
                 }
 
-                if (entryState.state == AppState.SUCCESS)
-                {
-                    val model = entryState.data!!
-
-                    MainCard(
-                        model.mainPicture ?: model.thumbnail,
-                        uiState.steamId,
-                        model.type,
-                        model.name,
-                        model.briefIntroduction,
-                        model.anotherName
-                    )
-
-                    TagGroupCard(tags = model.tags, onNav = onNav)
-
-                    GalleryCard(images = uiState.images)
-
-                    InformationCard(
-                        model.information.firstOrNull(),
-                        model.productionGroups,
-                        model.publishers,
-                        onNav
-                    )
-
-                    StaffCard(staffs = model.staffs, onNav = onNav)
-
-                    MainPageCard(mainPage = model.mainPage)
-
-                    RoleGroupCard(model.roles, onNav)
-                }
             }
         }
     }

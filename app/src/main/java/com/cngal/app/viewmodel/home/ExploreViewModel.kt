@@ -87,7 +87,7 @@ class ExploreViewModel : ViewModel()
                     ApiResponse.error(e)
             }.collect { model ->
 
-                model.forEach(){
+                model.forEach {
                     it.articles=it.articles.shuffled().take(2)
                 }
 

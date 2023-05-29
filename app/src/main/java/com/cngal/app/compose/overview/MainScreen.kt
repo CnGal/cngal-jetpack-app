@@ -10,19 +10,25 @@ import androidx.navigation.compose.rememberNavController
 import com.cngal.app.OverviewDestination
 import com.cngal.app.SingleEntryDestination
 import com.cngal.app.compose.entry.single.SingleEntryScreen
-import com.cngal.app.extension.navigateSingleTopTo
+import com.cngal.app.helper.appContext
+import com.cngal.app.helper.openNewTabWindow
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun MainScreen()
 {
     val navController = rememberNavController()
-
-
     MainNavHost(
         navController = navController,
         onNav = {
-            navController.navigateSingleTopTo(it)
+            if (it.contains("://"))
+            {
+                openNewTabWindow(it, appContext)
+            }
+            else
+            {
+                navController.navigateTo(it)
+            }
         }
     )
 }
@@ -53,4 +59,14 @@ fun MainNavHost(
 
         }
     }
+}
+
+fun NavHostController.navigateTo(route: String) = this.navigate(route) {
+    popUpTo(
+        route
+    ) {
+        saveState = true
+    }
+    launchSingleTop = false
+    restoreState = true
 }

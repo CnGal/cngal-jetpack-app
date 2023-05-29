@@ -31,7 +31,7 @@ fun InformationCard(
 
     TitleCard(title = information?.modifier?:"基本信息", content = {
         Column(
-            verticalArrangement = Arrangement.spacedBy(12.dp),
+            verticalArrangement = Arrangement.spacedBy(6.dp),
             modifier = Modifier
                 .padding(horizontal = 12.dp)
         ) {
