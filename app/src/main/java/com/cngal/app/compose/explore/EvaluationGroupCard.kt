@@ -36,15 +36,13 @@ fun EvaluationGroupCard(model: List<EvaluationModel>, onNav: (String) -> Unit)
         modifier = Modifier.padding(horizontal = 12.dp)
     ) {
         model.forEach { item ->
-            EvaluationCard(model = item, onClickImage = {
-                onNav.invoke(item.url)
-            })
+            EvaluationCard(model = item, onNav = onNav)
         }
     }
 }
 
 @Composable
-fun EvaluationCard(model: EvaluationModel, onClickImage: () -> Unit)
+fun EvaluationCard(model: EvaluationModel, onNav: (String) -> Unit)
 {
     Column(
         verticalArrangement = Arrangement.spacedBy(12.dp),
@@ -55,7 +53,7 @@ fun EvaluationCard(model: EvaluationModel, onClickImage: () -> Unit)
                 modifier = Modifier
                     .fillMaxWidth()
                     .clip(RoundedCornerShape(12.dp))
-                    .clickable { onClickImage() })
+                    .clickable { onNav(model.url) })
             Text(
                 text = model.name,
                 style = MaterialTheme.typography.titleLarge,
@@ -75,13 +73,7 @@ fun EvaluationCard(model: EvaluationModel, onClickImage: () -> Unit)
                     modifier = Modifier.weight(1f, fill = false)
                 ) {
 
-                    EvaluationArticleCard(model = item, onClickCard = {
-                        //todo 替换跳转页面
-                        openNewTabWindow(
-                            "https://www.cngal.org/articles/index/${item.id}", appContext
-                        )
-                    })
-
+                    EvaluationArticleCard(model = item,onClickCard = {onNav("articles/index/${item.id}")})
                 }
             }
         }

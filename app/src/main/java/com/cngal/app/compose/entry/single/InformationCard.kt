@@ -29,7 +29,7 @@ fun InformationCard(
         return
     }
 
-    TitleCard(title = information?.modifier?:"基本信息", content = {
+    TitleCard(title = information?.modifier?:"基本信息",linkText = null, onClickLink = {}, content = {
         Column(
             verticalArrangement = Arrangement.spacedBy(6.dp),
             modifier = Modifier

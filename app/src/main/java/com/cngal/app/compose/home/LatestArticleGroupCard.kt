@@ -29,40 +29,34 @@ import androidx.compose.ui.unit.dp
 import coil.compose.AsyncImage
 import com.cngal.app.compose.shared.IconChip
 import com.cngal.app.compose.shared.TitleCard
-import com.cngal.app.helper.appContext
-import com.cngal.app.helper.openNewTabWindow
 import com.cngal.app.model.home.LatestArticleModel
 
 @Composable
-fun LatestArticleGroupCard(model: List<LatestArticleModel>)
+fun LatestArticleGroupCard(model: List<LatestArticleModel>, onNav: (String) -> Unit)
 {
 
-    TitleCard(title = "最新文章", link = "https://www.cngal.org/articles", content = {
-        LazyRow(
-            horizontalArrangement = Arrangement.spacedBy(12.dp),
-            contentPadding = PaddingValues(horizontal = 12.dp),
-        ) {
-            items(items = model) { item ->
-
-                LatestArticleCard(model = item, onClickCard = {
-                    //todo 替换跳转页面
-                    openNewTabWindow(
-                        "https://www.cngal.org/${item.url}",
-                        appContext
-                    )
-                })
+    TitleCard(
+        title = "最新文章",
+        onClickLink = { onNav("https://www.cngal.org/articles") },
+        content = {
+            LazyRow(
+                horizontalArrangement = Arrangement.spacedBy(12.dp),
+                contentPadding = PaddingValues(horizontal = 12.dp),
+            ) {
+                items(items = model) { item ->
+                    LatestArticleCard(model = item, onClickCard = { onNav.invoke(item.url) })
+                }
             }
-        }
-    })
+        })
 }
 
 @Composable
 fun LatestArticleCard(model: LatestArticleModel, onClickCard: () -> Unit)
 {
     Card(modifier = Modifier
-            .width(300.dp)
-            .fillMaxHeight()
-            .clickable { onClickCard() }
+        .width(300.dp)
+        .fillMaxHeight()
+        .clickable { onClickCard() }
     ) {
         Column {
             AsyncImage(
@@ -76,34 +70,34 @@ fun LatestArticleCard(model: LatestArticleModel, onClickCard: () -> Unit)
             Column(
                 modifier = Modifier
                     .padding(12.dp),
-                verticalArrangement = Arrangement.spacedBy(12.dp),
+                //verticalArrangement = Arrangement.spacedBy(12.dp),
             ) {
 
                 Text(
                     text = model.name,
                     style = MaterialTheme.typography.titleLarge,
-                    maxLines = 2,
                     overflow = TextOverflow.Ellipsis,
                     modifier = Modifier
-                        .height(60.dp),
+                        .height(72.dp),
                 )
                 Text(
                     text = model.briefIntroduction,
                     style = MaterialTheme.typography.bodyMedium,
-                    maxLines = 3,
                     overflow = TextOverflow.Ellipsis,
+                    modifier = Modifier
+                        .height(76.dp),
                 )
                 Row(
                     modifier = Modifier
                         .fillMaxWidth(),
                     horizontalArrangement = Arrangement.SpaceBetween,
-                    verticalAlignment =  Alignment.CenterVertically,
+                    verticalAlignment = Alignment.CenterVertically,
                 ) {
                     Row(
                         horizontalArrangement = Arrangement.spacedBy(8.dp),
-                        verticalAlignment =  Alignment.CenterVertically,
+                        verticalAlignment = Alignment.CenterVertically,
                     ) {
-                        if(model.originalAuthor!=null)
+                        if (model.originalAuthor != null)
                         {
                             IconChip(
                                 "搬运",
@@ -138,7 +132,7 @@ fun LatestArticleCard(model: LatestArticleModel, onClickCard: () -> Unit)
                     Text(
                         text = model.publishTime,
                         style = MaterialTheme.typography.bodyMedium,
-                        color=MaterialTheme.colorScheme.secondary,
+                        color = MaterialTheme.colorScheme.secondary,
                         maxLines = 1,
                         overflow = TextOverflow.Ellipsis,
                     )

@@ -32,7 +32,7 @@ import com.cngal.app.model.home.UpcomingGameModel
 @Composable
 fun UpcomingGameGroupCard(model: List<UpcomingGameModel>,onNav: (String) -> Unit)
 {
-    TitleCard(title = "即将发布", link = "https://www.cngal.org/times", content = {
+    TitleCard(title = "即将发布", onClickLink = {onNav("https://www.cngal.org/times")}, content = {
         LazyRow(
             horizontalArrangement = Arrangement.spacedBy(12.dp),
             contentPadding = PaddingValues(horizontal = 12.dp),

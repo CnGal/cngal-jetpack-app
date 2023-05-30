@@ -37,9 +37,9 @@ import com.cngal.app.helper.openNewTabWindow
 import com.cngal.app.model.article.ArticleCardModel
 
 @Composable
-fun WeeklyNewsGroupCard(model: List<ArticleCardModel>)
+fun WeeklyNewsGroupCard(model: List<ArticleCardModel>,onNav:(String)->Unit)
 {
-    TitleCard(title = "每周速报", link = "https://www.cngal.org/weeklynews", content = {
+    TitleCard(title = "每周速报",onClickLink = {onNav("https://www.cngal.org/weeklynews")}, content = {
         Column(
             verticalArrangement = Arrangement.spacedBy(12.dp),
             modifier = Modifier

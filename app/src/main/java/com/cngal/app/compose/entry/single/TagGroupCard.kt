@@ -40,20 +40,20 @@ fun TagGroupCard(
     {
         return
     }
-    TitleCard(title = "标签", content = {
+    TitleCard(title = "标签", linkText = null, onClickLink = {},content = {
         FlowRow(
             modifier = Modifier
-                .padding(horizontal = 6.dp)
+                .padding(horizontal = 12.dp),
+            horizontalArrangement = Arrangement.spacedBy(6.dp),
+            verticalArrangement = Arrangement.spacedBy(6.dp)
         ) {
             tags.forEach {
-                Box(modifier = Modifier.padding(6.dp))
-                {
+
                     TagCard(it, onClickCard = {
                         onNav.invoke(
                             "tags/index${it.id}"
                         )
                     })
-                }
             }
         }
     })

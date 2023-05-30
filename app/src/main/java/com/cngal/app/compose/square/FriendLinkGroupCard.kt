@@ -29,7 +29,7 @@ import com.cngal.app.model.square.FriendLinkModel
 @Composable
 fun FriendLinkGroupCard(model:List<List<FriendLinkModel>>)
 {
-    TitleCard(title = "友情链接", content = {
+    TitleCard(title = "友情链接",linkText = null, onClickLink = {}, content = {
         Row(
             horizontalArrangement = Arrangement.spacedBy(12.dp),
             modifier = Modifier

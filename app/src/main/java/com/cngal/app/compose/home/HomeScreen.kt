@@ -61,12 +61,12 @@ fun HomeScreen(
 
             if (newsState.state == AppState.SUCCESS)
             {
-                NewsGroupCard(newsState.data!!)
+                NewsGroupCard(newsState.data!!,onNav)
             }
 
             if (weeklyNewsState.state == AppState.SUCCESS)
             {
-                WeeklyNewsGroupCard(weeklyNewsState.data!!)
+                WeeklyNewsGroupCard(weeklyNewsState.data!!,onNav)
             }
             if (publishedGamesState.state == AppState.SUCCESS)
             {
@@ -86,11 +86,11 @@ fun HomeScreen(
             }
             if (latestArticlesState.state == AppState.SUCCESS)
             {
-                LatestArticleGroupCard(latestArticlesState.data!!)
+                LatestArticleGroupCard(latestArticlesState.data!!,onNav)
             }
             if (latestVideosState.state == AppState.SUCCESS)
             {
-                LatestVideoGroupCard(latestVideosState.data!!)
+                LatestVideoGroupCard(latestVideosState.data!!,onNav)
             }
         }
     }

@@ -23,7 +23,7 @@ fun GalleryCard(images: List<PictureContentModel>)
     {
         return
     }
-    TitleCard(title = "相册", content = {
+    TitleCard(title = "相册", linkText = null, onClickLink = {}, content = {
         LazyRow(
             horizontalArrangement = Arrangement.spacedBy(12.dp),
             contentPadding = PaddingValues(horizontal = 12.dp),

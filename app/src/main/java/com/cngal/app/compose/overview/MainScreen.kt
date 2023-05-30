@@ -7,9 +7,18 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
+import com.cngal.app.ArticleCardGroupDestination
+import com.cngal.app.EntryCardGroupDestination
 import com.cngal.app.OverviewDestination
+import com.cngal.app.RoleCardGroupDestination
+import com.cngal.app.SingleArticleDestination
 import com.cngal.app.SingleEntryDestination
+import com.cngal.app.compose.article.detail.ArticleCardGroupScreen
+import com.cngal.app.compose.article.single.SingleArticleScreen
+import com.cngal.app.compose.entry.detail.EntryCardGroupScreen
+import com.cngal.app.compose.entry.detail.RoleCardGroupScreen
 import com.cngal.app.compose.entry.single.SingleEntryScreen
+import com.cngal.app.helper.JsonHelper
 import com.cngal.app.helper.appContext
 import com.cngal.app.helper.openNewTabWindow
 
@@ -54,8 +63,54 @@ fun MainNavHost(
             deepLinks = SingleEntryDestination.deepLinks
         ) { navBackStackEntry ->
             val id =
-                navBackStackEntry.arguments?.getInt(SingleEntryDestination.singleEntryIdArg)
+                navBackStackEntry.arguments?.getInt(SingleEntryDestination.idArg)
             SingleEntryScreen(id = id, onNav = onNav)
+
+        }
+        composable(
+            route = EntryCardGroupDestination.routeWithArgs,
+            arguments = EntryCardGroupDestination.arguments,
+            deepLinks = EntryCardGroupDestination.deepLinks
+        ) { navBackStackEntry ->
+            val title =
+                navBackStackEntry.arguments?.getString(EntryCardGroupDestination.titleArg)
+            val data =
+                navBackStackEntry.arguments?.getString(EntryCardGroupDestination.dataArg)
+            EntryCardGroupScreen(title ?: "", JsonHelper.fromJson(data!!), onNav)
+
+        }
+        composable(
+            route = RoleCardGroupDestination.routeWithArgs,
+            arguments = RoleCardGroupDestination.arguments,
+            deepLinks = RoleCardGroupDestination.deepLinks
+        ) { navBackStackEntry ->
+            val title =
+                navBackStackEntry.arguments?.getString(RoleCardGroupDestination.titleArg)
+            val data =
+                navBackStackEntry.arguments?.getString(RoleCardGroupDestination.dataArg)
+            RoleCardGroupScreen(title ?: "", JsonHelper.fromJson(data!!), onNav)
+
+        }
+        composable(
+            route = SingleArticleDestination.routeWithArgs,
+            arguments = SingleArticleDestination.arguments,
+            deepLinks = SingleArticleDestination.deepLinks
+        ) { navBackStackEntry ->
+            val id =
+                navBackStackEntry.arguments?.getLong(SingleArticleDestination.idArg)
+            SingleArticleScreen(id = id, onNav = onNav)
+
+        }
+        composable(
+            route = ArticleCardGroupDestination.routeWithArgs,
+            arguments = ArticleCardGroupDestination.arguments,
+            deepLinks = ArticleCardGroupDestination.deepLinks
+        ) { navBackStackEntry ->
+            val title =
+                navBackStackEntry.arguments?.getString(ArticleCardGroupDestination.titleArg)
+            val data =
+                navBackStackEntry.arguments?.getString(ArticleCardGroupDestination.dataArg)
+            ArticleCardGroupScreen(title ?: "", JsonHelper.fromJson(data!!), onNav)
 
         }
     }

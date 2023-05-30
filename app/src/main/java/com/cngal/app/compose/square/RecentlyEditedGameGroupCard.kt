@@ -14,9 +14,6 @@ import androidx.compose.material3.Card
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.text.style.TextOverflow
@@ -28,36 +25,33 @@ import com.cngal.app.helper.openNewTabWindow
 import com.cngal.app.model.square.RecentlyEditedGameModel
 
 @Composable
-fun RecentlyEditedGameGroupCard(model: List<RecentlyEditedGameModel>)
+fun RecentlyEditedGameGroupCard(model: List<RecentlyEditedGameModel>, onNav: (String) -> Unit)
 {
-    TitleCard(title = "近期编辑", link = "https://www.cngal.org/search?Sort=LastEditTime%20desc&Types=Game", content = {
-        Column(
-            verticalArrangement = Arrangement.spacedBy(12.dp),
-            modifier = Modifier
-                .padding(horizontal = 12.dp)
-        ) {
-            model.forEach { item ->
-                RecentlyEditedGameCard(model = item, onClickCard = {
-                    //todo 替换跳转页面
-                    openNewTabWindow(
-                        "https://www.cngal.org/${item.url}",
-                        appContext
-                    )
-                })
+    TitleCard(
+        title = "近期编辑",
+        onClickLink = { onNav("https://www.cngal.org/search?Sort=LastEditTime%20desc&Types=Game") },
+        content = {
+            Column(
+                verticalArrangement = Arrangement.spacedBy(12.dp),
+                modifier = Modifier
+                    .padding(horizontal = 12.dp)
+            ) {
+                model.forEach { item ->
+                    RecentlyEditedGameCard(model = item, onClickCard = {onNav(item.url) })
+                }
             }
-        }
-    })
+        })
 }
 
 @Composable
 fun RecentlyEditedGameCard(model: RecentlyEditedGameModel, onClickCard: () -> Unit)
 {
-    Card( modifier = Modifier
-            .height(70.dp)
-            .fillMaxWidth()
-            .clickable { onClickCard() }
+    Card(modifier = Modifier
+        .height(70.dp)
+        .fillMaxWidth()
+        .clickable { onClickCard() }
     ) {
-        Row(  horizontalArrangement = Arrangement.spacedBy(12.dp),) {
+        Row(horizontalArrangement = Arrangement.spacedBy(12.dp)) {
             AsyncImage(
                 model = model.image,
                 contentDescription = model.name,
@@ -68,7 +62,7 @@ fun RecentlyEditedGameCard(model: RecentlyEditedGameModel, onClickCard: () -> Un
             )
             Column(
                 modifier = Modifier
-                    .padding(vertical =  12.dp, horizontal = 8.dp)
+                    .padding(vertical = 12.dp, horizontal = 8.dp)
                     .fillMaxHeight()
                     .fillMaxWidth(),
                 verticalArrangement = Arrangement.SpaceBetween,

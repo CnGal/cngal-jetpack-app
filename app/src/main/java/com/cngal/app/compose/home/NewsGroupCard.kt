@@ -36,17 +36,9 @@ import com.cngal.app.helper.openNewTabWindow
 import com.cngal.app.model.home.NewsModel
 
 @Composable
-@Preview
-fun NewsGroupCardPreview()
+fun NewsGroupCard(model:List<List<NewsModel>>,onNav:(String)->Unit)
 {
-    NewsGroupCard(listOf())
-}
-
-
-@Composable
-fun NewsGroupCard(model:List<List<NewsModel>>)
-{
-    TitleCard(title = "最新动态", link = "https://www.cngal.org/articles/news", content = {
+    TitleCard(title = "最新动态", onClickLink = {onNav("https://www.cngal.org/articles/news")}, content = {
         LazyRow(
             horizontalArrangement = Arrangement.spacedBy(12.dp),
             contentPadding = PaddingValues(horizontal = 12.dp),

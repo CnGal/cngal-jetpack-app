@@ -2,11 +2,13 @@ package com.cngal.app.compose.entry.single
 
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.ExperimentalLayoutApi
 import androidx.compose.foundation.layout.FlowRow
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.aspectRatio
+import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
@@ -23,6 +25,7 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import coil.compose.AsyncImage
@@ -70,7 +73,8 @@ fun GameOrGroupCard(
             modifier = Modifier
                 .fillMaxWidth()
                 .aspectRatio(460f / 215f)
-                .clip(RoundedCornerShape(0.dp, 0.dp, 24.dp, 24.dp))
+                .padding(horizontal = 12.dp)
+                .clip(RoundedCornerShape(12.dp))
         )
         Column(
             modifier = Modifier
@@ -78,28 +82,25 @@ fun GameOrGroupCard(
             verticalArrangement = Arrangement.spacedBy(12.dp)
         ) {
             FlowRow(
-                verticalAlignment = Alignment.Bottom,
                 horizontalArrangement = Arrangement.spacedBy(6.dp)
             ) {
                 Text(
                     text = name,
-                    style = MaterialTheme.typography.headlineLarge,
+                    style = MaterialTheme.typography.headlineMedium,
                     fontWeight = FontWeight.Bold,
-                    maxLines = 2,
-                    overflow = TextOverflow.Ellipsis
                 )
-                if (!anotherName.isNullOrEmpty())
-                {
-                    Text(
-                        text = anotherName,
-                        style = MaterialTheme.typography.titleMedium,
-                        fontWeight = FontWeight.Bold,
-                        color = MaterialTheme.colorScheme.secondary,
-                        maxLines = 2,
-                        overflow = TextOverflow.Ellipsis
-                    )
-                }
 
+                    if (!anotherName.isNullOrEmpty())
+                    {
+                        Text(
+                            text = anotherName,
+                            style = MaterialTheme.typography.titleMedium,
+                            fontWeight = FontWeight.Bold,
+                            color = MaterialTheme.colorScheme.secondary,
+                            maxLines = 2,
+                            overflow = TextOverflow.Ellipsis
+                        )
+                    }
             }
             if (!briefIntroduction.isNullOrBlank())
             {
@@ -126,7 +127,7 @@ fun RoleOrStaffCard(
 {
     Row(
         modifier = Modifier
-            .padding(12.dp, 40.dp, 12.dp, 0.dp),
+            .padding(horizontal = 12.dp),
         horizontalArrangement = Arrangement.spacedBy(12.dp)
     ) {
         AsyncImage(
@@ -141,7 +142,6 @@ fun RoleOrStaffCard(
             verticalArrangement = Arrangement.spacedBy(12.dp)
         ) {
             FlowRow(
-                verticalAlignment = Alignment.Bottom,
                 horizontalArrangement = Arrangement.spacedBy(6.dp)
             ) {
                 Text(

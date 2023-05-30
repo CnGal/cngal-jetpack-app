@@ -28,7 +28,7 @@ fun StaffCard(staffs: List<StaffGroupModel>, onNav: (String) -> Unit)
     {
         return
     }
-    TitleCard(title = "STAFF", expandable = true, content = {
+    TitleCard(title = "STAFF", expandable = true, linkText = null, onClickLink = {},content = {
         Column(
             verticalArrangement = Arrangement.spacedBy(12.dp),
             modifier = Modifier

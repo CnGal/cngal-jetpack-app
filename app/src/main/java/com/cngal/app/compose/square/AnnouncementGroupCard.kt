@@ -35,9 +35,9 @@ import com.cngal.app.helper.openNewTabWindow
 import com.cngal.app.model.square.AnnouncementModel
 
 @Composable
-fun AnnouncementGroupCard(model: List<AnnouncementModel>)
+fun AnnouncementGroupCard(model: List<AnnouncementModel>,onNav: (String) -> Unit)
 {
-    TitleCard(title = "公告", link = "https://www.cngal.org/search?Types=Notice", content = {
+    TitleCard(title = "公告",onClickLink = {onNav( "https://www.cngal.org/search?Types=Notice")}, content = {
         Column(
             verticalArrangement = Arrangement.spacedBy(12.dp),
             modifier = Modifier

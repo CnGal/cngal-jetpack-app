@@ -2,7 +2,6 @@ package com.cngal.app.compose.shared
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.IntrinsicSize
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -26,22 +25,18 @@ import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.geometry.Size
-import androidx.compose.ui.layout.onGloballyPositioned
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.toSize
-import com.cngal.app.helper.appContext
-import com.cngal.app.helper.openNewTabWindow
 
 @Composable
 fun TitleCard(
     content: @Composable () -> Unit,
     title: String,
-    link: String? = null,
-    expandable: Boolean = false
+    expandable: Boolean = false,
+    linkText:String? ="更多",
+    onClickLink: () -> Unit
 )
 {
 
@@ -81,22 +76,17 @@ fun TitleCard(
                     maxLines = 1,
                     overflow = TextOverflow.Ellipsis,
                 )
-                if (link != null)
+                if (!linkText.isNullOrBlank())
                 {
-                    TextButton(onClick = {
-                        //todo 替换跳转页面
-                        openNewTabWindow(
-                            link, appContext
-                        )
-                    }) {
+                    TextButton(onClick = { onClickLink() }) {
                         Spacer(Modifier.size(ButtonDefaults.IconSpacing))
                         Text(
-                            text = "更多",
+                            text = linkText,
                             style = MaterialTheme.typography.titleSmall,
                             fontWeight = FontWeight.Bold
                         )
 
-                        Icon(Icons.Filled.KeyboardArrowRight, contentDescription = "更多")
+                        Icon(Icons.Filled.KeyboardArrowRight, contentDescription = linkText)
                     }
                 }
 
@@ -105,7 +95,7 @@ fun TitleCard(
 
 
         }
-        if (expandable)
+        if (expandable && !expanded)
         {
             TextButton(onClick = { expanded = !expanded }) {
                 Icon(

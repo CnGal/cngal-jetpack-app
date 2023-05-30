@@ -1,16 +1,21 @@
 package com.cngal.app.compose.shared
 
+import android.graphics.drawable.GradientDrawable
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.interaction.DragInteraction
 import androidx.compose.foundation.interaction.PressInteraction
 import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.aspectRatio
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.wrapContentHeight
 import androidx.compose.foundation.pager.HorizontalPager
+import androidx.compose.foundation.pager.PageSize
+import androidx.compose.foundation.pager.PagerDefaults
+import androidx.compose.foundation.pager.PagerScope
 import androidx.compose.foundation.pager.rememberPagerState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.MaterialTheme
@@ -39,22 +44,29 @@ import kotlinx.coroutines.delay
 fun Banner(model: List<CarouselModel>, onClickBanner: (CarouselModel) -> Unit)
 {
     val pageCount = model.size
-    val pagerState = rememberPagerState(initialPage = 0)
+    val pagerState = rememberPagerState(
+        initialPage = 0,
+        initialPageOffsetFraction = 0f
+    ) {
+        pageCount
+    }
 
     // 页码转换
     fun pageMapper(index: Int) = (index).floorMod(pageCount)
 
     Box {
+        // 计算页面下标
         HorizontalPager(
-            pageCount = pageCount,
-            state = pagerState,
             modifier = Modifier
-                .fillMaxWidth()
-        ) { index ->
-            // 计算页面下标
-            val page = pageMapper(index)
-            BannerItem(model = model[page], onClickBanner)
-        }
+                .fillMaxWidth(),
+            state = pagerState,
+            pageContent =
+            {
+                // 计算页面下标
+                val page = pageMapper(it)
+                BannerItem(model = model[page], onClickBanner)
+            }
+        )
 
         var underDragging by remember {
             mutableStateOf(false)

@@ -33,7 +33,7 @@ import com.cngal.app.model.home.PublishedGameModel
 fun PublishedGameGroupCard(model: List<PublishedGameModel>, onNav: (String) -> Unit)
 {
 
-    TitleCard(title = "近期新作", link = "https://www.cngal.org/times", content = {
+    TitleCard(title = "近期新作",  onClickLink = {onNav("https://www.cngal.org/times")}, content = {
         LazyRow(
             horizontalArrangement = Arrangement.spacedBy(12.dp),
             contentPadding = PaddingValues(horizontal = 12.dp),

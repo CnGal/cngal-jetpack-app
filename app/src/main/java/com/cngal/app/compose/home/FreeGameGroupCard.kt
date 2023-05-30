@@ -35,7 +35,7 @@ import com.cngal.app.model.home.FreeGameModel
 fun FreeGameGroupCard(model: List<FreeGameModel>,onNav: (String) -> Unit)
 {
 
-    TitleCard(title = "免费游玩", link = "https://www.cngal.org/free", content = {
+    TitleCard(title = "免费游玩", onClickLink = {onNav("https://www.cngal.org/free")}, content = {
         LazyRow(
             horizontalArrangement = Arrangement.spacedBy(12.dp),
             contentPadding = PaddingValues(horizontal = 12.dp),

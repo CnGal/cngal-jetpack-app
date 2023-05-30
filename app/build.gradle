@@ -71,7 +71,7 @@ dependencies {
     implementation("androidx.compose.foundation:foundation:1.4.3")
 
     //material3
-    implementation 'androidx.compose.material3:material3'
+    implementation 'androidx.compose.material3:material3:1.1.0'
     implementation "androidx.compose.material:material-icons-extended:1.4.3"
 
     //system ui controller

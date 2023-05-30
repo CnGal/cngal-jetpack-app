@@ -17,7 +17,7 @@ data class VideoCardModel(
     @Json(name = "displayName")
     val displayName: String,
     @Json(name = "id")
-    val id: Int,
+    val id: Long,
     @Json(name = "lastEditTime")
     val lastEditTime: String,
     @Json(name = "mainImage")

@@ -39,7 +39,7 @@ import com.cngal.app.model.square.LatestCommentModel
 @Composable
 fun LatestCommentGroupCard(model: List<LatestCommentModel>)
 {
-    TitleCard(title = "近期留言", content = {
+    TitleCard(title = "近期留言",linkText = null, onClickLink = {}, content = {
     Column(
         verticalArrangement = Arrangement.spacedBy(12.dp),
         modifier = Modifier

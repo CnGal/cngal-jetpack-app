@@ -1,32 +1,23 @@
 package com.cngal.app.compose.entry.single
 
-import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
-import androidx.compose.foundation.layout.aspectRatio
-import androidx.compose.foundation.layout.fillMaxHeight
-import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.items
-import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material3.Card
-import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.clip
-import androidx.compose.ui.text.style.TextAlign
-import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
-import coil.compose.AsyncImage
-import com.cngal.app.SingleEntryDestination
+import com.cngal.app.ArticleCardGroupDestination
+import com.cngal.app.EntryCardGroupDestination
+import com.cngal.app.RoleCardGroupDestination
+import com.cngal.app.compose.article.shared.ArticleCard
 import com.cngal.app.compose.entry.shared.EntryCard
+import com.cngal.app.compose.entry.shared.RoleCard
 import com.cngal.app.compose.shared.TitleCard
+import com.cngal.app.helper.JsonHelper
+import com.cngal.app.model.article.ArticleCardModel
 import com.cngal.app.model.entry.EntryCardModel
 import com.cngal.app.model.entry.RoleCardModel
+import java.net.URLEncoder
 
 @Composable
 fun RelevanceGroupCard(
@@ -40,182 +31,96 @@ fun RelevanceGroupCard(
     groups: List<EntryCardModel>,
     staffs: List<EntryCardModel>,
     relevanceRoles: List<EntryCardModel>,
+    articles: List<ArticleCardModel>,
+    name: String,
     onNav: (String) -> Unit
 )
 {
     if (roles.isNotEmpty())
     {
-        TitleCard(title = "角色", link = "entries/roles/", content = {
-            LazyRow(
-                horizontalArrangement = Arrangement.spacedBy(12.dp),
-                contentPadding = PaddingValues(horizontal = 12.dp),
-            ) {
-                items(items = roles) { item ->
-                    RoleCard(item, onNav)
+
+        TitleCard(
+            title = "角色",
+            onClickLink = {
+                val title = URLEncoder.encode("${name}的角色", "utf-8")
+                val json = JsonHelper.toJson(roles)
+                onNav("${RoleCardGroupDestination.route}/${title}/${json}")
+            },
+            content = {
+                LazyRow(
+                    horizontalArrangement = Arrangement.spacedBy(12.dp),
+                    contentPadding = PaddingValues(horizontal = 12.dp),
+                ) {
+                    items(items = roles) { item ->
+                        RoleCard(item, false, onNav)
+                    }
                 }
             }
-        })
+        )
     }
 
-    if (castWorks.isNotEmpty())
-    {
-        TitleCard(title = "配音作品", link = "entries/roles/", content = {
-            LazyRow(
-                horizontalArrangement = Arrangement.spacedBy(12.dp),
-                contentPadding = PaddingValues(horizontal = 12.dp),
-            ) {
-                items(items = castWorks) { item ->
-                    EntryCard(item, onNav)
-                }
-            }
-        })
-    }
+    SingleRelevanceGroupCard(castWorks, name, "配音作品", onNav)
+    SingleRelevanceGroupCard(productionGroupWorks, name, "制作作品", onNav)
+    SingleRelevanceGroupCard(publisherWorks, name, "发行作品", onNav)
+    SingleRelevanceGroupCard(participationWorks, name, "参与作品", onNav)
 
-    if (productionGroupWorks.isNotEmpty())
-    {
-        TitleCard(title = "制作作品", link = "entries/roles/", content = {
-            LazyRow(
-                horizontalArrangement = Arrangement.spacedBy(12.dp),
-                contentPadding = PaddingValues(horizontal = 12.dp),
-            ) {
-                items(items = productionGroupWorks) { item ->
-                    EntryCard(item, onNav)
-                }
-            }
-        })
-    }
+    SingleRelevanceGroupCard(appreciatedParticWorks, name, "特别感谢", onNav)
+    SingleRelevanceGroupCard(games, name, "相关游戏", onNav)
+    SingleRelevanceGroupCard(groups, name, "相关组织", onNav)
+    SingleRelevanceGroupCard(staffs, name, "相关STAFF", onNav)
+    SingleRelevanceGroupCard(relevanceRoles, name, "相关角色", onNav)
 
-    if (publisherWorks.isNotEmpty())
+    if (articles.isNotEmpty())
     {
-        TitleCard(title = "发行作品", link = "entries/roles/", content = {
-            LazyRow(
-                horizontalArrangement = Arrangement.spacedBy(12.dp),
-                contentPadding = PaddingValues(horizontal = 12.dp),
-            ) {
-                items(items = publisherWorks) { item ->
-                    EntryCard(item, onNav)
-                }
-            }
-        })
-    }
 
-    if (participationWorks.isNotEmpty())
-    {
-        TitleCard(title = "参与作品", link = "entries/roles/", content = {
-            LazyRow(
-                horizontalArrangement = Arrangement.spacedBy(12.dp),
-                contentPadding = PaddingValues(horizontal = 12.dp),
-            ) {
-                items(items = participationWorks) { item ->
-                    EntryCard(item, onNav)
+        TitleCard(
+            title = "文章",
+            onClickLink = {
+                val title = URLEncoder.encode("${name}的文章", "utf-8")
+                val json = JsonHelper.toJson(articles)
+                onNav("${ArticleCardGroupDestination.route}/${title}/${json}")
+            },
+            content = {
+                LazyRow(
+                    horizontalArrangement = Arrangement.spacedBy(12.dp),
+                    contentPadding = PaddingValues(horizontal = 12.dp),
+                ) {
+                    items(items = articles) { item ->
+                        ArticleCard(item, false, onNav)
+                    }
                 }
             }
-        })
-    }
-
-    if (appreciatedParticWorks.isNotEmpty())
-    {
-        TitleCard(title = "特别感谢", link = "entries/roles/", content = {
-            LazyRow(
-                horizontalArrangement = Arrangement.spacedBy(12.dp),
-                contentPadding = PaddingValues(horizontal = 12.dp),
-            ) {
-                items(items = appreciatedParticWorks) { item ->
-                    EntryCard(item, onNav)
-                }
-            }
-        })
-    }
-
-    if (games.isNotEmpty())
-    {
-        TitleCard(title = "相关游戏", link = "entries/roles/", content = {
-            LazyRow(
-                horizontalArrangement = Arrangement.spacedBy(12.dp),
-                contentPadding = PaddingValues(horizontal = 12.dp),
-            ) {
-                items(items = games) { item ->
-                    EntryCard(item, onNav)
-                }
-            }
-        })
-    }
-
-    if (groups.isNotEmpty())
-    {
-        TitleCard(title = "相关组织", link = "entries/roles/", content = {
-            LazyRow(
-                horizontalArrangement = Arrangement.spacedBy(12.dp),
-                contentPadding = PaddingValues(horizontal = 12.dp),
-            ) {
-                items(items = groups) { item ->
-                    EntryCard(item, onNav)
-                }
-            }
-        })
-    }
-
-    if (staffs.isNotEmpty())
-    {
-        TitleCard(title = "相关STAFF", link = "entries/roles/", content = {
-            LazyRow(
-                horizontalArrangement = Arrangement.spacedBy(12.dp),
-                contentPadding = PaddingValues(horizontal = 12.dp),
-            ) {
-                items(items = staffs) { item ->
-                    EntryCard(item, onNav)
-                }
-            }
-        })
-    }
-
-    if (relevanceRoles.isNotEmpty())
-    {
-        TitleCard(title = "相关角色", link = "entries/roles/", content = {
-            LazyRow(
-                horizontalArrangement = Arrangement.spacedBy(12.dp),
-                contentPadding = PaddingValues(horizontal = 12.dp),
-            ) {
-                items(items = relevanceRoles) { item ->
-                    EntryCard(item, onNav)
-                }
-            }
-        })
+        )
     }
 
 }
 
 @Composable
-fun RoleCard(model: RoleCardModel, onNav: (String) -> Unit)
+fun SingleRelevanceGroupCard(
+    list: List<EntryCardModel>,
+    name: String,
+    groupName: String,
+    onNav: (String) -> Unit
+)
 {
-    Card(modifier = Modifier
-        .width(80.dp)
-        .fillMaxHeight()
-        .clickable {
-            onNav("${SingleEntryDestination.route}/${model.id}")
-        }
-    ) {
-        Column {
-            AsyncImage(
-                model = model.mainImage,
-                contentDescription = model.name,
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .aspectRatio(1f / 1f)
-                    .clip(RoundedCornerShape(12.dp))
-            )
-            Text(
-                text = model.name,
-                style = MaterialTheme.typography.bodySmall,
-                overflow = TextOverflow.Ellipsis,
-                textAlign = TextAlign.Center,
-                maxLines = 1,
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(6.dp)
-            )
+    if (list.isNotEmpty())
+    {
 
-
-        }
+        TitleCard(title = groupName, onClickLink = {
+            val title = URLEncoder.encode("${name}的${groupName}", "utf-8")
+            val json = JsonHelper.toJson(list)
+            onNav("${EntryCardGroupDestination.route}/${title}/${json}")
+        }, content = {
+            LazyRow(
+                horizontalArrangement = Arrangement.spacedBy(12.dp),
+                contentPadding = PaddingValues(horizontal = 12.dp),
+            ) {
+                items(items = list) { item ->
+                    EntryCard(item, false, onNav)
+                }
+            }
+        })
     }
 }
+
+

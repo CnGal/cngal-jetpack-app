@@ -20,7 +20,7 @@ fun VerticalDrawingCard(image: String?, name: String, type: EntryType)
     {
         return
     }
-    TitleCard(title = "立绘", content = {
+    TitleCard(title = "立绘", linkText = null, onClickLink = {},content = {
         AsyncImage(
             model = image,
             contentDescription = name,

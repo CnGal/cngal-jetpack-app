@@ -43,7 +43,7 @@ fun NewsCard(news: List<NewsModel>, onNav: (String) -> Unit)
     {
         return
     }
-    TitleCard(title = "动态", link = "entries/roles/", content = {
+    TitleCard(title = "动态", onClickLink = {}, content = {
         Column(
             modifier = Modifier.padding(horizontal = 12.dp),
             verticalArrangement = Arrangement.spacedBy(12.dp),

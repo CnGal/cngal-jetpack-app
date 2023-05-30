@@ -35,7 +35,7 @@ import com.cngal.app.model.shared.AppState
 import com.cngal.app.viewmodel.home.SquareViewModel
 
 @Composable
-fun SquareScreen(modifier: Modifier = Modifier,viewModel: SquareViewModel = viewModel())
+fun SquareScreen(modifier: Modifier = Modifier,viewModel: SquareViewModel = viewModel(),onNav:(String)->Unit)
 {
     val announcementsState by viewModel.announcements.collectAsState()
     val recentlyEditedGamesState by viewModel.recentlyEditedGames.collectAsState()
@@ -62,11 +62,11 @@ fun SquareScreen(modifier: Modifier = Modifier,viewModel: SquareViewModel = view
             }
             if (announcementsState.state == AppState.SUCCESS)
             {
-                AnnouncementGroupCard(announcementsState.data!!)
+                AnnouncementGroupCard(announcementsState.data!!,onNav)
             }
             if (recentlyEditedGamesState.state == AppState.SUCCESS)
             {
-                RecentlyEditedGameGroupCard(recentlyEditedGamesState.data!!)
+                RecentlyEditedGameGroupCard(recentlyEditedGamesState.data!!,onNav)
             }
 
             CommunityGroupCard()

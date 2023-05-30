@@ -2,7 +2,6 @@ package com.cngal.app.compose.square
 
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.ExperimentalLayoutApi
 import androidx.compose.foundation.layout.FlowRow
 import androidx.compose.foundation.layout.Row
@@ -30,21 +29,21 @@ import com.cngal.app.model.square.HotTagModel
 @Composable
 fun HotTagGroupCard(model: List<HotTagModel>)
 {
-    TitleCard(title = "热门标签", content = {
+    TitleCard(title = "热门标签",linkText = null, onClickLink = {}, content = {
         FlowRow(
             modifier = Modifier
-                .padding(horizontal = 6.dp)
+                .padding(horizontal = 12.dp),
+            horizontalArrangement = Arrangement.spacedBy(6.dp),
+            verticalArrangement = Arrangement.spacedBy(6.dp)
         ) {
             model.forEach {
-                Box(modifier = Modifier.padding(6.dp))
-                {
-                    HotTagCard(it, onClickCard = {
-                        openNewTabWindow(
-                            "https://www.cngal.org/${it.url}",
-                            appContext
-                        )
-                    })
-                }
+                HotTagCard(it, onClickCard = {
+                    openNewTabWindow(
+                        "https://www.cngal.org/${it.url}",
+                        appContext
+                    )
+                })
+
             }
         }
     })

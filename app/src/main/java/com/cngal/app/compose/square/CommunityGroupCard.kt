@@ -38,7 +38,7 @@ fun CommunityGroupCardPreview()
 fun CommunityGroupCard(model: List<CommunityModel> = CommunityData.toList())
 {
 
-    TitleCard(title = "社区交流", content = {
+    TitleCard(title = "社区交流", linkText = null, onClickLink = {}, content = {
 
         Column(
             verticalArrangement = Arrangement.spacedBy(12.dp),

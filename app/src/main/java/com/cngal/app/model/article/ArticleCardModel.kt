@@ -17,7 +17,7 @@ data class ArticleCardModel(
     @Json(name = "displayName")
     val displayName: String,
     @Json(name = "id")
-    val id: Int,
+    val id: Long,
     @Json(name = "lastEditTime")
     val lastEditTime: String,
     @Json(name = "link")
@@ -34,14 +34,3 @@ data class ArticleCardModel(
     val type: ArticleType
 )
 
-enum class ArticleType {
-    Tought,
-    Strategy,
-    Interview,
-    News,
-    Evaluation,
-    Peripheral,
-    Notice,
-    None,
-    Fan,
-}

@@ -6,6 +6,7 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
+import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
@@ -15,6 +16,7 @@ import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.cngal.app.compose.shared.ErrorCard
 import com.cngal.app.compose.shared.LoadingCard
+import com.cngal.app.compose.shared.TitleBar
 import com.cngal.app.model.shared.AppState
 import com.cngal.app.viewmodel.entry.SingleEntryViewModel
 
@@ -42,79 +44,88 @@ fun SingleEntryScreen(
     }
     else
     {
-        Column(
-            modifier = modifier
-                .verticalScroll(rememberScrollState())
-        ) {
-            Column(
-                modifier = Modifier
-                    .padding(0.dp, 0.dp, 0.dp, 12.dp),
+        Scaffold(
+            topBar = {
+                TitleBar(title = entryState.data?.name ?: "",  onBack = {})
+            },
+            content = {
+                Column(
+                    modifier = modifier
+                        .padding(it)
+                        .verticalScroll(rememberScrollState())
+                ) {
+                    Column(
+                        modifier = Modifier
+                            .padding(0.dp, 0.dp, 0.dp, 12.dp),
 
-                verticalArrangement = Arrangement.spacedBy(36.dp)
-            ) {
+                        verticalArrangement = Arrangement.spacedBy(36.dp)
+                    ) {
 
 
-                if (id == null || id < 0 || entryState.state == AppState.ERROR)
-                {
-                    Box(modifier = modifier.padding(horizontal = 12.dp, vertical = 36.dp)) {
-                        ErrorCard()
+                        if (id == null || id < 0 || entryState.state == AppState.ERROR)
+                        {
+                            Box(modifier = modifier.padding(horizontal = 12.dp, vertical = 36.dp)) {
+                                ErrorCard()
+                            }
+                            //return
+                        }
+                        else
+                        {
+                            if (entryState.state == AppState.SUCCESS)
+                            {
+                                val model = entryState.data!!
+
+                                MainCard(
+                                    model.mainPicture,
+                                    model.thumbnail,
+                                    uiState.steamId,
+                                    model.type,
+                                    model.name,
+                                    model.briefIntroduction,
+                                    model.anotherName
+                                )
+
+                                TagGroupCard(tags = model.tags, onNav = onNav)
+
+
+                                GalleryCard(images = uiState.images)
+
+                                InformationCard(
+                                    model.information.firstOrNull(),
+                                    model.productionGroups,
+                                    model.publishers,
+                                    onNav
+                                )
+
+                                StaffCard(staffs = model.staffs, onNav = onNav)
+
+                                MainPageCard(mainPage = model.mainPage)
+
+                                VerticalDrawingCard(model.mainPicture, model.name, model.type)
+
+                                NewsCard(uiState.news, onNav)
+
+                                RelevanceGroupCard(
+                                    model.roles,
+                                    uiState.castWorks,
+                                    uiState.productionGroupWorks,
+                                    uiState.publisherWorks,
+                                    uiState.participationWorks,
+                                    uiState.appreciatedParticWorks,
+                                    uiState.games,
+                                    uiState.groups,
+                                    uiState.staffs,
+                                    uiState.roles,
+                                    model.articleRelevances,
+                                    model.name,
+                                    onNav
+                                )
+                            }
+                        }
+
                     }
-                    //return
                 }
-                else
-                {
-                    if (entryState.state == AppState.SUCCESS)
-                    {
-                        val model = entryState.data!!
-
-                        MainCard(
-                            model.mainPicture,
-                            model.thumbnail,
-                            uiState.steamId,
-                            model.type,
-                            model.name,
-                            model.briefIntroduction,
-                            model.anotherName
-                        )
-
-                        TagGroupCard(tags = model.tags, onNav = onNav)
-
-
-                        GalleryCard(images = uiState.images)
-
-                        InformationCard(
-                            model.information.firstOrNull(),
-                            model.productionGroups,
-                            model.publishers,
-                            onNav
-                        )
-
-                        StaffCard(staffs = model.staffs, onNav = onNav)
-
-                        MainPageCard(mainPage = model.mainPage)
-
-                        VerticalDrawingCard(model.mainPicture,model.name,model.type)
-
-                        NewsCard(uiState.news,onNav)
-
-                        RelevanceGroupCard(
-                            model.roles,
-                            uiState.castWorks,
-                            uiState.productionGroupWorks,
-                            uiState.publisherWorks,
-                            uiState.participationWorks,
-                            uiState.appreciatedParticWorks,
-                            uiState.games,
-                            uiState.groups,
-                            uiState.staffs,
-                            uiState.roles,
-                            onNav
-                        )
-                    }
-                }
-
             }
-        }
+        )
     }
-
 }

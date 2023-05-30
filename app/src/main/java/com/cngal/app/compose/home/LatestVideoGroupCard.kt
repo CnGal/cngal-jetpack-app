@@ -35,9 +35,9 @@ import com.cngal.app.helper.openNewTabWindow
 import com.cngal.app.model.home.LatestVideoModel
 
 @Composable
-fun LatestVideoGroupCard(model: List<LatestVideoModel>)
+fun LatestVideoGroupCard(model: List<LatestVideoModel>,onNav:(String)->Unit)
 {
-    TitleCard(title = "最新视频", link = "https://www.cngal.org/search/?Types=Video", content = {
+    TitleCard(title = "最新视频",  onClickLink = {onNav("https://www.cngal.org/search/?Types=Video")}, content = {
         LazyRow(
             horizontalArrangement = Arrangement.spacedBy(12.dp),
             contentPadding = PaddingValues(horizontal = 12.dp),

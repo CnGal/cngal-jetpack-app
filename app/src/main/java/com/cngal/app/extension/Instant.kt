@@ -1,6 +1,12 @@
 package com.cngal.app.extension
 
 import java.time.Instant
+import java.time.ZoneId
+
+import java.time.format.DateTimeFormatter
+
+
+
 
 fun Instant.toTimeFromNowString(): String
 {
@@ -30,4 +36,9 @@ fun Instant.toTimeFromNowString(): String
     {
         return "${mil / 1000}秒前"
     }
+}
+
+fun Instant.toString(format:String): String
+{
+    return DateTimeFormatter.ofPattern(format).withZone(ZoneId.systemDefault()).format(this)
 }

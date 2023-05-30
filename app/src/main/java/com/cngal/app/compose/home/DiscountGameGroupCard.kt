@@ -37,7 +37,7 @@ import com.cngal.app.model.home.DiscountGameModel
 fun DiscountGameGroupCard(model: List<DiscountGameModel>,onNav: (String) -> Unit)
 {
 
-    TitleCard(title = "折扣中的游戏", link = "https://www.cngal.org/discount", content = {
+    TitleCard(title = "折扣中的游戏", onClickLink = {onNav("https://www.cngal.org/discount")}, content = {
         LazyRow(
             horizontalArrangement = Arrangement.spacedBy(12.dp),
             contentPadding = PaddingValues(horizontal = 12.dp),
