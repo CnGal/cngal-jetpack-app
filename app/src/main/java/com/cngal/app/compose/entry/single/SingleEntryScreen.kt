@@ -17,6 +17,7 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import com.cngal.app.compose.shared.ErrorCard
 import com.cngal.app.compose.shared.LoadingCard
 import com.cngal.app.compose.shared.TitleBar
+import com.cngal.app.helper.ClipboardHelper
 import com.cngal.app.model.shared.AppState
 import com.cngal.app.viewmodel.entry.SingleEntryViewModel
 
@@ -42,11 +43,32 @@ fun SingleEntryScreen(
     {
         LoadingCard(true)
     }
-    else
+    else if (id == null || id < 0 || entryState.state == AppState.ERROR)
     {
+        Box(modifier = modifier.padding(horizontal = 12.dp)) {
+            ErrorCard()
+        }
+    }
+    else if (entryState.state == AppState.SUCCESS)
+    {
+        val model = entryState.data!!
+
         Scaffold(
             topBar = {
-                TitleBar(title = entryState.data?.name ?: "",  onBack = {})
+                TitleBar(
+                    title = model.name,
+                    onBack = {},
+                    onClickOpenInBrowser = { onNav(uiState.link) },
+                    onClickLink = {
+                        ClipboardHelper.textCopy(
+                            "链接",
+                            uiState.link
+                        )
+                    },
+                    onClickShare = {  ClipboardHelper.textCopy(
+                        "分享文案",
+                        uiState.shareText
+                    )})
             },
             content = {
                 Column(
@@ -61,71 +83,57 @@ fun SingleEntryScreen(
                         verticalArrangement = Arrangement.spacedBy(36.dp)
                     ) {
 
+                        MainCard(
+                            model.mainPicture,
+                            model.thumbnail,
+                            uiState.steamId,
+                            model.type,
+                            model.name,
+                            model.briefIntroduction,
+                            model.anotherName
+                        )
 
-                        if (id == null || id < 0 || entryState.state == AppState.ERROR)
-                        {
-                            Box(modifier = modifier.padding(horizontal = 12.dp, vertical = 36.dp)) {
-                                ErrorCard()
-                            }
-                            //return
-                        }
-                        else
-                        {
-                            if (entryState.state == AppState.SUCCESS)
-                            {
-                                val model = entryState.data!!
-
-                                MainCard(
-                                    model.mainPicture,
-                                    model.thumbnail,
-                                    uiState.steamId,
-                                    model.type,
-                                    model.name,
-                                    model.briefIntroduction,
-                                    model.anotherName
-                                )
-
-                                TagGroupCard(tags = model.tags, onNav = onNav)
+                        TagGroupCard(tags = model.tags, onNav = onNav)
 
 
-                                GalleryCard(images = uiState.images)
+                        GalleryCard(images = uiState.images)
 
-                                InformationCard(
-                                    model.information.firstOrNull(),
-                                    model.productionGroups,
-                                    model.publishers,
-                                    onNav
-                                )
+                        InformationCard(
+                            model.information.firstOrNull(),
+                            model.productionGroups,
+                            model.publishers,
+                            onNav
+                        )
 
-                                StaffCard(staffs = model.staffs, onNav = onNav)
+                        StaffCard(staffs = model.staffs, onNav = onNav)
 
-                                MainPageCard(mainPage = model.mainPage)
+                        MainPageCard(mainPage = model.mainPage)
 
-                                VerticalDrawingCard(model.mainPicture, model.name, model.type)
+                        VerticalDrawingCard(model.mainPicture, model.name, model.type)
 
-                                NewsCard(uiState.news, onNav)
+                        NewsGroupCard(uiState.news, model.newsOfEntry, model.name, onNav)
 
-                                RelevanceGroupCard(
-                                    model.roles,
-                                    uiState.castWorks,
-                                    uiState.productionGroupWorks,
-                                    uiState.publisherWorks,
-                                    uiState.participationWorks,
-                                    uiState.appreciatedParticWorks,
-                                    uiState.games,
-                                    uiState.groups,
-                                    uiState.staffs,
-                                    uiState.roles,
-                                    model.articleRelevances,
-                                    model.name,
-                                    onNav
-                                )
-                            }
-                        }
+                        RelevanceGroupCard(
+                            model.roles,
+                            uiState.castWorks,
+                            uiState.productionGroupWorks,
+                            uiState.publisherWorks,
+                            uiState.participationWorks,
+                            uiState.appreciatedParticWorks,
+                            uiState.games,
+                            uiState.groups,
+                            uiState.staffs,
+                            uiState.roles,
+                            model.articleRelevances,
+                            model.name,
+                            onNav
+                        )
 
+                        OutlinkGroupCard(uiState.outlinks, model.name, onNav)
                     }
                 }
             }
         )
+
     }
 }

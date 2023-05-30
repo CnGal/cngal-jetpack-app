@@ -9,15 +9,21 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.cngal.app.ArticleCardGroupDestination
 import com.cngal.app.EntryCardGroupDestination
+import com.cngal.app.NewsCardGroupDestination
+import com.cngal.app.OutlinkCardGroupDestination
 import com.cngal.app.OverviewDestination
 import com.cngal.app.RoleCardGroupDestination
 import com.cngal.app.SingleArticleDestination
 import com.cngal.app.SingleEntryDestination
+import com.cngal.app.SingleTagDestination
 import com.cngal.app.compose.article.detail.ArticleCardGroupScreen
 import com.cngal.app.compose.article.single.SingleArticleScreen
 import com.cngal.app.compose.entry.detail.EntryCardGroupScreen
+import com.cngal.app.compose.entry.detail.NewsCardGroupScreen
+import com.cngal.app.compose.entry.detail.OutlinkCardGroupScreen
 import com.cngal.app.compose.entry.detail.RoleCardGroupScreen
 import com.cngal.app.compose.entry.single.SingleEntryScreen
+import com.cngal.app.compose.tag.single.SingleTagScreen
 import com.cngal.app.helper.JsonHelper
 import com.cngal.app.helper.appContext
 import com.cngal.app.helper.openNewTabWindow
@@ -65,7 +71,6 @@ fun MainNavHost(
             val id =
                 navBackStackEntry.arguments?.getInt(SingleEntryDestination.idArg)
             SingleEntryScreen(id = id, onNav = onNav)
-
         }
         composable(
             route = EntryCardGroupDestination.routeWithArgs,
@@ -77,7 +82,6 @@ fun MainNavHost(
             val data =
                 navBackStackEntry.arguments?.getString(EntryCardGroupDestination.dataArg)
             EntryCardGroupScreen(title ?: "", JsonHelper.fromJson(data!!), onNav)
-
         }
         composable(
             route = RoleCardGroupDestination.routeWithArgs,
@@ -89,7 +93,28 @@ fun MainNavHost(
             val data =
                 navBackStackEntry.arguments?.getString(RoleCardGroupDestination.dataArg)
             RoleCardGroupScreen(title ?: "", JsonHelper.fromJson(data!!), onNav)
-
+        }
+        composable(
+            route = NewsCardGroupDestination.routeWithArgs,
+            arguments = NewsCardGroupDestination.arguments,
+            deepLinks = NewsCardGroupDestination.deepLinks
+        ) { navBackStackEntry ->
+            val title =
+                navBackStackEntry.arguments?.getString(NewsCardGroupDestination.titleArg)
+            val data =
+                navBackStackEntry.arguments?.getString(NewsCardGroupDestination.dataArg)
+            NewsCardGroupScreen(title ?: "", JsonHelper.fromJson(data!!), onNav)
+        }
+        composable(
+            route = OutlinkCardGroupDestination.routeWithArgs,
+            arguments = OutlinkCardGroupDestination.arguments,
+            deepLinks = OutlinkCardGroupDestination.deepLinks
+        ) { navBackStackEntry ->
+            val title =
+                navBackStackEntry.arguments?.getString(OutlinkCardGroupDestination.titleArg)
+            val data =
+                navBackStackEntry.arguments?.getString(OutlinkCardGroupDestination.dataArg)
+            OutlinkCardGroupScreen(title ?: "", JsonHelper.fromJson(data!!), onNav)
         }
         composable(
             route = SingleArticleDestination.routeWithArgs,
@@ -111,6 +136,15 @@ fun MainNavHost(
             val data =
                 navBackStackEntry.arguments?.getString(ArticleCardGroupDestination.dataArg)
             ArticleCardGroupScreen(title ?: "", JsonHelper.fromJson(data!!), onNav)
+        }
+        composable(
+            route = SingleTagDestination.routeWithArgs,
+            arguments = SingleTagDestination.arguments,
+            deepLinks = SingleTagDestination.deepLinks
+        ) { navBackStackEntry ->
+            val id =
+                navBackStackEntry.arguments?.getInt(SingleTagDestination.idArg)
+            SingleTagScreen(id = id, onNav = onNav)
 
         }
     }

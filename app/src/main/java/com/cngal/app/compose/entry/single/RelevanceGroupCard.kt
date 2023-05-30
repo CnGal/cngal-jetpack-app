@@ -5,6 +5,7 @@ import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.items
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import com.cngal.app.ArticleCardGroupDestination
 import com.cngal.app.EntryCardGroupDestination
@@ -116,7 +117,7 @@ fun SingleRelevanceGroupCard(
                 contentPadding = PaddingValues(horizontal = 12.dp),
             ) {
                 items(items = list) { item ->
-                    EntryCard(item, false, onNav)
+                    EntryCard(Modifier,item, false, onNav)
                 }
             }
         })

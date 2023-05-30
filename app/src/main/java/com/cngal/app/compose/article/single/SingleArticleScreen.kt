@@ -17,6 +17,7 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import com.cngal.app.compose.shared.ErrorCard
 import com.cngal.app.compose.shared.LoadingCard
 import com.cngal.app.compose.shared.TitleBar
+import com.cngal.app.helper.ClipboardHelper
 import com.cngal.app.model.shared.AppState
 import com.cngal.app.viewmodel.article.SingleArticleViewModel
 
@@ -29,6 +30,7 @@ fun SingleArticleScreen(
 )
 {
     val articleState by viewModel.article.collectAsState()
+    val uiState by viewModel.uiState.collectAsState()
 
     LaunchedEffect(id) {
         if ((viewModel.article.value.data?.id ?: 0) != id)
@@ -45,7 +47,18 @@ fun SingleArticleScreen(
     {
         Scaffold(
             topBar = {
-                TitleBar(title = articleState.data?.name ?: "", onBack = {})
+                TitleBar(title = articleState.data?.name ?: "",    onBack = {},
+                    onClickOpenInBrowser = { onNav(uiState.link) },
+                    onClickLink = {
+                        ClipboardHelper.textCopy(
+                            "链接",
+                            uiState.link
+                        )
+                    },
+                    onClickShare = {  ClipboardHelper.textCopy(
+                        "分享文案",
+                        uiState.shareText
+                    )})
             },
             content = {
                 Column(
@@ -63,7 +76,7 @@ fun SingleArticleScreen(
 
                         if (id == null || id < 0 || articleState.state == AppState.ERROR)
                         {
-                            Box(modifier = modifier.padding(horizontal = 12.dp, vertical = 36.dp)) {
+                            Box(modifier = modifier.padding(horizontal = 12.dp)) {
                                 ErrorCard()
                             }
                             //return
@@ -77,10 +90,6 @@ fun SingleArticleScreen(
                                 MainCard(
                                     model.mainPicture,
                                     model.name,
-                                    model.userInfor.name,
-                                    model.userInfor.photoPath,
-                                    model.userInfor.id,
-                                    onNav
                                 )
                                 AuthorCard(model.userInfor, onNav)
                                 MainPageCard(model.mainPage, model.createTime, model.lastEditTime)

@@ -21,7 +21,9 @@ fun RoleCardGroupScreen(title: String, model: List<RoleCardModel>, onNav: (Strin
 {
     Scaffold(
         topBar = {
-            TitleBar(title = title,  onBack = {})
+            TitleBar(title = title,  showActions = false,   onClickOpenInBrowser = { },
+                onClickLink = { },
+                onClickShare = {},onBack = {})
         },
         content = {
             LazyColumn(

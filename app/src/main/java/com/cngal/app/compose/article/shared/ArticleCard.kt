@@ -85,7 +85,7 @@ fun ArticleCard(model: ArticleCardModel, fillMaxWidth: Boolean, onNav: (String) 
                     text = model.name,
                     style = MaterialTheme.typography.bodySmall,
                     overflow = TextOverflow.Ellipsis,
-                    maxLines = 1,
+                    maxLines = 2,
                     modifier = Modifier
                         .fillMaxWidth()
                         .padding(6.dp)

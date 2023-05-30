@@ -54,7 +54,7 @@ fun SquareScreen(modifier: Modifier = Modifier,viewModel: SquareViewModel = view
         ) {
             if (hotTagsState.state == AppState.SUCCESS)
             {
-                HotTagGroupCard(hotTagsState.data!!)
+                HotTagGroupCard(hotTagsState.data!!,onNav)
             }
             if (latestCommentsState.state == AppState.SUCCESS)
             {

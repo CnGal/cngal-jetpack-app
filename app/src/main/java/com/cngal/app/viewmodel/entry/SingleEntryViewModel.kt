@@ -4,9 +4,10 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.cngal.app.model.entry.EntryModel
 import com.cngal.app.model.entry.EntryType
-import com.cngal.app.model.entry.getGeneralType
+import com.cngal.app.model.entry.OutlinkModel
 import com.cngal.app.model.entry.PositionGeneralType
 import com.cngal.app.model.entry.PublishPlatformType
+import com.cngal.app.model.entry.getGeneralType
 import com.cngal.app.model.shared.ApiResponse
 import com.cngal.app.repository.EntryRepository
 import com.cngal.app.uistate.entry.SingleEntryUiState
@@ -83,7 +84,78 @@ class SingleEntryViewModel : ViewModel()
                     state.staffs = model.entryRelevances.filter { it.type == EntryType.Staff }
 
                     //动态
-                    state.news=model.newsOfEntry.take(3)
+                    state.news = model.newsOfEntry.take(3)
+
+                    //外部链接
+                    state.outlinks.clear()
+                    model.otherRelevances.forEach {
+                        val image = when (it.displayName)
+                        {
+                            "萌娘百科" -> "Moegirl.png"
+                            "Bangumi" -> "Bangumi.png"
+                            "百度百科" -> "BaiDuWiki.png"
+                            "2DFan" -> "2DFan.png"
+                            "中文维基百科" -> "Wiki.png"
+                            "月幕Galgame" -> "YMGal.png"
+                            "Bilibili" -> "bilibili.png"
+                            "bilibili" -> "bilibili.png"
+                            "WikiData" -> "Wikidata.png"
+                            "微博" -> "weibo.png"
+                            "AcFun" -> "AcFun.png"
+                            "知乎" -> "zhihu.png"
+                            "爱发电" -> "Afdian.png"
+                            "Pixiv" -> "pixiv.png"
+                            "Twitter" -> "twitter.png"
+                            "YouTube" -> "Youtube.png"
+                            "Facebook" -> "Facebook.png"
+                            "官网" -> "SmartHome.png"
+                            "摩点" -> "modian.png"
+                            else ->
+                            {
+                                null
+                            }
+                        }
+
+                        state.outlinks.add(
+                            OutlinkModel(
+                                image = if (!image.isNullOrBlank())
+                                {
+                                    "https://res.cngal.org/_content/CnGalWebSite.Shared/images/${image}"
+                                }
+                                else
+                                {
+                                    it.image
+                                },
+                                displayValue = when (it.displayName)
+                                {
+                                    "VNDB" -> "VNDB.org力争成为一个关于视觉小说的全面的信息数据库"
+                                    else ->
+                                    {
+                                        it.displayValue
+                                    }
+                                },
+                                id = 0,
+                                displayName = it.displayName,
+                                link = when (it.displayName)
+                                {
+                                    "月幕Galgame" -> it.link?.replace(
+                                        "www.ymgal.com",
+                                        "www.ymgal.games"
+                                    )
+
+                                    else ->
+                                    {
+                                        it.link
+                                    }
+                                },
+                            )
+                        )
+                    }
+
+                    //分享
+                    state.link = "https://www.cngal.org/entries/index/${model.id}"
+                    state.shareText =
+                        "【词条】 ${model.name} | CnGal资料站 https://www.cngal.org/entries/index/${model.id}"
 
                     state
                 }

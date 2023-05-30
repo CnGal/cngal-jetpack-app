@@ -2,6 +2,7 @@ package com.cngal.app.uistate.entry
 
 import com.cngal.app.model.entry.EntryCardModel
 import com.cngal.app.model.entry.NewsModel
+import com.cngal.app.model.entry.OutlinkModel
 import com.cngal.app.model.entry.PictureContentModel
 
 class SingleEntryUiState
@@ -18,4 +19,7 @@ class SingleEntryUiState
     var staffs: List<EntryCardModel> = listOf()
     var roles: List<EntryCardModel> = listOf()
     var news: List<NewsModel> = listOf()
+    var outlinks: MutableList<OutlinkModel> = mutableListOf()
+    var link :String=""
+    var shareText :String=""
 }

@@ -9,18 +9,18 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
-import com.cngal.app.compose.entry.shared.EntryCard
+import com.cngal.app.compose.entry.shared.NewsCard
 import com.cngal.app.compose.shared.TitleBar
-import com.cngal.app.model.entry.EntryCardModel
+import com.cngal.app.model.entry.NewsModel
 
 @Composable
-fun EntryCardGroupScreen(title: String, model: List<EntryCardModel>, onNav: (String) -> Unit)
+fun NewsCardGroupScreen(title: String, model: List<NewsModel>, onNav: (String) -> Unit)
 {
     Scaffold(
         topBar = {
-            TitleBar(title = title, showActions = false, onClickOpenInBrowser = {},
-                onClickLink = {},
-                onClickShare = {}, onBack = {})
+            TitleBar(title = title, showActions = false,   onClickOpenInBrowser = { },
+                onClickLink = { },
+                onClickShare = {},onBack = {})
         },
         content = {
             LazyColumn(
@@ -31,7 +31,7 @@ fun EntryCardGroupScreen(title: String, model: List<EntryCardModel>, onNav: (Str
                     .padding(horizontal = 12.dp)
             ) {
                 items(items = model) { item ->
-                    EntryCard(Modifier, item, true, onNav)
+                    NewsCard(item, onNav)
                 }
             }
         }

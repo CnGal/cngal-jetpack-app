@@ -32,6 +32,7 @@ import androidx.compose.ui.unit.dp
 
 @Composable
 fun TitleCard(
+    modifier : Modifier=Modifier,
     content: @Composable () -> Unit,
     title: String,
     expandable: Boolean = false,
@@ -43,6 +44,7 @@ fun TitleCard(
     var expanded by rememberSaveable { mutableStateOf(false) }
 
     Column(
+        modifier=modifier,
         verticalArrangement = Arrangement.spacedBy(4.dp),
         horizontalAlignment = Alignment.CenterHorizontally
     ) {

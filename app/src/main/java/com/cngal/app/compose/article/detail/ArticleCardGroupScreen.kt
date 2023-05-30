@@ -10,28 +10,31 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import com.cngal.app.compose.article.shared.ArticleCard
-import com.cngal.app.compose.entry.shared.EntryCard
 import com.cngal.app.compose.shared.TitleBar
 import com.cngal.app.model.article.ArticleCardModel
-import com.cngal.app.model.entry.EntryCardModel
 
 @Composable
 fun ArticleCardGroupScreen(title: String, model: List<ArticleCardModel>, onNav: (String) -> Unit)
 {
     Scaffold(
         topBar = {
-            TitleBar(title = title,  onBack = {})
+            TitleBar(
+                title = title,
+                onClickOpenInBrowser = { },
+                onClickLink = { },
+                onClickShare = {},
+                onBack = {})
         },
         content = {
             LazyColumn(
                 verticalArrangement = Arrangement.spacedBy(12.dp),
-                contentPadding = PaddingValues(0.dp,0.dp,0.dp,12.dp),
+                contentPadding = PaddingValues(0.dp, 0.dp, 0.dp, 12.dp),
                 modifier = Modifier
                     .padding(it)
                     .padding(horizontal = 12.dp)
             ) {
-                items(items = model)  { item ->
-                    ArticleCard(item,true, onNav)
+                items(items = model) { item ->
+                    ArticleCard(item, true, onNav)
                 }
             }
         }

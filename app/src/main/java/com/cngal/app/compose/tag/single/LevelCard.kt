@@ -1,4 +1,4 @@
-package com.cngal.app.compose.entry.single
+package com.cngal.app.compose.tag.single
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.ExperimentalLayoutApi
@@ -9,30 +9,27 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import com.cngal.app.compose.shared.TitleCard
 import com.cngal.app.compose.tag.shared.TagCard
-import com.cngal.app.model.entry.TagModel
+import com.cngal.app.model.tag.TagLevelModel
 
 @OptIn(ExperimentalLayoutApi::class)
 @Composable
-fun TagGroupCard(
-    tags: List<TagModel>,
-    onNav: (String) -> Unit
-)
+fun LevelCard( modifier : Modifier=Modifier,tags: List<TagLevelModel>, onNav: (String) -> Unit)
 {
-
     if (tags.isEmpty())
     {
         return
     }
-    TitleCard(title = "标签", linkText = null, onClickLink = {}, content = {
+    TitleCard(title = "父标签", linkText = null, onClickLink = {}, content = {
         FlowRow(
-            modifier = Modifier
+            modifier = modifier
                 .padding(horizontal = 12.dp),
             horizontalArrangement = Arrangement.spacedBy(6.dp),
             verticalArrangement = Arrangement.spacedBy(6.dp)
         ) {
-            tags.forEach {
-                TagCard(it.name, it.id, onNav)
+            tags.dropLast(1).forEach {
+                TagCard(it.key, it.value, onNav)
             }
         }
     })
 }
+

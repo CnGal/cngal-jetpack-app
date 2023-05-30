@@ -106,9 +106,7 @@ fun GameOrGroupCard(
             {
                 Text(
                     text = briefIntroduction,
-                    style = MaterialTheme.typography.bodySmall,
-                    maxLines = 3,
-                    overflow = TextOverflow.Ellipsis,
+                    style = MaterialTheme.typography.bodySmall
                 )
             }
         }

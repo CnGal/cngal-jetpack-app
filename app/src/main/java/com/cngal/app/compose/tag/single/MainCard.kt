@@ -1,4 +1,4 @@
-package com.cngal.app.compose.article.single
+package com.cngal.app.compose.tag.single
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -19,12 +19,14 @@ import coil.compose.AsyncImage
 
 @Composable
 fun MainCard(
+    modifier : Modifier=Modifier,
     mainImage: String?,
+    briefIntroduction: String?,
     name: String
 )
 {
     Column(
-        modifier = Modifier
+        modifier = modifier
             .fillMaxWidth(),
         verticalArrangement = Arrangement.spacedBy(24.dp)
     ) {
@@ -53,7 +55,13 @@ fun MainCard(
                 style = MaterialTheme.typography.headlineMedium,
                 fontWeight = FontWeight.Bold,
             )
-
+            if (!briefIntroduction.isNullOrBlank())
+            {
+                Text(
+                    text = briefIntroduction,
+                    style = MaterialTheme.typography.bodySmall,
+                )
+            }
         }
     }
 }

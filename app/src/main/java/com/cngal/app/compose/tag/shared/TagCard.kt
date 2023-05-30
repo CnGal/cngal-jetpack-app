@@ -1,9 +1,7 @@
-package com.cngal.app.compose.square
+package com.cngal.app.compose.tag.shared
 
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.ExperimentalLayoutApi
-import androidx.compose.foundation.layout.FlowRow
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.padding
@@ -20,33 +18,13 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
-import com.cngal.app.compose.shared.TitleCard
-import com.cngal.app.compose.tag.shared.TagCard
-import com.cngal.app.model.square.HotTagModel
-
-@OptIn(ExperimentalLayoutApi::class)
-@Composable
-fun HotTagGroupCard(model: List<HotTagModel>, onNav: (String) -> Unit)
-{
-    TitleCard(title = "热门标签", linkText = null, onClickLink = {}, content = {
-        FlowRow(
-            modifier = Modifier
-                .padding(horizontal = 12.dp),
-            horizontalArrangement = Arrangement.spacedBy(6.dp),
-            verticalArrangement = Arrangement.spacedBy(6.dp)
-        ) {
-            model.forEach { item ->
-                TagCard(item.name, 0, onNav = { onNav(item.url) })
-            }
-        }
-    })
-}
+import com.cngal.app.model.entry.TagModel
 
 @Composable
-fun HotTagCard(model: HotTagModel, onClickCard: () -> Unit)
+fun TagCard(name: String,id:Int, onNav: (String) -> Unit)
 {
     Card(modifier = Modifier
-        .clickable { onClickCard() }
+        .clickable {  onNav("tags/index/${id}") }
     ) {
         Row(
             modifier = Modifier
@@ -54,10 +32,10 @@ fun HotTagCard(model: HotTagModel, onClickCard: () -> Unit)
             horizontalArrangement = Arrangement.SpaceBetween,
             verticalAlignment = Alignment.CenterVertically,
         ) {
-            Icon(Icons.Filled.Tag, contentDescription = model.name, Modifier.size(16.dp))
+            Icon(Icons.Filled.Tag, contentDescription = "标签", Modifier.size(16.dp))
             Spacer(Modifier.size(4.dp))
             Text(
-                text = model.name,
+                text = name,
                 style = MaterialTheme.typography.bodySmall,
                 maxLines = 1,
                 overflow = TextOverflow.Ellipsis,

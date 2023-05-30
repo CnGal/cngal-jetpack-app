@@ -46,14 +46,7 @@ fun AnnouncementGroupCard(model: List<AnnouncementModel>,onNav: (String) -> Unit
             model.forEach { item ->
                 AnnouncementCard(
                     model = item,
-                    latest = model.indexOf(item) == model.count { it.priority > 0 },
-                    onClickDetail = {
-                        //todo 替换跳转页面
-                        openNewTabWindow(
-                            "https://www.cngal.org/${item.url}",
-                            appContext
-                        )
-                    })
+                    latest = model.indexOf(item) == model.count { it.priority > 0 }, onClickDetail = {onNav(item.url) })
             }
 
         }

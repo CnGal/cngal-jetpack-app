@@ -52,7 +52,7 @@ object OverviewDestination : BaseDestination
 object SingleEntryDestination : BaseDestination
 {
     override val route = "entries/index"
-    override val text = "概览"
+    override val text = "单个词条详情页"
     const val idArg = "entry_id"
     val routeWithArgs = "${route}/{${idArg}}"
     val arguments = listOf(
@@ -67,7 +67,7 @@ object SingleEntryDestination : BaseDestination
 object EntryCardGroupDestination : BaseDestination
 {
     override val route = "entries/detail/entry_card/"
-    override val text = "概览"
+    override val text = "关联词条卡片列表"
     const val titleArg = "detail_title"
     const val dataArg = "detail_data"
     val routeWithArgs = "${route}/{${titleArg}}/{${dataArg}}"
@@ -87,7 +87,7 @@ object EntryCardGroupDestination : BaseDestination
 object RoleCardGroupDestination : BaseDestination
 {
     override val route = "entries/detail/role_card/"
-    override val text = "概览"
+    override val text = "关联词条角色卡片列表"
     const val titleArg = "detail_title"
     const val dataArg = "detail_data"
     val routeWithArgs = "${route}/{${titleArg}}/{${dataArg}}"
@@ -103,11 +103,51 @@ object RoleCardGroupDestination : BaseDestination
 }
 
 
+//关联动态卡片列表
+object NewsCardGroupDestination : BaseDestination
+{
+    override val route = "entries/detail/news_card/"
+    override val text = "关联动态卡片列表"
+    const val titleArg = "detail_title"
+    const val dataArg = "detail_data"
+    val routeWithArgs = "${route}/{${titleArg}}/{${dataArg}}"
+    val arguments = listOf(
+        navArgument(titleArg) { type = NavType.StringType },
+        navArgument(titleArg) { type = NavType.StringType }
+    )
+    val deepLinks = listOf(
+        navDeepLink {
+            uriPattern = "cngal://$route/{$titleArg}/{${dataArg}}"
+        }
+    )
+}
+
+//关联外部链接卡片列表
+object OutlinkCardGroupDestination : BaseDestination
+{
+    override val route = "entries/detail/outlink_card/"
+    override val text = "关联外部链接卡片列表"
+    const val titleArg = "detail_title"
+    const val dataArg = "detail_data"
+    val routeWithArgs = "${route}/{${titleArg}}/{${dataArg}}"
+    val arguments = listOf(
+        navArgument(titleArg) { type = NavType.StringType },
+        navArgument(titleArg) { type = NavType.StringType }
+    )
+    val deepLinks = listOf(
+        navDeepLink {
+            uriPattern = "cngal://$route/{$titleArg}/{${dataArg}}"
+        }
+    )
+}
+
+
+
 //单个文章详情页
 object SingleArticleDestination : BaseDestination
 {
     override val route = "articles/index"
-    override val text = "概览"
+    override val text = "单个文章详情页"
     const val idArg = "article_id"
     val routeWithArgs = "${route}/{${idArg}}"
     val arguments = listOf(
@@ -119,11 +159,11 @@ object SingleArticleDestination : BaseDestination
 }
 
 
-//关联词条卡片列表
+//关联文章卡片列表
 object ArticleCardGroupDestination : BaseDestination
 {
     override val route = "articles/detail/article_card/"
-    override val text = "概览"
+    override val text = "关联文章卡片列表"
     const val titleArg = "detail_title"
     const val dataArg = "detail_data"
     val routeWithArgs = "${route}/{${titleArg}}/{${dataArg}}"
@@ -135,6 +175,22 @@ object ArticleCardGroupDestination : BaseDestination
         navDeepLink {
             uriPattern = "cngal://$route/{$titleArg}/{${dataArg}}"
         }
+    )
+}
+
+
+//单个标签详情页
+object SingleTagDestination : BaseDestination
+{
+    override val route = "tags/index"
+    override val text = "单个标签详情页"
+    const val idArg = "tag_id"
+    val routeWithArgs = "${route}/{${idArg}}"
+    val arguments = listOf(
+        navArgument(idArg) { type = NavType.IntType }
+    )
+    val deepLinks = listOf(
+        navDeepLink { uriPattern = "cngal://$route/{$idArg}" }
     )
 }
 

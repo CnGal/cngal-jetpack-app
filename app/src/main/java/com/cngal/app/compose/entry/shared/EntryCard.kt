@@ -27,25 +27,25 @@ import com.cngal.app.model.entry.EntryType
 import com.cngal.app.model.entry.RoleCardModel
 
 @Composable
-fun EntryCard(model: EntryCardModel, fillMaxWidth: Boolean, onNav: (String) -> Unit)
+fun EntryCard(modifier : Modifier=Modifier,model: EntryCardModel, fillMaxWidth: Boolean, onNav: (String) -> Unit)
 {
     if (model.type == EntryType.Game || model.type == EntryType.ProductionGroup)
     {
-        GameOrGroupCard(model, fillMaxWidth, onNav)
+        GameOrGroupCard(modifier,model, fillMaxWidth, onNav)
     }
     else
     {
-        RoleOrStaffCard(model, fillMaxWidth, onNav)
+        RoleOrStaffCard(modifier,model, fillMaxWidth, onNav)
     }
 }
 
 
 @Composable
-fun GameOrGroupCard(model: EntryCardModel, fillMaxWidth: Boolean, onNav: (String) -> Unit)
+fun GameOrGroupCard(modifier : Modifier=Modifier,model: EntryCardModel, fillMaxWidth: Boolean, onNav: (String) -> Unit)
 {
     if (fillMaxWidth)
     {
-        Card(modifier = Modifier
+        Card(modifier = modifier
             .fillMaxWidth()
             .clickable { onNav("${SingleEntryDestination.route}/${model.id}") }
         ) {
@@ -118,12 +118,12 @@ fun GameOrGroupCard(model: EntryCardModel, fillMaxWidth: Boolean, onNav: (String
 }
 
 @Composable
-fun RoleOrStaffCard(model: EntryCardModel, fillMaxWidth: Boolean, onNav: (String) -> Unit)
+fun RoleOrStaffCard(modifier : Modifier=Modifier,model: EntryCardModel, fillMaxWidth: Boolean, onNav: (String) -> Unit)
 {
 
     if(fillMaxWidth)
     {
-        Card(modifier = Modifier
+        Card(modifier = modifier
             .fillMaxWidth()
             .clickable { onNav("${SingleEntryDestination.route}/${model.id}") }
         ) {
