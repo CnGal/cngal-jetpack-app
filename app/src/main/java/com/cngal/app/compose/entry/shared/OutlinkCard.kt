@@ -57,7 +57,7 @@ fun OutlinkCard(model: OutlinkModel, fillMaxWidth: Boolean, onNav: (String) -> U
 
             Column(
                 modifier = Modifier
-                    .height(40.dp),
+                    .height(45.dp),
                 verticalArrangement = if (!model.displayValue.isNullOrBlank())
                 {
                     Arrangement.SpaceBetween

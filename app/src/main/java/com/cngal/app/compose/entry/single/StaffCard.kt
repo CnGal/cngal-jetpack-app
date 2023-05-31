@@ -75,7 +75,8 @@ fun StaffPositionGroupCard(
         withStyle(
             style = SpanStyle(
                 fontWeight = FontWeight.Bold,
-                fontSize = fontSize
+                fontSize = fontSize,
+                color=MaterialTheme.colorScheme.onBackground
             )
         ) {
             append("${position}：")
@@ -85,7 +86,8 @@ fun StaffPositionGroupCard(
             {
                 withStyle(
                     style = SpanStyle(
-                        fontSize = fontSize
+                        fontSize = fontSize,
+                        color=MaterialTheme.colorScheme.onBackground
                     )
                 ) {
                     append("、")
@@ -112,7 +114,8 @@ fun StaffPositionGroupCard(
             {
                 withStyle(
                     style = SpanStyle(
-                        fontSize = fontSize
+                        fontSize = fontSize,
+                        color=MaterialTheme.colorScheme.onBackground
                     )
                 ) {
                     append(it.displayName)

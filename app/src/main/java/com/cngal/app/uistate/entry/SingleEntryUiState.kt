@@ -20,6 +20,8 @@ class SingleEntryUiState
     var roles: List<EntryCardModel> = listOf()
     var news: List<NewsModel> = listOf()
     var outlinks: MutableList<OutlinkModel> = mutableListOf()
+    var releases: MutableList<ReleaseUiState> = mutableListOf()
     var link :String=""
     var shareText :String=""
 }
+

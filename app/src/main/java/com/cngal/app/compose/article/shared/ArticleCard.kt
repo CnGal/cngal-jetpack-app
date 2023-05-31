@@ -25,7 +25,7 @@ import com.cngal.app.SingleEntryDestination
 import com.cngal.app.model.article.ArticleCardModel
 
 @Composable
-fun ArticleCard(model: ArticleCardModel, fillMaxWidth: Boolean, onNav: (String) -> Unit)
+fun ArticleCard(model: ArticleCardModel, fillMaxWidth: Boolean, onNav: (String) -> Unit,fixedHeight:Boolean=false)
 {
     if (fillMaxWidth)
     {
@@ -68,30 +68,60 @@ fun ArticleCard(model: ArticleCardModel, fillMaxWidth: Boolean, onNav: (String) 
     }
     else
     {
-        Card(modifier = Modifier
-            .width(120.dp)
-            .clickable { onNav("${SingleArticleDestination.route}/${model.id}") }
-        ) {
-            Column {
-                AsyncImage(
-                    model = model.mainImage,
-                    contentDescription = model.name,
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .aspectRatio(460f / 215f)
-                        .clip(RoundedCornerShape(12.dp))
-                )
-                Text(
-                    text = model.name,
-                    style = MaterialTheme.typography.bodySmall,
-                    overflow = TextOverflow.Ellipsis,
-                    maxLines = 2,
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .padding(6.dp)
-                )
+        if(fixedHeight)
+        {
+            Card(modifier = Modifier
+                .fillMaxWidth()
+                .clickable { onNav("${SingleArticleDestination.route}/${model.id}") }
+            ) {
+                Column {
+                    AsyncImage(
+                        model = model.mainImage,
+                        contentDescription = model.name,
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .aspectRatio(460f / 215f)
+                            .clip(RoundedCornerShape(12.dp))
+                    )
+                    Text(
+                        text = model.name,
+                        style = MaterialTheme.typography.bodyMedium,
+                        overflow = TextOverflow.Ellipsis,
+                        maxLines = 2,
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .padding(6.dp)
+                    )
+                }
             }
         }
+        else{
+            Card(modifier = Modifier
+                .width(120.dp)
+                .clickable { onNav("${SingleArticleDestination.route}/${model.id}") }
+            ) {
+                Column {
+                    AsyncImage(
+                        model = model.mainImage,
+                        contentDescription = model.name,
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .aspectRatio(460f / 215f)
+                            .clip(RoundedCornerShape(12.dp))
+                    )
+                    Text(
+                        text = model.name,
+                        style = MaterialTheme.typography.bodySmall,
+                        overflow = TextOverflow.Ellipsis,
+                        maxLines = 2,
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .padding(6.dp)
+                    )
+                }
+            }
+        }
+
     }
 
 }

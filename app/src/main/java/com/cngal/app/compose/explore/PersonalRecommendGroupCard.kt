@@ -139,7 +139,8 @@ fun GalleryCard(
     onClickStore: (PersonalRecommendModel) -> Unit
 )
 {
-    Card(modifier = Modifier
+    Card(
+        modifier = Modifier
             .fillMaxWidth()
     ) {
 
@@ -164,8 +165,8 @@ fun GalleryCard(
                 ) {
                     model.tags.shuffled().take(2).forEach {
                         IconChip(
-                            it,
-                            Icons.Filled.Tag
+                            text = it,
+                            icon = Icons.Filled.Tag
                         )
                     }
                 }
@@ -239,8 +240,8 @@ fun GalleryCard(
 fun PlainTextCard(model: PersonalRecommendModel, onClickCard: (PersonalRecommendModel) -> Unit)
 {
     Card(modifier = Modifier
-            .fillMaxWidth()
-            .clickable { onClickCard(model) }
+        .fillMaxWidth()
+        .clickable { onClickCard(model) }
     ) {
         Column {
             AsyncImage(
@@ -277,26 +278,27 @@ fun PlainTextCard(model: PersonalRecommendModel, onClickCard: (PersonalRecommend
                         )
                         {
                             IconChip(
-                                "已发布",
-                                Icons.Filled.Publish
+                                text = "已发布",
+                                icon = Icons.Filled.Publish
                             )
-                        } else
+                        }
+                        else
                         {
                             IconChip(
-                                "未发布",
-                                Icons.Filled.Unpublished
+                                text = "未发布",
+                                icon = Icons.Filled.Unpublished
                             )
                         }
 
                         if (model.release.storeInfor.evaluationCount != null && model.release.storeInfor.evaluationCount > 0)
                         {
                             IconChip(
-                                "${"%.0f".format(model.release.storeInfor.recommendationRate!!)}% 好评",
-                                Icons.Filled.ThumbUp
+                                text = "${"%.0f".format(model.release.storeInfor.recommendationRate!!)}% 好评",
+                                icon = Icons.Filled.ThumbUp
                             )
                             IconChip(
-                                "${model.release.storeInfor.evaluationCount}条评测",
-                                Icons.Filled.Article
+                                text = "${model.release.storeInfor.evaluationCount}条评测",
+                                icon = Icons.Filled.Article
                             )
                         }
                     }

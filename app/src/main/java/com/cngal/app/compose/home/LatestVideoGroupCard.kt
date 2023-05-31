@@ -14,15 +14,9 @@ import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Card
-import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.derivedStateOf
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -30,39 +24,33 @@ import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import coil.compose.AsyncImage
 import com.cngal.app.compose.shared.TitleCard
-import com.cngal.app.helper.appContext
-import com.cngal.app.helper.openNewTabWindow
 import com.cngal.app.model.home.LatestVideoModel
 
 @Composable
-fun LatestVideoGroupCard(model: List<LatestVideoModel>,onNav:(String)->Unit)
+fun LatestVideoGroupCard(model: List<LatestVideoModel>, onNav: (String) -> Unit)
 {
-    TitleCard(title = "最新视频",  onClickLink = {onNav("https://www.cngal.org/search/?Types=Video")}, content = {
-        LazyRow(
-            horizontalArrangement = Arrangement.spacedBy(12.dp),
-            contentPadding = PaddingValues(horizontal = 12.dp),
-        ) {
-            items(items = model) { item ->
-
-                LatestVideoCard(model = item, onClickCard = {
-                    //todo 替换跳转页面
-                    openNewTabWindow(
-                        "https://www.cngal.org/${item.url}",
-                        appContext
-                    )
-                })
+    TitleCard(
+        title = "最新视频",
+        onClickLink = { onNav("https://www.cngal.org/search/?Types=Video") },
+        content = {
+            LazyRow(
+                horizontalArrangement = Arrangement.spacedBy(12.dp),
+                contentPadding = PaddingValues(horizontal = 12.dp),
+            ) {
+                items(items = model) { item ->
+                    LatestVideoCard(model = item, onClickCard = { onNav(item.url) })
+                }
             }
-        }
-    })
+        })
 }
 
 @Composable
 fun LatestVideoCard(model: LatestVideoModel, onClickCard: () -> Unit)
 {
     Card(modifier = Modifier
-            .width(200.dp)
-            .fillMaxHeight()
-            .clickable { onClickCard() }
+        .width(200.dp)
+        .fillMaxHeight()
+        .clickable { onClickCard() }
     ) {
         Column {
             AsyncImage(

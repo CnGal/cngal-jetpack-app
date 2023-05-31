@@ -26,7 +26,8 @@ fun SingleTagScreen(
     modifier: Modifier = Modifier,
     id: Int?,
     viewModel: SingleTagViewModel = viewModel(),
-    onNav: (String) -> Unit
+    onNav: (String) -> Unit,
+    onBack: () -> Unit
 )
 {
     val tagState by viewModel.tag.collectAsState()
@@ -35,7 +36,7 @@ fun SingleTagScreen(
     LaunchedEffect(id) {
         if ((viewModel.tag.value.data?.id ?: 0) != id)
         {
-            viewModel.loadArticleData(id)
+            viewModel.loadTagData(id)
         }
     }
 
@@ -48,7 +49,7 @@ fun SingleTagScreen(
         Scaffold(
             topBar = {
                 TitleBar(title = tagState.data?.name ?: "",
-                    onBack = {},
+                    onBack = onBack,
                     onClickOpenInBrowser = { onNav(uiState.link) },
                     onClickLink = {
                         ClipboardHelper.textCopy(

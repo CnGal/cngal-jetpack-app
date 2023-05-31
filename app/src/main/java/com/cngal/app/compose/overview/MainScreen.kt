@@ -13,9 +13,12 @@ import com.cngal.app.NewsCardGroupDestination
 import com.cngal.app.OutlinkCardGroupDestination
 import com.cngal.app.OverviewDestination
 import com.cngal.app.RoleCardGroupDestination
+import com.cngal.app.SearchDestination
 import com.cngal.app.SingleArticleDestination
 import com.cngal.app.SingleEntryDestination
 import com.cngal.app.SingleTagDestination
+import com.cngal.app.SingleVideoDestination
+import com.cngal.app.VideoCardGroupDestination
 import com.cngal.app.compose.article.detail.ArticleCardGroupScreen
 import com.cngal.app.compose.article.single.SingleArticleScreen
 import com.cngal.app.compose.entry.detail.EntryCardGroupScreen
@@ -23,7 +26,10 @@ import com.cngal.app.compose.entry.detail.NewsCardGroupScreen
 import com.cngal.app.compose.entry.detail.OutlinkCardGroupScreen
 import com.cngal.app.compose.entry.detail.RoleCardGroupScreen
 import com.cngal.app.compose.entry.single.SingleEntryScreen
+import com.cngal.app.compose.search.SearchScreen
 import com.cngal.app.compose.tag.single.SingleTagScreen
+import com.cngal.app.compose.video.detail.VideoCardGroupScreen
+import com.cngal.app.compose.video.single.SingleVideoScreen
 import com.cngal.app.helper.JsonHelper
 import com.cngal.app.helper.appContext
 import com.cngal.app.helper.openNewTabWindow
@@ -44,6 +50,9 @@ fun MainScreen()
             {
                 navController.navigateTo(it)
             }
+        },
+        onBack={
+            navController.popBackStack()
         }
     )
 }
@@ -52,7 +61,8 @@ fun MainScreen()
 fun MainNavHost(
     navController: NavHostController,
     modifier: Modifier = Modifier,
-    onNav: (String) -> Unit
+    onNav: (String) -> Unit,
+    onBack: () -> Unit
 )
 {
     NavHost(
@@ -70,7 +80,7 @@ fun MainNavHost(
         ) { navBackStackEntry ->
             val id =
                 navBackStackEntry.arguments?.getInt(SingleEntryDestination.idArg)
-            SingleEntryScreen(id = id, onNav = onNav)
+            SingleEntryScreen(id = id, onNav = onNav,onBack=onBack)
         }
         composable(
             route = EntryCardGroupDestination.routeWithArgs,
@@ -81,7 +91,7 @@ fun MainNavHost(
                 navBackStackEntry.arguments?.getString(EntryCardGroupDestination.titleArg)
             val data =
                 navBackStackEntry.arguments?.getString(EntryCardGroupDestination.dataArg)
-            EntryCardGroupScreen(title ?: "", JsonHelper.fromJson(data!!), onNav)
+            EntryCardGroupScreen(title ?: "", JsonHelper.fromJson(data!!), onNav,onBack)
         }
         composable(
             route = RoleCardGroupDestination.routeWithArgs,
@@ -92,7 +102,7 @@ fun MainNavHost(
                 navBackStackEntry.arguments?.getString(RoleCardGroupDestination.titleArg)
             val data =
                 navBackStackEntry.arguments?.getString(RoleCardGroupDestination.dataArg)
-            RoleCardGroupScreen(title ?: "", JsonHelper.fromJson(data!!), onNav)
+            RoleCardGroupScreen(title ?: "", JsonHelper.fromJson(data!!), onNav,onBack)
         }
         composable(
             route = NewsCardGroupDestination.routeWithArgs,
@@ -103,7 +113,7 @@ fun MainNavHost(
                 navBackStackEntry.arguments?.getString(NewsCardGroupDestination.titleArg)
             val data =
                 navBackStackEntry.arguments?.getString(NewsCardGroupDestination.dataArg)
-            NewsCardGroupScreen(title ?: "", JsonHelper.fromJson(data!!), onNav)
+            NewsCardGroupScreen(title ?: "", JsonHelper.fromJson(data!!), onNav,onBack)
         }
         composable(
             route = OutlinkCardGroupDestination.routeWithArgs,
@@ -114,7 +124,7 @@ fun MainNavHost(
                 navBackStackEntry.arguments?.getString(OutlinkCardGroupDestination.titleArg)
             val data =
                 navBackStackEntry.arguments?.getString(OutlinkCardGroupDestination.dataArg)
-            OutlinkCardGroupScreen(title ?: "", JsonHelper.fromJson(data!!), onNav)
+            OutlinkCardGroupScreen(title ?: "", JsonHelper.fromJson(data!!), onNav,onBack)
         }
         composable(
             route = SingleArticleDestination.routeWithArgs,
@@ -123,7 +133,7 @@ fun MainNavHost(
         ) { navBackStackEntry ->
             val id =
                 navBackStackEntry.arguments?.getLong(SingleArticleDestination.idArg)
-            SingleArticleScreen(id = id, onNav = onNav)
+            SingleArticleScreen(id = id, onNav = onNav,onBack=onBack)
 
         }
         composable(
@@ -135,7 +145,7 @@ fun MainNavHost(
                 navBackStackEntry.arguments?.getString(ArticleCardGroupDestination.titleArg)
             val data =
                 navBackStackEntry.arguments?.getString(ArticleCardGroupDestination.dataArg)
-            ArticleCardGroupScreen(title ?: "", JsonHelper.fromJson(data!!), onNav)
+            ArticleCardGroupScreen(title ?: "", JsonHelper.fromJson(data!!), onNav,onBack)
         }
         composable(
             route = SingleTagDestination.routeWithArgs,
@@ -144,8 +154,31 @@ fun MainNavHost(
         ) { navBackStackEntry ->
             val id =
                 navBackStackEntry.arguments?.getInt(SingleTagDestination.idArg)
-            SingleTagScreen(id = id, onNav = onNav)
+            SingleTagScreen(id = id, onNav = onNav,onBack=onBack)
+        }
+        composable(
+            route = SingleVideoDestination.routeWithArgs,
+            arguments = SingleVideoDestination.arguments,
+            deepLinks = SingleVideoDestination.deepLinks
+        ) { navBackStackEntry ->
+            val id =
+                navBackStackEntry.arguments?.getLong(SingleVideoDestination.idArg)
+            SingleVideoScreen(id = id, onNav = onNav,onBack=onBack)
 
+        }
+        composable(
+            route = VideoCardGroupDestination.routeWithArgs,
+            arguments = VideoCardGroupDestination.arguments,
+            deepLinks = VideoCardGroupDestination.deepLinks
+        ) { navBackStackEntry ->
+            val title =
+                navBackStackEntry.arguments?.getString(VideoCardGroupDestination.titleArg)
+            val data =
+                navBackStackEntry.arguments?.getString(VideoCardGroupDestination.dataArg)
+            VideoCardGroupScreen(title ?: "", JsonHelper.fromJson(data!!), onNav,onBack)
+        }
+        composable(route = SearchDestination.route) {
+            SearchScreen(onNav = onNav, onBack = onBack)
         }
     }
 }

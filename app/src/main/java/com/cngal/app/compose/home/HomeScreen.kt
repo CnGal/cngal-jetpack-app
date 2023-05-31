@@ -59,6 +59,8 @@ fun HomeScreen(
                 CarouselGroupCard(carouselsState.data!!)
             }
 
+            LinkGroupCard(onNav)
+
             if (newsState.state == AppState.SUCCESS)
             {
                 NewsGroupCard(newsState.data!!,onNav)

@@ -86,8 +86,8 @@ fun PublishedGameCard(model: PublishedGameModel, onClickCard: () -> Unit)
                     if (model.tags.isNotEmpty())
                     {
                         IconChip(
-                            model.tags.first(),
-                            Icons.Filled.Tag
+                            text =   model.tags.first(),
+                           icon= Icons.Filled.Tag
                         )
                     }
 

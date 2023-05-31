@@ -26,7 +26,8 @@ fun SingleEntryScreen(
     modifier: Modifier = Modifier,
     id: Int?,
     viewModel: SingleEntryViewModel = viewModel(),
-    onNav: (String) -> Unit
+    onNav: (String) -> Unit,
+    onBack: () -> Unit
 )
 {
     val entryState by viewModel.entry.collectAsState()
@@ -57,7 +58,7 @@ fun SingleEntryScreen(
             topBar = {
                 TitleBar(
                     title = model.name,
-                    onBack = {},
+                    onBack = onBack,
                     onClickOpenInBrowser = { onNav(uiState.link) },
                     onClickLink = {
                         ClipboardHelper.textCopy(
@@ -65,10 +66,12 @@ fun SingleEntryScreen(
                             uiState.link
                         )
                     },
-                    onClickShare = {  ClipboardHelper.textCopy(
-                        "分享文案",
-                        uiState.shareText
-                    )})
+                    onClickShare = {
+                        ClipboardHelper.textCopy(
+                            "分享文案",
+                            uiState.shareText
+                        )
+                    })
             },
             content = {
                 Column(
@@ -94,6 +97,7 @@ fun SingleEntryScreen(
                         )
 
                         TagGroupCard(tags = model.tags, onNav = onNav)
+                        ReleaseGroupCard(uiState.releases, model.name, onNav)
 
 
                         GalleryCard(images = uiState.images)
@@ -107,7 +111,7 @@ fun SingleEntryScreen(
 
                         StaffCard(staffs = model.staffs, onNav = onNav)
 
-                        MainPageCard(mainPage = model.mainPage)
+                        MainPageCard(mainPage = model.mainPage, onNav = onNav)
 
                         VerticalDrawingCard(model.mainPicture, model.name, model.type)
 

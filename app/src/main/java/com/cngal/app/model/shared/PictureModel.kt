@@ -1,6 +1,7 @@
-package com.cngal.app.model.entry
+package com.cngal.app.model.shared
 
 
+import com.cngal.app.model.entry.PictureContentModel
 import com.squareup.moshi.Json
 import com.squareup.moshi.JsonClass
 

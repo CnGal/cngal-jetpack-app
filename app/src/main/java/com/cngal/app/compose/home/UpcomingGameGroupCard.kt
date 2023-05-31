@@ -77,8 +77,8 @@ fun UpcomingGameCard(model: UpcomingGameModel, onClickCard: () -> Unit)
                     overflow = TextOverflow.Ellipsis,
                 )
                 IconChip(
-                    model.publishTime,
-                    Icons.Filled.Schedule
+                   text= model.publishTime,
+                   icon= Icons.Filled.Schedule
                 )
 
             }

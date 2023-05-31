@@ -21,7 +21,7 @@ class SingleTagViewModel : ViewModel()
     private val _uiState = MutableStateFlow(SingleTagUiState())
     val uiState = _uiState.asStateFlow()
 
-    fun loadArticleData(id: Int?)
+    fun loadTagData(id: Int?)
     {
         if (id == null || id <= 0)
         {

@@ -14,16 +14,13 @@ import com.cngal.app.compose.shared.TitleBar
 import com.cngal.app.model.article.ArticleCardModel
 
 @Composable
-fun ArticleCardGroupScreen(title: String, model: List<ArticleCardModel>, onNav: (String) -> Unit)
+fun ArticleCardGroupScreen(title: String, model: List<ArticleCardModel>, onNav: (String) -> Unit,onBack: () -> Unit)
 {
     Scaffold(
         topBar = {
             TitleBar(
                 title = title,
-                onClickOpenInBrowser = { },
-                onClickLink = { },
-                onClickShare = {},
-                onBack = {})
+                onBack = onBack)
         },
         content = {
             LazyColumn(

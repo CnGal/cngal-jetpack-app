@@ -29,10 +29,9 @@ import androidx.compose.ui.zIndex
 fun TitleBar(
     title: String?,
     onBack: () -> Unit,
-    onClickOpenInBrowser: () -> Unit,
-    onClickLink: () -> Unit,
-    onClickShare: () -> Unit,
-    showActions: Boolean = true
+    onClickOpenInBrowser: (() -> Unit)?=null,
+    onClickLink: (() -> Unit)?=null,
+    onClickShare: (() -> Unit)?=null,
 )
 {
     var expanded by remember { mutableStateOf(false) }
@@ -58,7 +57,7 @@ fun TitleBar(
             }
         },
         actions = {
-            if (showActions)
+            if (onClickOpenInBrowser != null || onClickLink != null || onClickShare != null)
             {
                 IconButton(onClick = { expanded = true }) {
                     Icon(
@@ -66,47 +65,58 @@ fun TitleBar(
                         contentDescription = "更多"
                     )
                 }
+
                 DropdownMenu(
                     expanded = expanded,
                     onDismissRequest = { expanded = false }
                 ) {
-                    DropdownMenuItem(
-                        text = { Text("浏览器打开") },
-                        onClick = {
-                            onClickOpenInBrowser()
-                            expanded = false
-                        },
-                        leadingIcon = {
-                            Icon(
-                                Icons.Outlined.OpenInBrowser,
-                                contentDescription = null
-                            )
-                        })
-                    DropdownMenuItem(
-                        text = { Text("复制链接") },
-                        onClick = {
-                            onClickLink()
-                            expanded = false
-                        },
-                        leadingIcon = {
-                            Icon(
-                                Icons.Outlined.Link,
-                                contentDescription = null
-                            )
-                        })
+                    if (onClickOpenInBrowser != null)
+                    {
+                        DropdownMenuItem(
+                            text = { Text("浏览器打开") },
+                            onClick = {
+                                onClickOpenInBrowser()
+                                expanded = false
+                            },
+                            leadingIcon = {
+                                Icon(
+                                    Icons.Outlined.OpenInBrowser,
+                                    contentDescription = null
+                                )
+                            })
+                    }
+                    if (onClickLink != null)
+                    {
+                        DropdownMenuItem(
+                            text = { Text("复制链接") },
+                            onClick = {
+                                onClickLink()
+                                expanded = false
+                            },
+                            leadingIcon = {
+                                Icon(
+                                    Icons.Outlined.Link,
+                                    contentDescription = null
+                                )
+                            })
 
-                    DropdownMenuItem(
-                        text = { Text("复制分享文案") },
-                        onClick = {
-                            onClickShare()
-                            expanded = false
-                        },
-                        leadingIcon = {
-                            Icon(
-                                Icons.Outlined.Share,
-                                contentDescription = null
-                            )
-                        })
+                    }
+                    if (onClickShare != null)
+                    {
+                        DropdownMenuItem(
+                            text = { Text("复制分享文案") },
+                            onClick = {
+                                onClickShare()
+                                expanded = false
+                            },
+                            leadingIcon = {
+                                Icon(
+                                    Icons.Outlined.Share,
+                                    contentDescription = null
+                                )
+                            })
+                    }
+
                 }
             }
 

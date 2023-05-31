@@ -7,11 +7,15 @@ import retrofit2.Retrofit
 import retrofit2.converter.moshi.MoshiConverterFactory
 import retrofit2.http.GET
 import retrofit2.http.Path
+import retrofit2.http.Query
 
 interface EntryService
 {
     @GET("/api/entries/GetEntryView/{id}")
-    suspend fun getEntryData(@Path("id") id: Int): EntryModel
+    suspend fun getEntryData(
+        @Path("id") id: Int,
+        @Query("renderMarkdown") renderMarkdown: Boolean = false
+    ): EntryModel
 
     companion object
     {

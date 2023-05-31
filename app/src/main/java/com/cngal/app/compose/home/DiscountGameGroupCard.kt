@@ -16,8 +16,6 @@ import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.LocalOffer
-import androidx.compose.material.icons.filled.Percent
-import androidx.compose.material.icons.filled.ThumbUp
 import androidx.compose.material3.Card
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
@@ -29,33 +27,34 @@ import androidx.compose.ui.unit.dp
 import coil.compose.AsyncImage
 import com.cngal.app.compose.shared.IconChip
 import com.cngal.app.compose.shared.TitleCard
-import com.cngal.app.helper.appContext
-import com.cngal.app.helper.openNewTabWindow
 import com.cngal.app.model.home.DiscountGameModel
 
 @Composable
-fun DiscountGameGroupCard(model: List<DiscountGameModel>,onNav: (String) -> Unit)
+fun DiscountGameGroupCard(model: List<DiscountGameModel>, onNav: (String) -> Unit)
 {
 
-    TitleCard(title = "折扣中的游戏", onClickLink = {onNav("https://www.cngal.org/discount")}, content = {
-        LazyRow(
-            horizontalArrangement = Arrangement.spacedBy(12.dp),
-            contentPadding = PaddingValues(horizontal = 12.dp),
-        ) {
-            items(items = model) { item ->
+    TitleCard(
+        title = "折扣中的游戏",
+        onClickLink = { onNav("https://www.cngal.org/discount") },
+        content = {
+            LazyRow(
+                horizontalArrangement = Arrangement.spacedBy(12.dp),
+                contentPadding = PaddingValues(horizontal = 12.dp),
+            ) {
+                items(items = model) { item ->
 
-                DiscountGameCard(model = item, onClickCard = {
-                    onNav.invoke(item.url)
-                })
+                    DiscountGameCard(model = item, onClickCard = {
+                        onNav.invoke(item.url)
+                    })
+                }
             }
-        }
-    })
+        })
 }
 
 @Composable
 fun DiscountGameCard(model: DiscountGameModel, onClickCard: () -> Unit)
 {
-    Card( modifier = Modifier
+    Card(modifier = Modifier
         .width(200.dp)
         .fillMaxHeight()
         .clickable { onClickCard() }
@@ -85,16 +84,16 @@ fun DiscountGameCard(model: DiscountGameModel, onClickCard: () -> Unit)
                 Row(
                     modifier = Modifier
                         .height(24.dp),
-                horizontalArrangement = Arrangement.spacedBy(12.dp)
+                    horizontalArrangement = Arrangement.spacedBy(12.dp)
                 )
                 {
                     IconChip(
-                        "${model.cut}% OFF",
-                        Icons.Filled.LocalOffer
+                        text = "${model.cut}% OFF",
+                        icon = Icons.Filled.LocalOffer
                     )
                     IconChip(
-                        "¥ ${"%.2f".format(model.price)}",
-                        null
+                        text = "¥ ${"%.2f".format(model.price)}",
+                        icon = null
                     )
 
                 }

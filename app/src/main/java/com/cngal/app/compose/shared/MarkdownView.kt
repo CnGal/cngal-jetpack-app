@@ -1,23 +1,20 @@
 package com.cngal.app.compose.shared
 
-import android.text.util.Linkify
-import android.widget.TextView
 import androidx.compose.foundation.layout.Box
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.toArgb
-import androidx.compose.ui.viewinterop.AndroidView
-import androidx.core.text.HtmlCompat
+import dev.jeziellago.compose.markdowntext.MarkdownText
 
 @Composable
-fun MarkdownView(modifier: Modifier = Modifier, text: String)
+fun MarkdownView(modifier: Modifier = Modifier, text: String,onNav:(String)->Unit)
 {
     Box(modifier = modifier)
     {
         val textColor = MaterialTheme.colorScheme.onBackground.toArgb()
         val linkTextColor = MaterialTheme.colorScheme.primary.toArgb()
-        AndroidView(
+        /*AndroidView(
             factory = {
                 TextView(it).apply {
                     // links
@@ -30,6 +27,9 @@ fun MarkdownView(modifier: Modifier = Modifier, text: String)
             update = {
                 it.text = HtmlCompat.fromHtml(text, 0)
             }
-        )
+        )*/
+
+
+        MarkdownText(markdown = text, onLinkClicked = {onNav(it)}, color = MaterialTheme.colorScheme.onBackground)
     }
 }

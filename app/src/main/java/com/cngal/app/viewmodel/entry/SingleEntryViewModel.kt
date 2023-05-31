@@ -2,6 +2,8 @@ package com.cngal.app.viewmodel.entry
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.cngal.app.extension.toDate
+import com.cngal.app.extension.toString
 import com.cngal.app.model.entry.EntryModel
 import com.cngal.app.model.entry.EntryType
 import com.cngal.app.model.entry.OutlinkModel
@@ -10,6 +12,7 @@ import com.cngal.app.model.entry.PublishPlatformType
 import com.cngal.app.model.entry.getGeneralType
 import com.cngal.app.model.shared.ApiResponse
 import com.cngal.app.repository.EntryRepository
+import com.cngal.app.uistate.entry.ReleaseUiState
 import com.cngal.app.uistate.entry.SingleEntryUiState
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -156,6 +159,95 @@ class SingleEntryViewModel : ViewModel()
                     state.link = "https://www.cngal.org/entries/index/${model.id}"
                     state.shareText =
                         "【词条】 ${model.name} | CnGal资料站 https://www.cngal.org/entries/index/${model.id}"
+
+                    //发行列表
+                    state.releases.clear()
+                    model.releases.forEach {
+                        val image = when (it.publishPlatformType)
+                        {
+                            PublishPlatformType.Steam -> "Steam.png"
+                            PublishPlatformType.AppStore -> "AppStore.png"
+                            PublishPlatformType.DLsite -> "DLsite.png"
+                            PublishPlatformType.Epic -> "Epic.png"
+                            PublishPlatformType.NS -> "Nintendo_Switch.png"
+                            PublishPlatformType.GooglePlay -> "GooglePlay.png"
+                            PublishPlatformType.TapTap -> "TapTap.png"
+                            else ->
+                            {
+                                val name = it.publishPlatformName?.lowercase()
+                                if (name != null && (name.contains("bilibili") || name.contains("b站") || name.contains(
+                                        "哔哩哔哩"
+                                    ))
+                                )
+                                {
+                                    "bilibili.png"
+                                }
+                                else
+                                {
+                                    null
+                                }
+
+                            }
+                        }
+
+                        state.releases.add(
+                            ReleaseUiState(
+                                image = if (!image.isNullOrBlank())
+                                {
+                                    "https://res.cngal.org/_content/CnGalWebSite.Shared/images/${image}"
+                                }
+                                else
+                                {
+                                    null
+                                },
+                                value = if (it.timeNote.isNullOrBlank())
+                                {
+                                    if (!it.time.isNullOrBlank())
+                                    {
+                                        it.time.toDate().toString("yyyy年M月d日")
+                                    }
+                                    else
+                                    {
+                                        null
+                                    }
+                                }
+                                else
+                                {
+                                    it.timeNote
+                                },
+                                id = 0,
+                                name = if (it.publishPlatformType == PublishPlatformType.Other)
+                                {
+                                    it.publishPlatformName ?: "其他"
+                                }
+                                else
+                                {
+                                    it.publishPlatformType.toString()
+                                },
+                                link = when (it.publishPlatformType)
+                                {
+                                    PublishPlatformType.Steam -> if (it.link?.toIntOrNull() != null)
+                                    {
+                                        "https://store.steampowered.com/app/" + it.link
+                                    }
+                                    else
+                                    {
+                                        it.link
+                                    }
+
+                                    PublishPlatformType.AppStore -> "https://apps.apple.com/cn/app/" + it.link
+                                    PublishPlatformType.GooglePlay -> "https://play.google.com/store/apps/details?id=" + it.link
+                                    PublishPlatformType.Epic -> "https://store.epicgames.com/zh-CN/p/" + it.link
+                                    PublishPlatformType.TapTap -> "https://www.taptap.cn/app/" + it.link
+                                    PublishPlatformType.NS -> "https://ec.nintendo.com/HK/zh/titles/" + it.link
+                                    PublishPlatformType.DLsite -> "https://www.dlsite.com/maniax/work/=/product_id/${it.link}.html"
+                                    else ->
+                                        it.link
+                                },
+                                type = it.type
+                            )
+                        )
+                    }
 
                     state
                 }

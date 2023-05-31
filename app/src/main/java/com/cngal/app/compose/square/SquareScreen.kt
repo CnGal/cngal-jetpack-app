@@ -58,7 +58,7 @@ fun SquareScreen(modifier: Modifier = Modifier,viewModel: SquareViewModel = view
             }
             if (latestCommentsState.state == AppState.SUCCESS)
             {
-                LatestCommentGroupCard(latestCommentsState.data!!)
+                LatestCommentGroupCard(latestCommentsState.data!!,onNav)
             }
             if (announcementsState.state == AppState.SUCCESS)
             {

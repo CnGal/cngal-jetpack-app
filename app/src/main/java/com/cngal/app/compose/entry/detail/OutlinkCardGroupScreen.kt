@@ -14,13 +14,11 @@ import com.cngal.app.compose.shared.TitleBar
 import com.cngal.app.model.entry.OutlinkModel
 
 @Composable
-fun OutlinkCardGroupScreen(title: String, model: List<OutlinkModel>, onNav: (String) -> Unit)
+fun OutlinkCardGroupScreen(title: String, model: List<OutlinkModel>, onNav: (String) -> Unit,onBack: () -> Unit)
 {
     Scaffold(
         topBar = {
-            TitleBar(title = title, showActions = false,   onClickOpenInBrowser = { },
-                onClickLink = { },
-                onClickShare = {},onBack = {})
+            TitleBar(title = title,  onBack = onBack)
         },
         content = {
             LazyColumn(

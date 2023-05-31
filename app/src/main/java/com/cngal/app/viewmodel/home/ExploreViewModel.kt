@@ -11,6 +11,7 @@ import com.cngal.app.repository.ExploreRepository
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.catch
+import kotlinx.coroutines.flow.debounce
 import kotlinx.coroutines.flow.onStart
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
@@ -42,6 +43,10 @@ class ExploreViewModel : ViewModel()
 
     fun loadMoreRecommends()
     {
+        if(_uiState.value.isLoading)
+        {
+            return
+        }
         viewModelScope.launch {
             ExploreRepository.getPersonalizedRecommendations(_personalRecommends.value.map { it.id })
                 .onStart {

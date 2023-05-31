@@ -11,6 +11,7 @@ import com.squareup.moshi.kotlin.reflect.KotlinJsonAdapterFactory
 import retrofit2.Retrofit
 import retrofit2.converter.moshi.MoshiConverterFactory
 import retrofit2.http.GET
+import retrofit2.http.Query
 
 @Keep
 interface SquareService
@@ -29,7 +30,7 @@ interface SquareService
     suspend fun getHotTagData(): List<HotTagModel>
 
     @GET("/api/home/ListLatestComments")
-    suspend fun getLatestCommentData(): List<LatestCommentModel>
+    suspend fun getLatestCommentData( @Query("renderMarkdown") renderMarkdown: Boolean = false): List<LatestCommentModel>
 
     companion object
     {

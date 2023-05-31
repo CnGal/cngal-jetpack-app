@@ -26,7 +26,8 @@ fun SingleArticleScreen(
     modifier: Modifier = Modifier,
     id: Long?,
     viewModel: SingleArticleViewModel = viewModel(),
-    onNav: (String) -> Unit
+    onNav: (String) -> Unit,
+    onBack: () -> Unit
 )
 {
     val articleState by viewModel.article.collectAsState()
@@ -47,7 +48,7 @@ fun SingleArticleScreen(
     {
         Scaffold(
             topBar = {
-                TitleBar(title = articleState.data?.name ?: "",    onBack = {},
+                TitleBar(title = articleState.data?.name ?: "",    onBack = onBack,
                     onClickOpenInBrowser = { onNav(uiState.link) },
                     onClickLink = {
                         ClipboardHelper.textCopy(
@@ -92,7 +93,7 @@ fun SingleArticleScreen(
                                     model.name,
                                 )
                                 AuthorCard(model.userInfor, onNav)
-                                MainPageCard(model.mainPage, model.createTime, model.lastEditTime)
+                                MainPageCard(model.mainPage, model.createTime, model.lastEditTime,model.originalAuthor,model.originalLink,onNav)
                                 RelevanceGroupCard(
                                     model.relatedArticles,
                                     model.relatedEntries,

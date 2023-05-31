@@ -32,19 +32,19 @@ import androidx.compose.ui.unit.dp
 
 @Composable
 fun TitleCard(
-    modifier : Modifier=Modifier,
+    modifier: Modifier = Modifier,
     content: @Composable () -> Unit,
     title: String,
     expandable: Boolean = false,
-    linkText:String? ="更多",
-    onClickLink: () -> Unit
+    linkText: String? = "更多",
+    onClickLink: (() -> Unit)?=null
 )
 {
 
     var expanded by rememberSaveable { mutableStateOf(false) }
 
     Column(
-        modifier=modifier,
+        modifier = modifier,
         verticalArrangement = Arrangement.spacedBy(4.dp),
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
@@ -78,7 +78,7 @@ fun TitleCard(
                     maxLines = 1,
                     overflow = TextOverflow.Ellipsis,
                 )
-                if (!linkText.isNullOrBlank())
+                if (!linkText.isNullOrBlank() && onClickLink != null)
                 {
                     TextButton(onClick = { onClickLink() }) {
                         Spacer(Modifier.size(ButtonDefaults.IconSpacing))

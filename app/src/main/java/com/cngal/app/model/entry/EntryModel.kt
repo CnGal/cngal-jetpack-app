@@ -3,6 +3,7 @@ package com.cngal.app.model.entry
 
 import com.cngal.app.model.article.ArticleCardModel
 import com.cngal.app.model.edit.EditState
+import com.cngal.app.model.shared.PictureModel
 import com.cngal.app.model.video.VideoCardModel
 import com.squareup.moshi.Json
 import com.squareup.moshi.JsonClass

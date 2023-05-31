@@ -100,8 +100,8 @@ fun LatestArticleCard(model: LatestArticleModel, onClickCard: () -> Unit)
                         if (model.originalAuthor != null)
                         {
                             IconChip(
-                                "搬运",
-                                Icons.Filled.SwapHoriz
+                                text =  "搬运",
+                               icon= Icons.Filled.SwapHoriz
                             )
                             Text(
                                 text = "作者：${model.originalAuthor}",

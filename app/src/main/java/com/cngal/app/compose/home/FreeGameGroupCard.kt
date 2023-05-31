@@ -27,15 +27,13 @@ import androidx.compose.ui.unit.dp
 import coil.compose.AsyncImage
 import com.cngal.app.compose.shared.IconChip
 import com.cngal.app.compose.shared.TitleCard
-import com.cngal.app.helper.appContext
-import com.cngal.app.helper.openNewTabWindow
 import com.cngal.app.model.home.FreeGameModel
 
 @Composable
-fun FreeGameGroupCard(model: List<FreeGameModel>,onNav: (String) -> Unit)
+fun FreeGameGroupCard(model: List<FreeGameModel>, onNav: (String) -> Unit)
 {
 
-    TitleCard(title = "免费游玩", onClickLink = {onNav("https://www.cngal.org/free")}, content = {
+    TitleCard(title = "免费游玩", onClickLink = { onNav("https://www.cngal.org/free") }, content = {
         LazyRow(
             horizontalArrangement = Arrangement.spacedBy(12.dp),
             contentPadding = PaddingValues(horizontal = 12.dp),
@@ -53,7 +51,7 @@ fun FreeGameGroupCard(model: List<FreeGameModel>,onNav: (String) -> Unit)
 @Composable
 fun FreeGameCard(model: FreeGameModel, onClickCard: () -> Unit)
 {
-    Card( modifier = Modifier
+    Card(modifier = Modifier
         .width(150.dp)
         .fillMaxHeight()
         .clickable { onClickCard() }
@@ -88,8 +86,8 @@ fun FreeGameCard(model: FreeGameModel, onClickCard: () -> Unit)
                     if (model.tags.isNotEmpty())
                     {
                         IconChip(
-                            model.tags.first(),
-                            Icons.Filled.Tag
+                            text = model.tags.first(),
+                            icon = Icons.Filled.Tag
                         )
                     }
 

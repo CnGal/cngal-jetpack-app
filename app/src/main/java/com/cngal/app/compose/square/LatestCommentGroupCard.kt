@@ -28,6 +28,7 @@ import androidx.core.text.HtmlCompat.FROM_HTML_MODE_COMPACT
 import androidx.core.text.HtmlCompat.TO_HTML_PARAGRAPH_LINES_INDIVIDUAL
 import coil.compose.AsyncImage
 import com.cngal.app.compose.home.WeeklyNewsCard
+import com.cngal.app.compose.shared.MarkdownView
 import com.cngal.app.compose.shared.TitleCard
 import com.cngal.app.extension.toDate
 import com.cngal.app.extension.toTimeFromNowString
@@ -37,7 +38,7 @@ import com.cngal.app.model.article.ArticleCardModel
 import com.cngal.app.model.square.LatestCommentModel
 
 @Composable
-fun LatestCommentGroupCard(model: List<LatestCommentModel>)
+fun LatestCommentGroupCard(model: List<LatestCommentModel>,onNav: (String) -> Unit)
 {
     TitleCard(title = "近期留言",linkText = null, onClickLink = {}, content = {
     Column(
@@ -58,7 +59,7 @@ fun LatestCommentGroupCard(model: List<LatestCommentModel>)
                     "https://www.cngal.org/${item.url}",
                     appContext
                 )
-            })
+            },onNav=onNav)
         }
 
     }
@@ -66,7 +67,7 @@ fun LatestCommentGroupCard(model: List<LatestCommentModel>)
 }
 
 @Composable
-fun LatestCommentCard(model:LatestCommentModel, onClickImage: () -> Unit, onClickCard: () -> Unit)
+fun LatestCommentCard(model:LatestCommentModel, onClickImage: () -> Unit, onClickCard: () -> Unit,onNav: (String) -> Unit)
 {
     Card(
         modifier = Modifier
@@ -104,20 +105,7 @@ fun LatestCommentCard(model:LatestCommentModel, onClickImage: () -> Unit, onClic
                         style = MaterialTheme.typography.bodySmall
                     )
                 }
-                AndroidView(
-                    factory = {
-                        TextView(it).apply {
-                            // links
-                            autoLinkMask = Linkify.WEB_URLS
-                            linksClickable = true
-                            // setting the color to use forr highlihting the links
-                            setLinkTextColor(Color.White.toArgb())
-                        }
-                    },
-                    update = {
-                        it.text =  HtmlCompat.fromHtml(model.content, FROM_HTML_MODE_COMPACT)
-                    }
-                )
+                MarkdownView(text =  model.content, onNav =onNav )
             }
         }
     }

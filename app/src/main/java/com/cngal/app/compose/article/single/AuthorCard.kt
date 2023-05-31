@@ -35,7 +35,7 @@ fun AuthorCard(user: UserInforModel, onNav: (String) -> Unit)
                 .height(45.dp)
                 .width(45.dp)
                 .clip(CircleShape)
-                .clickable { /*todo*/ }
+                .clickable { onNav("https://www.cngal.org/space/index/${user.id}") }
         )
         Column(
             modifier = Modifier
