@@ -2,6 +2,7 @@ package com.cngal.app.service
 
 import androidx.annotation.Keep
 import com.cngal.app.model.article.ArticleCardModel
+import com.cngal.app.model.entry.RoleBirthdayModel
 import com.cngal.app.model.square.AnnouncementModel
 import com.cngal.app.model.home.CarouselModel
 import com.cngal.app.model.home.DiscountGameModel
@@ -18,6 +19,8 @@ import com.squareup.moshi.kotlin.reflect.KotlinJsonAdapterFactory
 import retrofit2.Retrofit
 import retrofit2.converter.moshi.MoshiConverterFactory
 import retrofit2.http.GET
+import retrofit2.http.Path
+import retrofit2.http.Query
 
 @Keep
 interface HomeService
@@ -49,6 +52,9 @@ interface HomeService
 
     @GET("/api/home/ListDiscountGames")
     suspend fun getDiscountGameData(): List<DiscountGameModel>
+
+    @GET("/api/entries/GetRoleBirthdaysByTime")
+    suspend fun getRoleBirthdayData(@Query("month") month: Int,@Query("day") day: Int): List<RoleBirthdayModel>
 
     companion object
     {

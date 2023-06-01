@@ -105,7 +105,7 @@ fun LatestCommentCard(model:LatestCommentModel, onClickImage: () -> Unit, onClic
                         style = MaterialTheme.typography.bodySmall
                     )
                 }
-                MarkdownView(text =  model.content, onNav =onNav )
+                MarkdownView(text =  model.content, onNav =onNav, onClick = onClickCard )
             }
         }
     }

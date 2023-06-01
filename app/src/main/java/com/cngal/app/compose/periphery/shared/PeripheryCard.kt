@@ -11,6 +11,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Card
+import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -20,18 +21,25 @@ import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import coil.compose.AsyncImage
-import com.cngal.app.SingleEntryDestination
+import com.cngal.app.SinglePeripheryDestination
 import com.cngal.app.model.periphery.PeripheryCardModel
+import com.cngal.app.model.periphery.PeripheryOverviewItemModel
 
 
 @Composable
-fun PeripheryCard(modifier : Modifier = Modifier, model: PeripheryCardModel, fillMaxWidth: Boolean, onNav: (String) -> Unit,fixedHeight:Boolean=false)
+fun PeripheryCard(
+    modifier: Modifier = Modifier,
+    model: PeripheryCardModel,
+    fillMaxWidth: Boolean,
+    onNav: (String) -> Unit,
+    fixedHeight: Boolean = false
+)
 {
     if (fillMaxWidth)
     {
         Card(modifier = modifier
             .fillMaxWidth()
-            .clickable { onNav("https://www.cngal.org/peripheries/index/${model.id}") }
+            .clickable { onNav("${SinglePeripheryDestination.route}/${model.id}") }
         ) {
             Row {
                 AsyncImage(
@@ -45,7 +53,7 @@ fun PeripheryCard(modifier : Modifier = Modifier, model: PeripheryCardModel, fil
                 )
                 Column(
                     modifier = Modifier
-                        .padding(horizontal =  12.dp, vertical = 6.dp)
+                        .padding(horizontal = 12.dp, vertical = 6.dp)
                         .height(58.dp),
                     verticalArrangement = Arrangement.SpaceBetween
                 ) {
@@ -72,11 +80,11 @@ fun PeripheryCard(modifier : Modifier = Modifier, model: PeripheryCardModel, fil
     }
     else
     {
-        if(fixedHeight)
+        if (fixedHeight)
         {
             Card(modifier = Modifier
                 .fillMaxWidth()
-                .clickable { onNav("${SingleEntryDestination.route}/${model.id}") }
+                .clickable { onNav("${SinglePeripheryDestination.route}/${model.id}") }
             ) {
                 Column {
                     AsyncImage(
@@ -100,10 +108,11 @@ fun PeripheryCard(modifier : Modifier = Modifier, model: PeripheryCardModel, fil
                 }
             }
         }
-        else{
+        else
+        {
             Card(modifier = Modifier
                 .width(120.dp)
-                .clickable { onNav("${SingleEntryDestination.route}/${model.id}") }
+                .clickable { onNav("${SinglePeripheryDestination.route}/${model.id}") }
             ) {
                 Column {
                     AsyncImage(
@@ -131,3 +140,51 @@ fun PeripheryCard(modifier : Modifier = Modifier, model: PeripheryCardModel, fil
     }
 
 }
+
+
+@Composable
+fun PeripheryCard(
+    model: PeripheryOverviewItemModel,
+    onNav: (String) -> Unit,
+    changeBackground: Boolean = true
+)
+{
+    Card(
+        modifier = Modifier
+            .width(120.dp)
+            .clickable { onNav("${SinglePeripheryDestination.route}/${model.id}") },
+        colors = if (changeBackground)
+        {
+            CardDefaults.cardColors(
+                containerColor = MaterialTheme.colorScheme.secondary
+            )
+        }
+        else
+        {
+            CardDefaults.cardColors()
+        },
+    ) {
+        Column {
+            AsyncImage(
+                model = model.image,
+                contentDescription = model.name,
+                contentScale = ContentScale.Crop,
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .aspectRatio(460f / 215f)
+                    .clip(RoundedCornerShape(12.dp))
+            )
+            Text(
+                text = model.name,
+                style = MaterialTheme.typography.bodySmall,
+                overflow = TextOverflow.Ellipsis,
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .height(48.dp)
+                    .padding(6.dp)
+            )
+        }
+    }
+
+}
+

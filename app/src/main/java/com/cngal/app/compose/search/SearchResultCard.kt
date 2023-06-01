@@ -18,22 +18,11 @@ import com.cngal.app.model.search.SearchResultModel
 fun SearchResultCard(
     modifier: Modifier = Modifier,
     model: List<SearchResultModel>,
-    fixedHeight: Boolean,
+    isSegment: Boolean,
     onNav: (String) -> Unit
 )
 {
-    if (fixedHeight)
-    {
-        Row(horizontalArrangement = Arrangement.spacedBy(12.dp)) {
-            model.forEach {
-                Box(Modifier.weight(1f, true)) {
-                    SingleSearchResultCard(modifier, it, onNav, true)
-                }
-            }
-
-        }
-    }
-    else
+    if (isSegment)
     {
         Column(verticalArrangement = Arrangement.spacedBy(12.dp)) {
             model.forEach {
@@ -41,6 +30,16 @@ fun SearchResultCard(
             }
         }
 
+    }
+    else
+    {
+        Row(horizontalArrangement = Arrangement.spacedBy(12.dp)) {
+            model.forEach {
+                Box(Modifier.weight(1f, true)) {
+                    SingleSearchResultCard(modifier, it, onNav, true)
+                }
+            }
+        }
     }
 
 }

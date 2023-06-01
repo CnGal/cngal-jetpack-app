@@ -10,6 +10,7 @@ import com.cngal.app.model.entry.OutlinkModel
 import com.cngal.app.model.entry.PositionGeneralType
 import com.cngal.app.model.entry.PublishPlatformType
 import com.cngal.app.model.entry.getGeneralType
+import com.cngal.app.model.periphery.PeripheryOverviewModel
 import com.cngal.app.model.shared.ApiResponse
 import com.cngal.app.repository.EntryRepository
 import com.cngal.app.uistate.entry.ReleaseUiState
@@ -29,12 +30,32 @@ class SingleEntryViewModel : ViewModel()
     private val _uiState = MutableStateFlow(SingleEntryUiState())
     val uiState = _uiState.asStateFlow()
 
+    private val _peripheryOverview = MutableStateFlow(ApiResponse.empty<PeripheryOverviewModel>())
+    val peripheryOverview = _peripheryOverview.asStateFlow()
+
+
+    private fun getPeripheryOverviewData(id: Int)
+    {
+        viewModelScope.launch {
+            EntryRepository.getPeripheryOverviewData(id).onStart {
+                _peripheryOverview.value = ApiResponse.loading()
+            }.catch { e ->
+                _peripheryOverview.value =
+                    ApiResponse.error(e)
+            }.collect { model ->
+                _peripheryOverview.value = ApiResponse.success(model)
+            }
+        }
+    }
+
     fun loadEntryData(id: Int?)
     {
         if (id == null || id <= 0)
         {
             return
         }
+
+        getPeripheryOverviewData(id)
 
         viewModelScope.launch {
             EntryRepository.getEntryData(id).onStart {

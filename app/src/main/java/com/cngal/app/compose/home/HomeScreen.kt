@@ -44,6 +44,8 @@ fun HomeScreen(
     val latestVideosState by viewModel.latestVideos.collectAsState()
     val freeGamesState by viewModel.freeGames.collectAsState()
     val discountGamesState by viewModel.discountGames.collectAsState()
+    val roleBirthdayState by viewModel.roleBirthday.collectAsState()
+
     Column(
         modifier = modifier
             .verticalScroll(rememberScrollState())
@@ -61,6 +63,10 @@ fun HomeScreen(
 
             LinkGroupCard(onNav)
 
+            if (roleBirthdayState.state == AppState.SUCCESS)
+            {
+                RoleBirthdayGroupCard(roleBirthdayState.data!!,onNav)
+            }
             if (newsState.state == AppState.SUCCESS)
             {
                 NewsGroupCard(newsState.data!!,onNav)

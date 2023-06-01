@@ -8,6 +8,7 @@ import androidx.compose.foundation.layout.FlowRow
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
@@ -35,16 +36,22 @@ fun LinkGroupCardPreview()
 @Composable
 fun LinkGroupCard(onNav: (String) -> Unit)
 {
-    Row(
-        modifier = Modifier
-            .fillMaxWidth()
-            .padding(horizontal = 12.dp),
-        horizontalArrangement = Arrangement.SpaceBetween,
-    ) {
-        CnGalLinkGroup.forEach {
-            LinkCard(it, onNav)
+    Column(Modifier.padding(horizontal = 12.dp), verticalArrangement = Arrangement.spacedBy(24.dp)) {
+        CnGalLinkGroup.forEach{
+            Row(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(horizontal = 12.dp),
+                horizontalArrangement = Arrangement.SpaceBetween,
+            ) {
+                it.forEach {
+                    LinkCard(it, onNav)
+                }
+            }
         }
+
     }
+
 }
 
 @Composable
@@ -61,7 +68,7 @@ fun LinkCard(model: OverviewItemDestination, onNav: (String) -> Unit)
             ),
             modifier = Modifier.clip(CircleShape)
         ) {
-            Icon(model.icon, contentDescription = null, Modifier.padding(12.dp))
+            Icon(model.icon, contentDescription = null, Modifier.padding(14.dp).size(18.dp))
         }
         Text(
             text = model.text,

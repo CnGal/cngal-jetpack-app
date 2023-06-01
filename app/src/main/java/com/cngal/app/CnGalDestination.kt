@@ -2,14 +2,19 @@ package com.cngal.app
 
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Cake
+import androidx.compose.material.icons.filled.CalendarMonth
 import androidx.compose.material.icons.filled.Category
+import androidx.compose.material.icons.filled.Cloud
 import androidx.compose.material.icons.filled.Explore
 import androidx.compose.material.icons.filled.Home
+import androidx.compose.material.icons.filled.Info
 import androidx.compose.material.icons.filled.LocalOffer
+import androidx.compose.material.icons.filled.Mic
 import androidx.compose.material.icons.filled.Newspaper
 import androidx.compose.material.icons.filled.Search
 import androidx.compose.material.icons.filled.Settings
 import androidx.compose.material.icons.filled.SportsEsports
+import androidx.compose.material.icons.filled.Web
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.navigation.NavType
 import androidx.navigation.navArgument
@@ -184,6 +189,21 @@ object ArticleCardGroupDestination : BaseDestination
     )
 }
 
+//单个周边详情页
+object SinglePeripheryDestination : BaseDestination
+{
+    override val route = "peripheries/index"
+    override val text = "单个周边详情页"
+    const val idArg = "periphery_id"
+    val routeWithArgs = "${route}/{${idArg}}"
+    val arguments = listOf(
+        navArgument(idArg) { type = NavType.LongType }
+    )
+    val deepLinks = listOf(
+        navDeepLink { uriPattern = "cngal://$route/{$idArg}" }
+    )
+}
+
 
 //单个标签详情页
 object SingleTagDestination : BaseDestination
@@ -248,7 +268,7 @@ object SearchDestination : OverviewItemDestination
 object SettingDestination : OverviewItemDestination
 {
     override val icon = Icons.Filled.Settings
-    override val route = ""
+    override val route = "setting"
     override val text = "设置"
 }
 
@@ -256,7 +276,7 @@ object SettingDestination : OverviewItemDestination
 object FreeDestination : OverviewItemDestination
 {
     override val icon = Icons.Filled.SportsEsports
-    override val route = "https://www.cngal.org/free"
+    override val route = "tags/index/92"
     override val text = "免费游戏"
 }
 
@@ -278,6 +298,51 @@ object WeeklyNewsDestination : OverviewItemDestination
     override val text = "每周速报"
 }
 
+//时间线
+object GameTimelineDestination : OverviewItemDestination
+{
+    override val icon = Icons.Filled.CalendarMonth
+    override val route = "https://www.cngal.org/time"
+    override val text = "时间线"
+}
+
+
+//CV专题页
+object CVThematicDestination : OverviewItemDestination
+{
+    override val icon = Icons.Filled.Mic
+    override val route = "https://www.cngal.org/time"
+    override val text = "专题页"
+}
+
+
+//数据汇总
+object DataDestination : OverviewItemDestination
+{
+    override val icon = Icons.Filled.Cloud
+    override val route = "https://app.cngal.org/data"
+    override val text = "数据汇总"
+}
+
+//关于我们
+object AboutDestination : OverviewItemDestination
+{
+    override val icon = Icons.Filled.Info
+    override val route = "https://www.cngal.org/about"
+    override val text = "关于"
+}
+
+
+//关于我们
+object WebsiteDestination : OverviewItemDestination
+{
+    override val icon = Icons.Filled.Web
+    override val route = "https://www.cngal.org"
+    override val text = "网站"
+}
+
+
+
 
 //打折游戏
 object BirthdayDestination : OverviewItemDestination
@@ -295,5 +360,10 @@ val CnGalLinkGroup = listOf(
     FreeDestination,
     DiscountDestination,
     WeeklyNewsDestination,
-    BirthdayDestination
-)
+    BirthdayDestination,
+    GameTimelineDestination,
+    CVThematicDestination,
+    DataDestination,
+    WebsiteDestination,
+    SettingDestination
+).chunked(5)

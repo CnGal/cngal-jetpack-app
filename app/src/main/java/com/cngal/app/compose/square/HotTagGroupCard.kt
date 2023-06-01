@@ -36,33 +36,8 @@ fun HotTagGroupCard(model: List<HotTagModel>, onNav: (String) -> Unit)
             verticalArrangement = Arrangement.spacedBy(6.dp)
         ) {
             model.forEach { item ->
-                TagCard(item.name, 0, onNav = { onNav(item.url) })
+                TagCard(item.name, 1, onNav = { onNav(item.url) })
             }
         }
     })
-}
-
-@Composable
-fun HotTagCard(model: HotTagModel, onClickCard: () -> Unit)
-{
-    Card(modifier = Modifier
-        .clickable { onClickCard() }
-    ) {
-        Row(
-            modifier = Modifier
-                .padding(vertical = 4.dp, horizontal = 8.dp),
-            horizontalArrangement = Arrangement.SpaceBetween,
-            verticalAlignment = Alignment.CenterVertically,
-        ) {
-            Icon(Icons.Filled.Tag, contentDescription = model.name, Modifier.size(16.dp))
-            Spacer(Modifier.size(4.dp))
-            Text(
-                text = model.name,
-                style = MaterialTheme.typography.bodySmall,
-                maxLines = 1,
-                overflow = TextOverflow.Ellipsis,
-                fontWeight = FontWeight.Bold
-            )
-        }
-    }
 }

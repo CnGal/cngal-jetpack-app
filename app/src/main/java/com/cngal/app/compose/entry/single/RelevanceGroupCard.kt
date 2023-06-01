@@ -4,6 +4,7 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.items
+import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
@@ -13,13 +14,16 @@ import com.cngal.app.RoleCardGroupDestination
 import com.cngal.app.compose.article.shared.ArticleCard
 import com.cngal.app.compose.entry.shared.EntryCard
 import com.cngal.app.compose.entry.shared.RoleCard
+import com.cngal.app.compose.periphery.shared.PeripheryCard
 import com.cngal.app.compose.shared.TitleCard
 import com.cngal.app.helper.JsonHelper
 import com.cngal.app.model.article.ArticleCardModel
 import com.cngal.app.model.entry.EntryCardModel
 import com.cngal.app.model.entry.RoleCardModel
+import com.cngal.app.model.periphery.PeripheryOverviewModel
 import java.net.URLEncoder
 
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun RelevanceGroupCard(
     roles: List<RoleCardModel>,
@@ -33,6 +37,7 @@ fun RelevanceGroupCard(
     staffs: List<EntryCardModel>,
     relevanceRoles: List<EntryCardModel>,
     articles: List<ArticleCardModel>,
+    peripheryOverview: PeripheryOverviewModel?,
     name: String,
     onNav: (String) -> Unit
 )
@@ -94,6 +99,23 @@ fun RelevanceGroupCard(
         )
     }
 
+    if (peripheryOverview!=null&&peripheryOverview.peripheries.isNotEmpty())
+    {
+        TitleCard(
+            title = "周边",
+            content = {
+                LazyRow(
+                    horizontalArrangement = Arrangement.spacedBy(12.dp),
+                    contentPadding = PaddingValues(horizontal = 12.dp),
+                ) {
+                    items(items = peripheryOverview.peripheries) { item ->
+                        PeripheryCard(item, onNav, false)
+                    }
+                }
+            }
+        )
+    }
+
 }
 
 @Composable
@@ -117,7 +139,7 @@ fun SingleRelevanceGroupCard(
                 contentPadding = PaddingValues(horizontal = 12.dp),
             ) {
                 items(items = list) { item ->
-                    EntryCard(Modifier,item, false, onNav)
+                    EntryCard(Modifier, item, false, onNav)
                 }
             }
         })

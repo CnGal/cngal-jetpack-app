@@ -28,6 +28,7 @@ import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import coil.compose.AsyncImage
 import com.cngal.app.SingleEntryDestination
+import com.cngal.app.SingleTagDestination
 import com.cngal.app.model.entry.EntryCardModel
 import com.cngal.app.model.tag.TagCardModel
 
@@ -73,7 +74,7 @@ fun TagCard(modifier : Modifier=Modifier, model: TagCardModel, fillMaxWidth: Boo
     {
         Card(modifier = modifier
             .fillMaxWidth()
-            .clickable { onNav("${SingleEntryDestination.route}/${model.id}") }
+            .clickable { onNav("${SingleTagDestination.route}/${model.id}") }
         ) {
             Row {
                 AsyncImage(
@@ -118,7 +119,7 @@ fun TagCard(modifier : Modifier=Modifier, model: TagCardModel, fillMaxWidth: Boo
         {
             Card(modifier = Modifier
                 .fillMaxWidth()
-                .clickable { onNav("${SingleEntryDestination.route}/${model.id}") }
+                .clickable { onNav("${SingleTagDestination.route}/${model.id}") }
             ) {
                 Column {
                     AsyncImage(
@@ -146,7 +147,7 @@ fun TagCard(modifier : Modifier=Modifier, model: TagCardModel, fillMaxWidth: Boo
         {
             Card(modifier = Modifier
                 .width(120.dp)
-                .clickable { onNav("${SingleEntryDestination.route}/${model.id}") }
+                .clickable { onNav("${SingleTagDestination.route}/${model.id}") }
             ) {
                 Column {
                     AsyncImage(

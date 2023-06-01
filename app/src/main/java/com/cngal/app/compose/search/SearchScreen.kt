@@ -28,6 +28,7 @@ import com.cngal.app.compose.shared.LoadingCard
 import com.cngal.app.compose.shared.TitleBar
 import com.cngal.app.helper.ClipboardHelper
 import com.cngal.app.viewmodel.search.SearchViewModel
+import com.funny.data_saver.core.rememberDataSaverState
 
 
 @Composable
@@ -40,6 +41,7 @@ fun SearchScreen(
 {
     val searchResultsState by viewModel.searchResults.collectAsState()
     val uiState by viewModel.uiState.collectAsState()
+    var isSegment by rememberDataSaverState("ListDisplayMode", true)
 
     Scaffold(
         topBar = {
@@ -56,10 +58,10 @@ fun SearchScreen(
                     })
                 MainCard(
                     viewModel.text,
-                    viewModel.isSegment,
+                    isSegment,
                     onTextChanged = { viewModel.updateText(it) },
                     onKeyboardDone = { viewModel.search() },
-                    OnIsSegmentChanged = {viewModel.updateIsSegment(it)})
+                    OnIsSegmentChanged = {isSegment=it})
             }
 
         },
@@ -100,7 +102,7 @@ fun SearchScreen(
                             "other"
                         }
                     }) { item ->
-                        SearchResultCard(Modifier, item, !viewModel.isSegment, onNav)
+                        SearchResultCard(Modifier, item, isSegment, onNav)
                     }
 
                     item {

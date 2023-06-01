@@ -11,6 +11,7 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.SideEffect
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -18,6 +19,8 @@ import androidx.core.view.WindowCompat
 import com.cngal.app.compose.overview.MainScreen
 import com.cngal.app.compose.overview.OverviewScreen
 import com.cngal.app.ui.theme.CnGalTheme
+import com.funny.data_saver.core.DataSaverPreferences
+import com.funny.data_saver.core.LocalDataSaver
 import com.google.accompanist.systemuicontroller.rememberSystemUiController
 
 class MainActivity : ComponentActivity()
@@ -39,7 +42,10 @@ class MainActivity : ComponentActivity()
                 ) {
                     Box()
                     {
-                        MainScreen()
+                        val dataSaverPreferences = DataSaverPreferences(applicationContext)
+                        CompositionLocalProvider(LocalDataSaver provides dataSaverPreferences){
+                            MainScreen()
+                        }
                     }
 
                 }

@@ -3,6 +3,7 @@ package com.cngal.app.viewmodel.home
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.cngal.app.model.article.ArticleCardModel
+import com.cngal.app.model.entry.RoleBirthdayModel
 import com.cngal.app.model.home.CarouselModel
 import com.cngal.app.model.home.DiscountGameModel
 import com.cngal.app.model.home.FreeGameModel
@@ -18,6 +19,8 @@ import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.onStart
 import kotlinx.coroutines.launch
+import java.time.Instant
+import java.time.ZoneId
 
 class HomeViewModel : ViewModel()
 {
@@ -48,9 +51,13 @@ class HomeViewModel : ViewModel()
     private val _discountGames = MutableStateFlow(ApiResponse.empty<List<DiscountGameModel>>())
     val discountGames = _discountGames.asStateFlow()
 
+    private val _roleBirthday = MutableStateFlow(ApiResponse.empty<List<RoleBirthdayModel>>())
+    val roleBirthday = _roleBirthday.asStateFlow()
+
     init
     {
         getCarouselData()
+        getRoleBirthdayData()
         getNewsData()
         getWeeklyNewsData()
         getUpcomingGameData()
@@ -59,6 +66,7 @@ class HomeViewModel : ViewModel()
         getLatestVideoData()
         getFreeGameData()
         getDiscountGameData()
+
     }
 
     private fun getCarouselData()
@@ -106,7 +114,23 @@ class HomeViewModel : ViewModel()
                     ApiResponse.error(e)
             }.collect { model ->
                 _news.value =
-                    ApiResponse.success(model.take(12).chunked(3) )
+                    ApiResponse.success(model.take(12).chunked(3))
+            }
+        }
+    }
+
+    private fun getRoleBirthdayData()
+    {
+        val now = Instant.now().atZone(ZoneId.systemDefault())
+        viewModelScope.launch {
+            HomeRepository.getRoleBirthdayData(now.month.value, now.dayOfMonth).onStart {
+                _roleBirthday.value = ApiResponse.loading()
+            }.catch { e ->
+                _roleBirthday.value =
+                    ApiResponse.error(e)
+            }.collect { model ->
+                _roleBirthday.value =
+                    ApiResponse.success(model)
             }
         }
     }
@@ -152,7 +176,7 @@ class HomeViewModel : ViewModel()
             }.collect { model ->
                 model.forEach()
                 {
-                    it.tags=it.tags.shuffled().take(1)
+                    it.tags = it.tags.shuffled().take(1)
                 }
 
                 _publishedGames.value =
@@ -172,7 +196,7 @@ class HomeViewModel : ViewModel()
             }.collect { model ->
                 model.forEach()
                 {
-                    it.tags=it.tags.shuffled().take(1)
+                    it.tags = it.tags.shuffled().take(1)
                 }
 
                 _freeGames.value =

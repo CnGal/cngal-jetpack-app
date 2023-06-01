@@ -28,9 +28,6 @@ class SearchViewModel : ViewModel()
     var isCompleted by mutableStateOf(true)
         private set
 
-    var isSegment by mutableStateOf(true)
-        private set
-
     private var isLoading: Boolean = false
 
     var text by mutableStateOf("")
@@ -46,10 +43,6 @@ class SearchViewModel : ViewModel()
         text = _text
     }
 
-    fun updateIsSegment(_isSegment: Boolean)
-    {
-        isSegment = _isSegment
-    }
 
     fun search()
     {

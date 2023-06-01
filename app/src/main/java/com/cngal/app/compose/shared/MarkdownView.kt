@@ -8,7 +8,7 @@ import androidx.compose.ui.graphics.toArgb
 import dev.jeziellago.compose.markdowntext.MarkdownText
 
 @Composable
-fun MarkdownView(modifier: Modifier = Modifier, text: String,onNav:(String)->Unit)
+fun MarkdownView(modifier: Modifier = Modifier, text: String,onNav:(String)->Unit,onClick:(()->Unit)?=null)
 {
     Box(modifier = modifier)
     {
@@ -30,6 +30,6 @@ fun MarkdownView(modifier: Modifier = Modifier, text: String,onNav:(String)->Uni
         )*/
 
 
-        MarkdownText(markdown = text, onLinkClicked = {onNav(it)}, color = MaterialTheme.colorScheme.onBackground)
+        MarkdownText(markdown = text, onLinkClicked = {onNav(it)}, onClick = onClick, color = MaterialTheme.colorScheme.onBackground)
     }
 }

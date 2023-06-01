@@ -15,6 +15,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.cngal.app.compose.shared.ErrorCard
+import com.cngal.app.compose.shared.GalleryCard
 import com.cngal.app.compose.shared.LoadingCard
 import com.cngal.app.compose.shared.TitleBar
 import com.cngal.app.helper.ClipboardHelper
@@ -32,9 +33,10 @@ fun SingleEntryScreen(
 {
     val entryState by viewModel.entry.collectAsState()
     val uiState by viewModel.uiState.collectAsState()
+    val peripheryOverviewState by viewModel.peripheryOverview.collectAsState()
 
     LaunchedEffect(id) {
-        if ((viewModel.entry.value.data?.id ?: 0) != id)
+        if ((entryState.data?.id ?: 0) != id)
         {
             viewModel.loadEntryData(id)
         }
@@ -129,6 +131,7 @@ fun SingleEntryScreen(
                             uiState.staffs,
                             uiState.roles,
                             model.articleRelevances,
+                            peripheryOverviewState.data,
                             model.name,
                             onNav
                         )
