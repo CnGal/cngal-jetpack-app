@@ -59,14 +59,14 @@ fun SettingScreen( onNav: (String) -> Unit,onBack:()->Unit)
                         )
 
                         Text(
-                            text = "0.9",
+                            text = "0.1.9",
                             style = MaterialTheme.typography.bodyMedium,
                             maxLines = 1,
                             overflow = TextOverflow.Ellipsis
                         )
                     }
                 }
-                Card(  modifier = Modifier.fillMaxWidth().clickable{onNav("https://github.com/CnGal/CnGalAPP")}) {
+                Card(  modifier = Modifier.fillMaxWidth().clickable{onNav("https://github.com/CnGal/cngal-jetpack-app")}) {
                     Row(
                         modifier = Modifier
                             .fillMaxWidth()
