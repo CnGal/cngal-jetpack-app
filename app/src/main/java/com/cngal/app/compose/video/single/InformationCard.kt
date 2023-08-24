@@ -13,7 +13,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.withStyle
 import androidx.compose.ui.unit.dp
 import com.cngal.app.compose.shared.TitleCard
-import com.cngal.app.model.entry.InformationContentModel
+import com.cngal.app.model.periphery.InformationContentModel
 
 
 @Composable

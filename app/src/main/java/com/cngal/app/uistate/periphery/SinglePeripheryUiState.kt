@@ -1,7 +1,7 @@
 package com.cngal.app.uistate.periphery
 
-import com.cngal.app.model.entry.InformationContentModel
 import com.cngal.app.model.entry.PictureContentModel
+import com.cngal.app.model.periphery.InformationContentModel
 
 class SinglePeripheryUiState
 {

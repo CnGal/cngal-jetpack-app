@@ -105,7 +105,7 @@ fun SingleEntryScreen(
                         GalleryCard(images = uiState.images)
 
                         InformationCard(
-                            model.information.firstOrNull(),
+                            model.information,
                             model.productionGroups,
                             model.publishers,
                             onNav

@@ -1,4 +1,4 @@
-package com.cngal.app.model.entry
+package com.cngal.app.model.periphery
 
 
 import com.squareup.moshi.Json

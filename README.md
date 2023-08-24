@@ -85,6 +85,7 @@ App 下载：https://cngal.app/
 <span id="nav-4"></span>
 
 ## 图形演示
+
 <img src="https://image.cngal.org/images/upload/20230601/67e2e029f8f07eb4c16df679d5e140ee7b1ff1d3.jpg" width="200" alt="主页" title="主页"/>
 <img src="https://image.cngal.org/images/upload/20230601/399c296927c835c7519061f2ff76d67d2ac41c1b.jpg" width="200" alt="主页" title="探索"/>
 <img src="https://image.cngal.org/images/upload/20230601/ffed7f0e2223b8fbb7751c194f12c049877f7178.jpg" width="200" alt="主页" title="游戏详情页"/>
@@ -119,7 +120,7 @@ Jetpack Compose
 
 ## 贡献者
 
-感谢所有参与 CnGal 资料站 开发的贡献者。[贡献者列表](https://github.com/CnGal/CnGalWebSite/graphs/contributors)
+感谢所有参与 CnGal 资料站 - App 开发的贡献者。[贡献者列表](https://github.com/CnGal/CnGalWebSite/graphs/contributors)
 
 <!-- 这里填写项目贡献者列表，通常是列表，当然也可以用图片代替。 -->
 

@@ -19,18 +19,18 @@ import com.cngal.app.model.entry.StaffModel
 
 @Composable
 fun InformationCard(
-    information: InformationModel?,
+    information: List<InformationModel>,
     productionGroups: List<StaffModel>,
     publishers: List<StaffModel>,
     onNav: (String) -> Unit
 )
 {
-    if (information == null && productionGroups.isEmpty() && publishers.isEmpty())
+    if (information.isEmpty() && productionGroups.isEmpty() && publishers.isEmpty())
     {
         return
     }
 
-    TitleCard(title = information?.modifier?:"基本信息",linkText = null, onClickLink = {}, content = {
+    TitleCard(title = "基本信息",linkText = null, onClickLink = {}, content = {
         Column(
             verticalArrangement = Arrangement.spacedBy(6.dp),
             modifier = Modifier
@@ -44,14 +44,14 @@ fun InformationCard(
             {
                 StaffPositionGroupCard("发行商", publishers, onNav, 16.sp)
             }
-            information?.content?.forEach { item ->
+            information.forEach { item ->
                 Text(
                     buildAnnotatedString {
                         withStyle(style = SpanStyle(fontWeight = FontWeight.Bold,color=MaterialTheme.colorScheme.onBackground)) {
-                            append(item.displayName)
+                            append(item.name)
                             append("：")
                         }
-                        append(item.displayValue)
+                        append(item.value)
                     }
                 )
             }

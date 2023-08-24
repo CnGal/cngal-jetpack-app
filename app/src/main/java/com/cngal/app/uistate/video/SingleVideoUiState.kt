@@ -1,7 +1,7 @@
 package com.cngal.app.uistate.video
 
-import com.cngal.app.model.entry.InformationContentModel
 import com.cngal.app.model.entry.OutlinkModel
+import com.cngal.app.model.periphery.InformationContentModel
 
 class SingleVideoUiState
 {

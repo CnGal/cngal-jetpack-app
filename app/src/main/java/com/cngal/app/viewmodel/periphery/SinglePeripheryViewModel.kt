@@ -2,7 +2,7 @@ package com.cngal.app.viewmodel.periphery
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.cngal.app.model.entry.InformationContentModel
+import com.cngal.app.model.periphery.InformationContentModel
 import com.cngal.app.model.periphery.PeripheryModel
 import com.cngal.app.model.periphery.PeripheryType
 import com.cngal.app.model.shared.ApiResponse

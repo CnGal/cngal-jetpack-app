@@ -101,12 +101,16 @@ fun NewsCard(model: NewsModel, onClickImage: () -> Unit, onClickCard: () -> Unit
                 ) {
                     Text(
                         text = model.title,
-                        style = MaterialTheme.typography.titleMedium
+                        style = MaterialTheme.typography.titleMedium,
+                        maxLines = 1,
+                        overflow = TextOverflow.Ellipsis,
                     )
                     Text(
                         text = model.time.toDate().toTimeFromNowString(),
                         color = MaterialTheme.colorScheme.secondary,
-                        style = MaterialTheme.typography.bodySmall
+                        style = MaterialTheme.typography.bodySmall,
+                        maxLines = 1,
+                        overflow = TextOverflow.Ellipsis,
                     )
                 }
                 Text(

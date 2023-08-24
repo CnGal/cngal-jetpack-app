@@ -16,7 +16,8 @@ import androidx.compose.ui.text.withStyle
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.cngal.app.compose.shared.TitleCard
-import com.cngal.app.model.entry.InformationContentModel
+import com.cngal.app.model.periphery.InformationContentModel
+import com.cngal.app.model.periphery.InformationModel
 
 
 @Composable

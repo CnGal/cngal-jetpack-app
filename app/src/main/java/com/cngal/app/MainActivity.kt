@@ -42,7 +42,7 @@ class MainActivity : ComponentActivity()
                 ) {
                     Box()
                     {
-                        val dataSaverPreferences = DataSaverPreferences(applicationContext)
+                        val dataSaverPreferences = DataSaverPreferences(context = applicationContext,false)
                         CompositionLocalProvider(LocalDataSaver provides dataSaverPreferences){
                             MainScreen()
                         }

@@ -6,8 +6,10 @@ import com.squareup.moshi.JsonClass
 
 @JsonClass(generateAdapter = true)
 data class InformationModel(
-    @Json(name = "informations")
-    val content: List<InformationContentModel>,
-    @Json(name = "modifier")
-    val modifier: String
+    @Json(name = "name")
+    val name: String,
+    @Json(name = "value")
+    val value: String,
+    @Json(name = "icon")
+    val icon: String
 )

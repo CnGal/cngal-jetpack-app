@@ -4,8 +4,8 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.cngal.app.extension.toDate
 import com.cngal.app.extension.toString
-import com.cngal.app.model.entry.InformationContentModel
 import com.cngal.app.model.entry.OutlinkModel
+import com.cngal.app.model.periphery.InformationContentModel
 import com.cngal.app.model.shared.ApiResponse
 import com.cngal.app.model.video.VideoModel
 import com.cngal.app.repository.VideoRepository
