@@ -18,6 +18,7 @@ import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.automirrored.filled.Article
 import androidx.compose.material.icons.filled.Article
 import androidx.compose.material.icons.filled.Info
 import androidx.compose.material.icons.filled.Publish
@@ -50,8 +51,7 @@ import com.cngal.app.model.explore.PersonalRecommendModel
 import java.time.Instant
 
 @Composable
-fun PersonalRecommendGroupCard(model: List<PersonalRecommendModel>)
-{
+fun PersonalRecommendGroupCard(model: List<PersonalRecommendModel>) {
 
 }
 
@@ -61,10 +61,8 @@ fun PersonalRecommendCard(
     onClickCard: (PersonalRecommendModel) -> Unit,
     onClickImage: (PersonalRecommendImageCardModel) -> Unit,
     onClickStore: (PersonalRecommendModel) -> Unit,
-)
-{
-    when (model.displayType)
-    {
+) {
+    when (model.displayType) {
         PlainText -> PlainTextCard(model, onClickCard)
         ImageGames -> ImageGameCard(model, onClickImage)
         Gallery -> GalleryCard(model, onClickStore = onClickStore, onClickGame = onClickCard)
@@ -75,8 +73,7 @@ fun PersonalRecommendCard(
 fun ImageGameCard(
     model: PersonalRecommendModel,
     onClickImage: (PersonalRecommendImageCardModel) -> Unit
-)
-{
+) {
     Column(
         verticalArrangement = Arrangement.spacedBy(12.dp),
     ) {
@@ -108,8 +105,7 @@ fun ImageGameCard(
 fun ImageCard(
     model: PersonalRecommendImageCardModel,
     onClickImage: (PersonalRecommendImageCardModel) -> Unit
-)
-{
+) {
     Box {
         AsyncImage(model = model.image,
             contentDescription = model.name,
@@ -137,8 +133,7 @@ fun GalleryCard(
     model: PersonalRecommendModel,
     onClickGame: (PersonalRecommendModel) -> Unit,
     onClickStore: (PersonalRecommendModel) -> Unit
-)
-{
+) {
     Card(
         modifier = Modifier
             .fillMaxWidth()
@@ -150,16 +145,14 @@ fun GalleryCard(
             verticalArrangement = Arrangement.spacedBy(12.dp),
         ) {
 
-            if (model.name != null)
-            {
+            if (model.name != null) {
                 Text(
                     text = model.name,
                     style = MaterialTheme.typography.titleLarge,
                 )
             }
 
-            if (model.tags.isNotEmpty())
-            {
+            if (model.tags.isNotEmpty()) {
                 FlowRow(
                     horizontalArrangement = Arrangement.spacedBy(8.dp),
                 ) {
@@ -171,8 +164,7 @@ fun GalleryCard(
                     }
                 }
             }
-            if (model.briefIntroduction != null)
-            {
+            if (model.briefIntroduction != null) {
                 Text(
                     text = model.briefIntroduction,
                     style = MaterialTheme.typography.bodyMedium,
@@ -237,8 +229,7 @@ fun GalleryCard(
 
 @OptIn(ExperimentalLayoutApi::class)
 @Composable
-fun PlainTextCard(model: PersonalRecommendModel, onClickCard: (PersonalRecommendModel) -> Unit)
-{
+fun PlainTextCard(model: PersonalRecommendModel, onClickCard: (PersonalRecommendModel) -> Unit) {
     Card(modifier = Modifier
         .fillMaxWidth()
         .clickable { onClickCard(model) }
@@ -259,53 +250,46 @@ fun PlainTextCard(model: PersonalRecommendModel, onClickCard: (PersonalRecommend
                 verticalArrangement = Arrangement.spacedBy(12.dp),
             ) {
 
-                if (model.name != null)
-                {
+                if (model.name != null) {
                     Text(
                         text = model.name,
                         style = MaterialTheme.typography.titleLarge,
                     )
                 }
 
-                if (model.release != null)
-                {
+                if (model.release != null) {
                     FlowRow(
                         horizontalArrangement = Arrangement.spacedBy(8.dp),
                     ) {
 
                         if (model.release.time != null && model.release.time.toDate()
                             < Instant.now()
-                        )
-                        {
+                        ) {
                             IconChip(
                                 text = "已发布",
                                 icon = Icons.Filled.Publish
                             )
-                        }
-                        else
-                        {
+                        } else {
                             IconChip(
                                 text = "未发布",
                                 icon = Icons.Filled.Unpublished
                             )
                         }
 
-                        if (model.release.storeInfor.evaluationCount != null && model.release.storeInfor.evaluationCount > 0)
-                        {
+                        if (model.release.storeInfor.evaluationCount != null && model.release.storeInfor.evaluationCount > 0) {
                             IconChip(
                                 text = "${"%.0f".format(model.release.storeInfor.recommendationRate!!)}% 好评",
                                 icon = Icons.Filled.ThumbUp
                             )
                             IconChip(
                                 text = "${model.release.storeInfor.evaluationCount}条评测",
-                                icon = Icons.Filled.Article
+                                icon = Icons.AutoMirrored.Filled.Article
                             )
                         }
                     }
                 }
 
-                if (model.briefIntroduction != null)
-                {
+                if (model.briefIntroduction != null) {
                     Text(
                         text = model.briefIntroduction,
                         style = MaterialTheme.typography.bodyMedium,

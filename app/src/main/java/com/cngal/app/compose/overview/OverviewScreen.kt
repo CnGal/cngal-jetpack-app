@@ -26,12 +26,10 @@ import com.cngal.app.SquareDestination
 import com.cngal.app.compose.explore.ExploreScreen
 import com.cngal.app.compose.home.HomeScreen
 import com.cngal.app.compose.square.SquareScreen
-import com.google.accompanist.systemuicontroller.rememberSystemUiController
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun OverviewScreen(onNav:(String)->Unit)
-{
+fun OverviewScreen(onNav: (String) -> Unit) {
     val navController = rememberNavController()
 
     val currentBackStack by navController.currentBackStackEntryAsState()
@@ -71,22 +69,21 @@ fun OverviewScreen(onNav:(String)->Unit)
 fun OverviewNavHost(
     navController: NavHostController,
     modifier: Modifier = Modifier,
-    onNav:(String)->Unit
-)
-{
+    onNav: (String) -> Unit
+) {
     NavHost(
         navController = navController,
         startDestination = HomeDestination.route,
         modifier = modifier
     ) {
         composable(route = HomeDestination.route) {
-            HomeScreen(onNav=onNav)
+            HomeScreen(onNav = onNav)
         }
         composable(route = ExploreDestination.route) {
-            ExploreScreen(onNav=onNav)
+            ExploreScreen(onNav = onNav)
         }
         composable(route = SquareDestination.route) {
-            SquareScreen(onNav=onNav)
+            SquareScreen(onNav = onNav)
         }
     }
 }

@@ -11,6 +11,7 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.automirrored.filled.Segment
 import androidx.compose.material.icons.filled.FilterAlt
 import androidx.compose.material.icons.filled.Image
 import androidx.compose.material.icons.filled.Search
@@ -36,8 +37,7 @@ fun MainCard(
     onTextChanged: (String) -> Unit,
     OnIsSegmentChanged: (Boolean) -> Unit,
     onKeyboardDone: () -> Unit
-)
-{
+) {
     val kc = LocalSoftwareKeyboardController.current
     Column(
         Modifier.padding(12.dp, 0.dp, 12.dp, 12.dp),
@@ -73,18 +73,19 @@ fun MainCard(
         )
         Row(Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.End) {
             Row(horizontalArrangement = Arrangement.spacedBy(12.dp)) {
-                if (isSegment)
-                {
+                if (isSegment) {
                     Button(onClick = { OnIsSegmentChanged(false) }, Modifier.height(30.dp)) {
-                        Icon(Icons.Filled.Segment, contentDescription = null, Modifier.size(16.dp))
+                        Icon(
+                            Icons.AutoMirrored.Filled.Segment,
+                            contentDescription = null,
+                            Modifier.size(16.dp)
+                        )
                         Spacer(Modifier.size(ButtonDefaults.IconSpacing))
                         Text(
                             text = "段落", fontSize = 10.sp
                         )
                     }
-                }
-                else
-                {
+                } else {
                     Button(onClick = { OnIsSegmentChanged(true) }, Modifier.height(30.dp)) {
                         Icon(Icons.Filled.Image, contentDescription = null, Modifier.size(16.dp))
                         Spacer(Modifier.size(ButtonDefaults.IconSpacing))
@@ -96,13 +97,13 @@ fun MainCard(
                 }
 
 
-              /*  Button(onClick = { }, Modifier.height(30.dp)) {
-                    Icon(Icons.Filled.FilterAlt, contentDescription = null, Modifier.size(16.dp))
-                    Spacer(Modifier.size(ButtonDefaults.IconSpacing))
-                    Text(
-                        text = "过滤", fontSize = 10.sp
-                    )
-                }*/
+                /*  Button(onClick = { }, Modifier.height(30.dp)) {
+                      Icon(Icons.Filled.FilterAlt, contentDescription = null, Modifier.size(16.dp))
+                      Spacer(Modifier.size(ButtonDefaults.IconSpacing))
+                      Text(
+                          text = "过滤", fontSize = 10.sp
+                      )
+                  }*/
             }
         }
     }

@@ -8,16 +8,18 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.text.LinkAnnotation
 import androidx.compose.ui.text.SpanStyle
+import androidx.compose.ui.text.TextLinkStyles
 import androidx.compose.ui.text.buildAnnotatedString
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextDecoration
+import androidx.compose.ui.text.withLink
 import androidx.compose.ui.text.withStyle
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.cngal.app.compose.shared.TitleCard
 import com.cngal.app.model.periphery.InformationContentModel
-import com.cngal.app.model.periphery.InformationModel
 
 
 @Composable
@@ -25,10 +27,8 @@ fun InformationCard(
     information: List<InformationContentModel>,
     saleLink: String?,
     onNav: (String) -> Unit
-)
-{
-    if (information.isEmpty()&&saleLink.isNullOrBlank())
-    {
+) {
+    if (information.isEmpty() && saleLink.isNullOrBlank()) {
         return
     }
 
@@ -55,8 +55,7 @@ fun InformationCard(
                 )
 
             }
-            if (!saleLink.isNullOrBlank())
-            {
+            if (!saleLink.isNullOrBlank()) {
                 val annotatedString = buildAnnotatedString {
                     withStyle(
                         style = SpanStyle(
@@ -68,32 +67,25 @@ fun InformationCard(
                         append("贩售链接：")
                     }
 
-                    pushStringAnnotation(
-                        tag = "link",
-                        annotation = saleLink
-                    )
-                    withStyle(
-                        style = SpanStyle(
-                            color = MaterialTheme.colorScheme.primary,
-                            textDecoration = TextDecoration.Underline,
-                            fontSize = 16.sp,
+                    withLink(
+                        LinkAnnotation.Url(
+                            saleLink,
+                            TextLinkStyles(
+                                style = SpanStyle(
+                                    color = MaterialTheme.colorScheme.primary,
+                                    textDecoration = TextDecoration.Underline,
+                                    fontSize = 16.sp,
+                                )
+                            )
                         )
                     ) {
                         append(saleLink)
                     }
-                    pop()
-
                 }
 
-
-                ClickableText(
-                    text = annotatedString,
-                    onClick = { offset ->
-                        annotatedString.getStringAnnotations(start = offset, end = offset)
-                            .firstOrNull()?.let {
-                                onNav(it.item)
-                            }
-                    })
+                Text(
+                    text = annotatedString
+                )
             }
         }
     })

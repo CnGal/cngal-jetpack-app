@@ -1,7 +1,7 @@
 package com.cngal.app.compose.shared
 
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.ArrowBack
+import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.material.icons.filled.MoreVert
 import androidx.compose.material.icons.outlined.Link
 import androidx.compose.material.icons.outlined.OpenInBrowser
@@ -29,17 +29,15 @@ import androidx.compose.ui.zIndex
 fun TitleBar(
     title: String?,
     onBack: () -> Unit,
-    onClickOpenInBrowser: (() -> Unit)?=null,
-    onClickLink: (() -> Unit)?=null,
-    onClickShare: (() -> Unit)?=null,
-)
-{
+    onClickOpenInBrowser: (() -> Unit)? = null,
+    onClickLink: (() -> Unit)? = null,
+    onClickShare: (() -> Unit)? = null,
+) {
     var expanded by remember { mutableStateOf(false) }
 
     TopAppBar(
         title = {
-            if (!title.isNullOrBlank())
-            {
+            if (!title.isNullOrBlank()) {
                 Text(
                     text = title,
                     style = MaterialTheme.typography.titleMedium,
@@ -51,14 +49,13 @@ fun TitleBar(
         navigationIcon = {
             IconButton(onClick = { onBack() }) {
                 Icon(
-                    imageVector = Icons.Filled.ArrowBack,
+                    imageVector = Icons.AutoMirrored.Filled.ArrowBack,
                     contentDescription = "返回"
                 )
             }
         },
         actions = {
-            if (onClickOpenInBrowser != null || onClickLink != null || onClickShare != null)
-            {
+            if (onClickOpenInBrowser != null || onClickLink != null || onClickShare != null) {
                 IconButton(onClick = { expanded = true }) {
                     Icon(
                         imageVector = Icons.Filled.MoreVert,
@@ -70,8 +67,7 @@ fun TitleBar(
                     expanded = expanded,
                     onDismissRequest = { expanded = false }
                 ) {
-                    if (onClickOpenInBrowser != null)
-                    {
+                    if (onClickOpenInBrowser != null) {
                         DropdownMenuItem(
                             text = { Text("浏览器打开") },
                             onClick = {
@@ -85,8 +81,7 @@ fun TitleBar(
                                 )
                             })
                     }
-                    if (onClickLink != null)
-                    {
+                    if (onClickLink != null) {
                         DropdownMenuItem(
                             text = { Text("复制链接") },
                             onClick = {
@@ -101,8 +96,7 @@ fun TitleBar(
                             })
 
                     }
-                    if (onClickShare != null)
-                    {
+                    if (onClickShare != null) {
                         DropdownMenuItem(
                             text = { Text("复制分享文案") },
                             onClick = {

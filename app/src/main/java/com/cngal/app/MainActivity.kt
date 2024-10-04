@@ -3,6 +3,7 @@ package com.cngal.app
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
+import androidx.activity.enableEdgeToEdge
 import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
@@ -21,29 +22,25 @@ import com.cngal.app.compose.overview.OverviewScreen
 import com.cngal.app.ui.theme.CnGalTheme
 import com.funny.data_saver.core.DataSaverPreferences
 import com.funny.data_saver.core.LocalDataSaver
-import com.google.accompanist.systemuicontroller.rememberSystemUiController
 
-class MainActivity : ComponentActivity()
-{
-    override fun onCreate(savedInstanceState: Bundle?)
-    {
+class MainActivity : ComponentActivity() {
+    override fun onCreate(savedInstanceState: Bundle?) {
+        enableEdgeToEdge()
+
         super.onCreate(savedInstanceState)
-
-        //应用占满全屏
-        WindowCompat.setDecorFitsSystemWindows(window, false)
+ 
 
         setContent {
             CnGalTheme {
-                //状态栏透明
-                TransparentSystemBars()
                 // A surface container using the 'background' color from the theme
                 Surface(
                     modifier = Modifier.fillMaxSize(), color = MaterialTheme.colorScheme.background
                 ) {
                     Box()
                     {
-                        val dataSaverPreferences = DataSaverPreferences(context = applicationContext,false)
-                        CompositionLocalProvider(LocalDataSaver provides dataSaverPreferences){
+                        val dataSaverPreferences =
+                            DataSaverPreferences(context = applicationContext, false)
+                        CompositionLocalProvider(LocalDataSaver provides dataSaverPreferences) {
                             MainScreen()
                         }
                     }
@@ -53,17 +50,3 @@ class MainActivity : ComponentActivity()
         }
     }
 }
-
-
-@Composable
-fun TransparentSystemBars() {
-    val systemUiController = rememberSystemUiController()
-    val useDarkIcons = !isSystemInDarkTheme()
-    SideEffect {
-        systemUiController.setSystemBarsColor(
-            color = Color.Transparent,
-            darkIcons = useDarkIcons,
-            isNavigationBarContrastEnforced = false,)
-    }
-}
-
