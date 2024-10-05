@@ -1,7 +1,9 @@
 package com.cngal.app
 
+import android.graphics.Color
 import android.os.Bundle
 import androidx.activity.ComponentActivity
+import androidx.activity.SystemBarStyle
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
 import androidx.compose.foundation.isSystemInDarkTheme
@@ -15,7 +17,6 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.SideEffect
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.core.view.WindowCompat
 import com.cngal.app.compose.overview.MainScreen
 import com.cngal.app.compose.overview.OverviewScreen
@@ -28,7 +29,7 @@ class MainActivity : ComponentActivity() {
         enableEdgeToEdge()
 
         super.onCreate(savedInstanceState)
- 
+
 
         setContent {
             CnGalTheme {
