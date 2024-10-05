@@ -7,7 +7,7 @@
       </SelectionState>
       <SelectionState runConfigName="CnGal.app">
         <option name="selectionMode" value="DROPDOWN" />
-        <DropdownSelection timestamp="2024-10-04T22:12:55.502572600Z">
+        <DropdownSelection timestamp="2024-10-05T04:39:06.346157700Z">
           <Target type="DEFAULT_BOOT">
             <handle>
               <DeviceId pluginId="PhysicalDevice" identifier="serial=4304650" />
